@@ -36,7 +36,6 @@ export default function VoicesPage() {
   return (
     <div className="stack">
       <div className="pageTitle">
-        <span className="eyebrow">FAN VOICE</span>
         <h1>팬이 제안하고, 팬이 공감합니다.</h1>
         <p>
           많은 팬이 공감하는 의견을 구단이 직접 확인하고 답합니다. 공감 20 이상이면
@@ -106,48 +105,47 @@ export default function VoicesPage() {
             </div>
           </div>
 
-          <div className="stack" style={{ gap: 14 }}>
-            {visibleVoices.length === 0 && (
-              <div className="emptyState">아직 이 카테고리의 의견이 없어요. 첫 의견을 남겨보세요.</div>
-            )}
-            {visibleVoices.map((v) => {
-              const liked = likedVoiceIds.includes(v.id);
-              return (
-                <article className="voiceRow" key={v.id}>
-                  <div className="tagRow">
-                    <span className="tag">{v.category}</span>
-                    {v.likes >= 20 && <span className="hot">HOT</span>}
-                  </div>
-                  <h3>{v.title}</h3>
-                  <p>{v.content}</p>
-                  <div className="meta">
-                    <span>
-                      {v.author} · {v.createdAt}
-                    </span>
-                    <span className="statusChip" data-status={v.status}>
-                      {v.status}
-                    </span>
-                  </div>
-                  {v.clubFeedback && (
-                    <div className="clubReply">
-                      <b>구단 피드백 · {v.clubFeedback.date}</b>
-                      {v.clubFeedback.comment}
+          {visibleVoices.length === 0 ? (
+            <div className="emptyState">아직 이 카테고리의 의견이 없어요. 첫 의견을 남겨보세요.</div>
+          ) : (
+            <div className="panel board">
+              {visibleVoices.map((v) => {
+                const liked = likedVoiceIds.includes(v.id);
+                return (
+                  <div className="boardRow" key={v.id}>
+                    <div className="boardMeta">
+                      <span className="catLabel">{v.category}</span>
+                      {v.likes >= 20 && <span className="hotLabel">HOT</span>}
+                      <span style={{ color: "var(--muted)" }}>
+                        · {v.author} · {v.createdAt}
+                      </span>
                     </div>
-                  )}
-                  <div className="meta">
-                    <button
-                      className={`likeBtn ${liked ? "isLiked" : ""}`}
-                      onClick={() => likeVoice(v.id)}
-                      disabled={liked}
-                    >
-                      ♥ 공감 {v.likes}
-                      {liked ? " · 공감완료" : ""}
-                    </button>
+                    <p className="boardTitle">{v.title}</p>
+                    <p className="boardExcerpt">{v.content}</p>
+                    {v.clubFeedback && (
+                      <div className="clubReply">
+                        <b>구단 답변 · {v.clubFeedback.date}</b>
+                        {v.clubFeedback.comment}
+                      </div>
+                    )}
+                    <div className="boardFoot">
+                      <button
+                        className={`likeBtn ${liked ? "isLiked" : ""}`}
+                        onClick={() => likeVoice(v.id)}
+                        disabled={liked}
+                      >
+                        공감 {v.likes}
+                        {liked ? " · 공감완료" : ""}
+                      </button>
+                      <span className="statusChip" data-status={v.status}>
+                        {v.status}
+                      </span>
+                    </div>
                   </div>
-                </article>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -35,7 +35,6 @@ export default function AdminPage() {
   return (
     <div className="stack">
       <div className="pageTitle">
-        <span className="eyebrow">CLUB ADMIN</span>
         <h1>팬의 목소리를 의사결정 데이터로.</h1>
         <p>
           지금 팬들이 무엇을 원하는지 5초 안에 확인하고, 설문을 설계하고, 피드백을 남기는
@@ -69,15 +68,15 @@ export default function AdminPage() {
       <div className="grid2">
         <section className="panel">
           <div className="sectionHead">
-            <h2>TOP FAN NEEDS</h2>
-            <button className="smallBtn">CSV Export</button>
+            <h2>가장 많이 공감받은 의견</h2>
+            <button className="smallBtn">CSV 내보내기</button>
           </div>
           <div className="rankList" style={{ marginTop: 10 }}>
             {topFanNeeds.map((v, i) => (
               <div key={v.id}>
                 <b>{i + 1}</b>
                 <span>{v.title}</span>
-                <strong>♥ {v.likes}</strong>
+                <strong>공감 {v.likes}</strong>
               </div>
             ))}
           </div>
@@ -161,10 +160,10 @@ export default function AdminPage() {
       </section>
 
       <section className="panel">
-        <h2>Future Integration</h2>
+        <h2>향후 확장 개념</h2>
         <p className="muted" style={{ marginTop: 10 }}>
-          현재 프로토타입의 핵심은 팬 직접 의견 수렴입니다. 향후 FEVER의 행동 데이터와 결합해
-          더 깊은 팬 인사이트로 확장할 수 있습니다. (실제 API 연동 없이 개념만 표시합니다.)
+          현재 버전의 핵심은 팬 직접 의견 수렴입니다. 향후 FEVER의 행동 데이터와 결합해
+          더 깊은 팬 인사이트로 확장할 수 있습니다. (실제 연동 없이 개념만 표시합니다.)
         </p>
         <div className="integration">
           <div>
@@ -182,7 +181,7 @@ export default function AdminPage() {
             <span>무엇을 했는가 + 왜 그렇게 행동했는가</span>
           </div>
         </div>
-        <h2 style={{ marginTop: 26, fontSize: 16 }}>Future Feature</h2>
+        <h2 style={{ marginTop: 26, fontSize: 16 }}>향후 확장 기능</h2>
         <div className="futureRow">
           {futureFeatures.map((f) => (
             <span className="futureChip" key={f}>
