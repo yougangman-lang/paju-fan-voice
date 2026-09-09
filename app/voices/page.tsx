@@ -39,8 +39,8 @@ export default function VoicesPage() {
         <span className="eyebrow">FAN VOICE</span>
         <h1>팬이 제안하고, 팬이 공감합니다.</h1>
         <p>
-          단순 불만 게시판이 아니라, 많은 팬이 공감하는 니즈를 구단이 확인하고 답하는
-          공간입니다. 공감 20 이상이면 HOT 의견으로 표시돼요.
+          많은 팬이 공감하는 의견을 구단이 직접 확인하고 답합니다. 공감 20 이상이면
+          HOT 의견으로 표시돼요.
         </p>
       </div>
 
@@ -141,7 +141,7 @@ export default function VoicesPage() {
                       disabled={liked}
                     >
                       ♥ 공감 {v.likes}
-                      {liked ? " · 완료" : ""}
+                      {liked ? " · 공감완료" : ""}
                     </button>
                   </div>
                 </article>

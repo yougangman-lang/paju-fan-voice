@@ -47,7 +47,7 @@ export default function AdminPage() {
         <div>
           <span>이번 주 참여자</span>
           <b>432</b>
-          <small>▲ 18% (mock)</small>
+          <small>▲ 18% 전주 대비</small>
         </div>
         <div>
           <span>설문 응답 수</span>

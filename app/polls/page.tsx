@@ -11,8 +11,8 @@ export default function PollsPage() {
         <span className="eyebrow">QUICK POLL</span>
         <h1>짧게 답하고, 구단 운영에 참여하세요.</h1>
         <p>
-          상황별 1~3문항 설문으로 팬의 니즈를 자주, 가볍게 수집합니다. 설문을 모두 완료하면
-          Y포인트가 적립돼요.
+          1~3개의 짧은 질문에 답하고 다음 홈경기 운영에 의견을 더해보세요. 설문을 모두
+          완료하면 Y포인트가 적립돼요.
         </p>
       </div>
 

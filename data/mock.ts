@@ -176,6 +176,26 @@ export const initialVoices: Voice[] = [
     },
     createdAt: "2026-08-18",
   },
+  {
+    id: "v7",
+    category: "경기장 운영",
+    title: "매표소 앞 대기 줄 안내선을 정리해주세요",
+    content: "매표소 앞에 줄이 여러 갈래로 생겨서 혼잡합니다. 안내선만 정리돼도 훨씬 편할 것 같아요.",
+    author: "홈경기개근",
+    likes: 34,
+    status: "검토중",
+    createdAt: "2026-08-25",
+  },
+  {
+    id: "v8",
+    category: "팬서비스",
+    title: "선수 입장 시 어린이 하이파이브존을 만들어주세요",
+    content: "선수단이 입장할 때 어린이 팬들과 하이파이브할 수 있는 구간이 있으면 좋겠습니다.",
+    author: "파주키즈",
+    likes: 19,
+    status: "검토중",
+    createdAt: "2026-08-22",
+  },
 ];
 
 export const initialPointHistory: PointHistoryEntry[] = [

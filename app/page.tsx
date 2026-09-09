@@ -30,8 +30,8 @@ export default function Home() {
             구단의 다음 행동이 되도록.
           </h1>
           <p>
-            짧은 설문, 팬 제안, 공감, 구단 피드백을 하나의 흐름으로 연결하는 파주 프런티어FC
-            팬 참여 플랫폼입니다. 1분이면 참여할 수 있어요.
+            오늘의 질문에 답하고, 하고 싶은 이야기를 남겨보세요. 여러분의 목소리가 모여
+            다음 홈경기를 바꿉니다.
           </p>
           <div className="actions">
             <Link className="primaryBtn" href="/polls">
@@ -132,8 +132,7 @@ export default function Home() {
           <span className="eyebrow">CLUB FEEDBACK</span>
           <h2>팬 의견이 실제 변화로 이어집니다</h2>
           <p className="muted" style={{ marginTop: 10 }}>
-            의견 작성 → 다른 팬 공감 → HOT 의견 → 구단 확인 → 실제 피드백까지, 팬 목소리가
-            움직이는 과정을 확인하세요.
+            많은 팬이 공감한 의견부터 구단이 직접 확인하고 답합니다.
           </p>
         </div>
         <div className="feedbackList">
