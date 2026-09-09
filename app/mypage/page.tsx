@@ -20,9 +20,9 @@ export default function MyPage() {
 
       <div className="profileGrid">
         <div className="pointCard big">
-          <span>MY Y POINT</span>
-          <strong>{points.toLocaleString()} P</strong>
-          <small>파주 팬 참여 리워드</small>
+          <span>MY P:POINT</span>
+          <strong>{points.toLocaleString()} P:POINT</strong>
+          <small>Paju Participation Point · 파주 프런티어FC 팬 참여 리워드</small>
           <div className="rewardHint">
             <span>MD 할인</span>
             <span>이벤트 응모</span>

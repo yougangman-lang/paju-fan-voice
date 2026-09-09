@@ -43,8 +43,8 @@ export default function Home() {
           </div>
         </div>
         <div className="pointCard">
-          <span>MY Y POINT</span>
-          <strong>{points.toLocaleString()} P</strong>
+          <span>MY P:POINT</span>
+          <strong>{points.toLocaleString()} P:POINT</strong>
           <small>설문 참여 +5P · 의견 작성 +10P · 공감 +1P</small>
         </div>
       </section>
@@ -70,7 +70,7 @@ export default function Home() {
           ) : (
             <>
               <div className="success">
-                참여 완료{isPollCompleted(todayPoll.id) ? ` · +${todayPoll.pointReward} YP 적립` : ""}
+                참여 완료{isPollCompleted(todayPoll.id) ? ` · +${todayPoll.pointReward} P:POINT 적립` : ""}
               </div>
               <div className="resultList">
                 {todayQuestion.options.map((o) => {

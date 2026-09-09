@@ -67,7 +67,7 @@ export default function VoicesPage() {
             rows={6}
           />
           <button className="primaryBtn" type="submit">
-            의견 등록 +10 YP
+            의견 등록 +10 P:POINT
           </button>
         </form>
 

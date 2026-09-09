@@ -50,7 +50,7 @@ export const initialPolls: Poll[] = [
   {
     id: "p2",
     title: "다음 홈경기 이벤트 투표",
-    description: "가장 기대되는 이벤트에 투표하고 YP를 받아가세요.",
+    description: "가장 기대되는 이벤트에 투표하고 P:POINT를 받아가세요.",
     status: "active",
     pointReward: 5,
     createdAt: "2026-09-05",

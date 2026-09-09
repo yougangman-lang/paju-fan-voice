@@ -33,8 +33,7 @@ export default function Nav() {
       </nav>
       <div className="navRight">
         <Link href="/mypage" className="ypBadge">
-          <span>YP</span>
-          <b>{points.toLocaleString()}</b>
+          <b>{points.toLocaleString()} P:POINT</b>
         </Link>
         <Link href="/admin" className="adminLink">
           관리자

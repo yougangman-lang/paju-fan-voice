@@ -12,7 +12,7 @@ export default function PollsPage() {
         <h1>짧게 답하고, 구단 운영에 참여하세요.</h1>
         <p>
           1~3개의 짧은 질문에 답하고 다음 홈경기 운영에 의견을 더해보세요. 설문을 모두
-          완료하면 Y포인트가 적립돼요.
+          완료하면 P:POINT가 적립돼요.
         </p>
       </div>
 
@@ -31,7 +31,7 @@ export default function PollsPage() {
               <p className="pollDesc">{poll.description}</p>
 
               {completed && (
-                <div className="success">참여 완료 · +{poll.pointReward} YP 적립</div>
+                <div className="success">참여 완료 · +{poll.pointReward} P:POINT 적립</div>
               )}
 
               {poll.questions.map((q, i) => {
