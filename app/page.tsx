@@ -43,7 +43,7 @@ export default function Home() {
           </div>
         </div>
         <div className="pointCard">
-          <span>MY P:POINT</span>
+          <span>내 P:POINT</span>
           <strong>{points.toLocaleString()} P:POINT</strong>
           <small>설문 참여 +5P · 의견 작성 +10P · 공감 +1P</small>
         </div>
@@ -51,10 +51,7 @@ export default function Home() {
 
       <section>
         <div className="sectionHead">
-          <div>
-            <span className="eyebrow">TODAY&apos;S QUESTION</span>
-            <h2>오늘의 팬 질문</h2>
-          </div>
+          <h2>오늘의 질문</h2>
           <Link href="/polls">전체 설문 보기 →</Link>
         </div>
         <div className="questionCard">
@@ -101,52 +98,46 @@ export default function Home() {
 
       <section>
         <div className="sectionHead">
-          <div>
-            <span className="eyebrow">HOT VOICES</span>
-            <h2>지금 팬들이 공감하는 의견</h2>
-          </div>
+          <h2>많이 공감한 팬 의견</h2>
           <Link href="/voices">전체 의견 보기 →</Link>
         </div>
-        <div className="grid3">
+        <div className="panel board">
           {hotVoices.map((v) => (
-            <article className="voiceCard" key={v.id}>
-              <div className="tagRow">
-                <span className="tag">{v.category}</span>
-                {v.likes >= 20 && <span className="hot">HOT</span>}
+            <div className="boardRow" key={v.id}>
+              <div className="boardMeta">
+                <span className="catLabel">{v.category}</span>
+                {v.likes >= 20 && <span className="hotLabel">HOT</span>}
               </div>
-              <h3>{v.title}</h3>
-              <p>{v.content}</p>
-              <div className="meta">
-                <span>♥ 공감 {v.likes}</span>
+              <p className="boardTitle">{v.title}</p>
+              <p className="boardExcerpt">{v.content}</p>
+              <div className="boardFoot">
+                <span>공감 {v.likes}</span>
                 <span className="statusChip" data-status={v.status}>
                   {v.status}
                 </span>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="feedback">
-        <div>
-          <span className="eyebrow">CLUB FEEDBACK</span>
-          <h2>팬 의견이 실제 변화로 이어집니다</h2>
-          <p className="muted" style={{ marginTop: 10 }}>
-            많은 팬이 공감한 의견부터 구단이 직접 확인하고 답합니다.
-          </p>
+      <section>
+        <div className="sectionHead">
+          <h2>구단 답변</h2>
         </div>
-        <div className="feedbackList">
+        <p className="muted">팬 의견에 대한 구단의 검토 결과를 안내합니다.</p>
+        <div className="panel board">
           {recentFeedback.map((v) => (
-            <div className="feedbackBox" key={v.id}>
-              <div className="tagRow">
-                <span className="tag">{v.category}</span>
+            <div className="boardRow" key={v.id}>
+              <div className="boardMeta">
+                <span className="catLabel">{v.category}</span>
                 <span className="statusChip" data-status={v.status}>
                   {v.status}
                 </span>
               </div>
-              <strong style={{ marginTop: 10 }}>{v.title}</strong>
+              <p className="boardTitle">{v.title}</p>
               <div className="clubReply">
-                <b>구단 피드백 · {v.clubFeedback.date}</b>
+                <b>구단 답변 · {v.clubFeedback.date}</b>
                 {v.clubFeedback.comment}
               </div>
             </div>

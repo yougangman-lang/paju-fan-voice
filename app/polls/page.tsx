@@ -8,7 +8,6 @@ export default function PollsPage() {
   return (
     <div className="stack">
       <div className="pageTitle">
-        <span className="eyebrow">QUICK POLL</span>
         <h1>짧게 답하고, 구단 운영에 참여하세요.</h1>
         <p>
           1~3개의 짧은 질문에 답하고 다음 홈경기 운영에 의견을 더해보세요. 설문을 모두

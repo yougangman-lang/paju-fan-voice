@@ -13,14 +13,13 @@ export default function MyPage() {
   return (
     <div className="stack">
       <div className="pageTitle">
-        <span className="eyebrow">MY PAGE</span>
-        <h1>내 참여가 쌓이는 공간</h1>
+        <h1>마이페이지</h1>
         <p>{currentUser.nickname}님이 참여한 설문, 작성한 의견, 공감 내역을 한눈에 확인하세요.</p>
       </div>
 
       <div className="profileGrid">
         <div className="pointCard big">
-          <span>MY P:POINT</span>
+          <span>내 P:POINT</span>
           <strong>{points.toLocaleString()} P:POINT</strong>
           <small>Paju Participation Point · 파주 프런티어FC 팬 참여 리워드</small>
           <div className="rewardHint">
@@ -80,7 +79,7 @@ export default function MyPage() {
                 <div key={v.id}>
                   <span>{v.title}</span>
                   <span>
-                    ♥ {v.likes} · {v.status}
+                    공감 {v.likes} · {v.status}
                   </span>
                 </div>
               ))}
