@@ -4,7 +4,11 @@
   --navy: #283188;
   --navy-deep: #1a2058;
   --blue: #4854c9;
-  --pink: #de337d;
+  /* 공식 Cosmos Pink: 큰 면적 accent, 배경, active underline, COSMOS 등급,
+     장식 라인 등 브랜드 정체성이 드러나야 하는 곳에 사용 */
+  --cosmos-pink: #ee97bd;
+  /* 흰 배경 위 작은 텍스트·버튼처럼 공식 핑크로는 대비가 부족한 곳에만 사용 */
+  --cosmos-pink-strong: #de337d;
   --orange: #ff8a3d;
   --ink: #142033;
   --muted: #6b7688;
@@ -142,7 +146,7 @@ p {
 
 .topbar nav a.navActive {
   color: var(--navy);
-  border-bottom-color: var(--pink);
+  border-bottom-color: var(--cosmos-pink);
 }
 
 .navRight {
@@ -402,7 +406,7 @@ button:disabled {
 .likeBtn {
   border: none;
   background: none;
-  color: var(--pink);
+  color: var(--cosmos-pink-strong);
   font-weight: 700;
   padding: 0;
   font-size: 13px;
@@ -445,7 +449,7 @@ button:disabled {
 }
 
 .hotLabel {
-  color: var(--pink);
+  color: var(--cosmos-pink-strong);
   font-weight: 800;
 }
 
@@ -1056,7 +1060,7 @@ button:disabled {
 }
 
 .matchLabel {
-  color: var(--pink);
+  color: var(--cosmos-pink);
 }
 
 .matchTeams {
@@ -1260,7 +1264,7 @@ button:disabled {
 }
 
 .completePoint {
-  color: var(--pink);
+  color: var(--cosmos-pink-strong);
   font-weight: 800;
   font-size: 22px;
   margin: 10px 0;
@@ -1538,7 +1542,7 @@ button:disabled {
 }
 
 .insightCard {
-  border-left: 3px solid var(--pink);
+  border-left: 3px solid var(--cosmos-pink);
 }
 
 .tableWrap {

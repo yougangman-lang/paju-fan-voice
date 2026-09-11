@@ -3,8 +3,8 @@ import { TIER_LABELS, TIER_DESCRIPTIONS } from "@/data/tiers";
 
 const TIER_COLORS: Record<Tier, string> = {
   ROOKIE: "#4caf6e", // soft green
-  FRONTIER: "#1a56b0", // paju blue
-  COSMOS: "#d1487f", // cosmos pink
+  FRONTIER: "var(--blue)", // paju blue
+  COSMOS: "var(--cosmos-pink)", // 공식 Cosmos Pink
 };
 
 function IconPath({ tier }: { tier: Tier }) {
