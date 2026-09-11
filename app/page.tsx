@@ -2,143 +2,179 @@
 
 import Link from "next/link";
 import { useAppState } from "@/lib/store";
-import type { Voice } from "@/data/types";
+import { nextMatch } from "@/data/matches";
+import { cosmosContent } from "@/data/content";
+import { officialChannels } from "@/data/channels";
+import { sponsors } from "@/data/sponsors";
+import type { SponsorCategory } from "@/data/types";
+
+const sponsorGroups: { category: SponsorCategory; label: string }[] = [
+  { category: "MAIN", label: "MAIN" },
+  { category: "KIT", label: "KIT" },
+  { category: "MEDICAL", label: "MEDICAL" },
+  { category: "OFFICIAL", label: "OFFICIAL" },
+];
+
+function formatMatchDate(dateStr: string) {
+  const d = new Date(`${dateStr}T00:00:00`);
+  const days = ["일", "월", "화", "수", "목", "금", "토"];
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")} (${days[d.getDay()]})`;
+}
 
 export default function Home() {
-  const { points, polls, answers, answerQuestion, isPollCompleted, voices } = useAppState();
+  const { isLoggedIn, surveys, isSurveyCompleted, cheer, hasCheeredToday } = useAppState();
 
-  const todayPoll = polls[0];
-  const todayQuestion = todayPoll.questions[0];
-  const myPick = answers[todayQuestion.id];
-  const totalVotes = todayQuestion.options.reduce((sum, o) => sum + o.votes, 0);
-
-  const hotVoices = [...voices].sort((a, b) => b.likes - a.likes).slice(0, 3);
-
-  const recentFeedback = voices
-    .filter((v): v is Voice & { clubFeedback: NonNullable<Voice["clubFeedback"]> } => !!v.clubFeedback)
-    .sort((a, b) => (a.clubFeedback.date < b.clubFeedback.date ? 1 : -1))
-    .slice(0, 2);
+  const surveyContext = nextMatch.isToday ? nextMatch.homeAway : "NON_MATCHDAY";
+  const todaySurvey =
+    surveys.find((s) => s.status === "active" && s.context === surveyContext) ??
+    surveys.find((s) => s.status === "active");
 
   return (
     <div className="stack">
-      <section className="hero">
-        <div>
-          <span className="eyebrow">PAJU FRONTIER FC</span>
-          <h1>
-            팬의 목소리가
-            <br />
-            구단의 다음 행동이 되도록.
-          </h1>
-          <p>
-            오늘의 질문에 답하고, 하고 싶은 이야기를 남겨보세요. 여러분의 목소리가 모여
-            다음 홈경기를 바꿉니다.
-          </p>
-          <div className="actions">
-            <Link className="primaryBtn" href="/polls">
-              오늘의 설문 참여
+      {/* NEXT MATCH */}
+      <section className="matchCard">
+        <div className="matchTop">
+          <span className="matchComp">{nextMatch.competition}</span>
+          <span className="matchLabel">NEXT MATCH</span>
+        </div>
+        <div className="matchTeams">
+          <span className="matchTeam">파주 프런티어FC</span>
+          <span className="matchVs">VS</span>
+          <span className="matchTeam">{nextMatch.opponent}</span>
+        </div>
+        <div className="matchMeta">
+          {formatMatchDate(nextMatch.date)} {nextMatch.time} · {nextMatch.venue}
+          {nextMatch.homeAway === "HOME" ? " · HOME" : " · AWAY"}
+        </div>
+        <div className="matchActions">
+          <Link className="ghostBtnNavy" href="/fanzone">
+            경기 정보
+          </Link>
+          <a className="ghostBtnNavy" href="#" onClick={(e) => e.preventDefault()}>
+            티켓 예매
+          </a>
+          {nextMatch.isToday && (
+            <Link className="primaryBtn" href="/fanzone">
+              직관 인증
             </Link>
-            <Link className="ghostBtn" href="/voices">
-              팬 의견 보기
-            </Link>
+          )}
+        </div>
+      </section>
+
+      {/* 오늘의 설문 */}
+      {todaySurvey && (
+        <section>
+          <div className="sectionHead">
+            <h2>오늘의 설문</h2>
+          </div>
+          <div className="panel surveyTeaser">
+            <div>
+              <p className="surveyTeaserTitle">{todaySurvey.title}</p>
+              <p className="muted">
+                {todaySurvey.questions.length}문항 · 참여 완료 시 +{todaySurvey.pointReward} P:POINT
+              </p>
+            </div>
+            {isSurveyCompleted(todaySurvey.id) ? (
+              <span className="success" style={{ margin: 0 }}>
+                참여 완료
+              </span>
+            ) : (
+              <Link className="primaryBtn" href={`/survey/${todaySurvey.id}`}>
+                설문 참여하기
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* FAN ZONE / 팬 제안 빠른 참여 */}
+      <section>
+        <div className="sectionHead">
+          <h2>지금 참여할 수 있어요</h2>
+        </div>
+        <div className="quickGrid">
+          <div className="panel quickCard">
+            <span className="eyebrowSmall">FAN ZONE</span>
+            <p className="quickTitle">오늘도 파주와 함께해 주세요.</p>
+            <p className="muted">응원 한 번으로 +5 P:POINT를 받아보세요.</p>
+            <div className="quickActions">
+              {isLoggedIn ? (
+                <button className="primaryBtn" onClick={cheer} disabled={hasCheeredToday}>
+                  {hasCheeredToday ? "오늘 응원 완료" : "파주를 응원해요"}
+                </button>
+              ) : (
+                <Link className="primaryBtn" href="/login">
+                  로그인하고 응원하기
+                </Link>
+              )}
+              <Link href="/fanzone" className="quickLink">
+                FAN ZONE 더 보기 →
+              </Link>
+            </div>
+          </div>
+          <div className="panel quickCard">
+            <span className="eyebrowSmall">팬 제안</span>
+            <p className="quickTitle">바꾸고 싶은 부분이 있나요?</p>
+            <p className="muted">제안 작성 시 +30 P:POINT, 구단이 직접 검토하고 답합니다.</p>
+            <div className="quickActions">
+              <Link href="/suggestions" className="primaryBtn">
+                팬 제안 남기기
+              </Link>
+            </div>
           </div>
         </div>
-        <div className="pointCard">
-          <span>내 P:POINT</span>
-          <strong>{points.toLocaleString()} P:POINT</strong>
-          <small>설문 참여 +5P · 의견 작성 +10P · 공감 +1P</small>
-        </div>
       </section>
 
+      {/* COSMOS CONTENT */}
       <section>
         <div className="sectionHead">
-          <h2>오늘의 질문</h2>
-          <Link href="/polls">전체 설문 보기 →</Link>
+          <h2>COSMOS CONTENT</h2>
         </div>
-        <div className="questionCard">
-          <h3>{todayQuestion.text}</h3>
-          {!myPick ? (
-            <div className="optionList">
-              {todayQuestion.options.map((o) => (
-                <button key={o.id} onClick={() => answerQuestion(todayPoll.id, todayQuestion.id, o.id)}>
-                  {o.label}
-                </button>
-              ))}
-            </div>
-          ) : (
-            <>
-              <div className="success">
-                참여 완료{isPollCompleted(todayPoll.id) ? ` · +${todayPoll.pointReward} P:POINT 적립` : ""}
-              </div>
-              <div className="resultList">
-                {todayQuestion.options.map((o) => {
-                  const pct = totalVotes ? Math.round((o.votes / totalVotes) * 100) : 0;
-                  return (
-                    <div key={o.id}>
-                      <div className="resultHead">
-                        <span className={o.id === myPick ? "isMyPick" : ""}>
-                          {o.label}
-                          {o.id === myPick ? " · 내 선택" : ""}
-                        </span>
-                        <b>{pct}%</b>
-                      </div>
-                      <div className="bar">
-                        <i style={{ width: `${pct}%` }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
-          <p className="muted" style={{ marginTop: 18 }}>
-            1분이면 충분해요. 팬들의 선택은 다음 홈경기 개선안의 근거가 됩니다.
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <div className="sectionHead">
-          <h2>많이 공감한 팬 의견</h2>
-          <Link href="/voices">전체 의견 보기 →</Link>
-        </div>
-        <div className="panel board">
-          {hotVoices.map((v) => (
-            <div className="boardRow" key={v.id}>
-              <div className="boardMeta">
-                <span className="catLabel">{v.category}</span>
-                {v.likes >= 20 && <span className="hotLabel">HOT</span>}
-              </div>
-              <p className="boardTitle">{v.title}</p>
-              <p className="boardExcerpt">{v.content}</p>
-              <div className="boardFoot">
-                <span>공감 {v.likes}</span>
-                <span className="statusChip" data-status={v.status}>
-                  {v.status}
-                </span>
-              </div>
+        <p className="muted">파주 프런티어FC의 최신 소식</p>
+        <div className="contentGrid">
+          {cosmosContent.map((c) => (
+            <div className="panel contentCard" key={c.id}>
+              <span className="catLabel">{c.platform}</span>
+              <p className="boardTitle">{c.title}</p>
+              <p className="muted" style={{ marginTop: 4 }}>
+                {c.publishedAt}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
+      {/* OFFICIAL CHANNELS */}
       <section>
         <div className="sectionHead">
-          <h2>구단 답변</h2>
+          <h2>OFFICIAL CHANNELS</h2>
         </div>
-        <p className="muted">팬 의견에 대한 구단의 검토 결과를 안내합니다.</p>
-        <div className="panel board">
-          {recentFeedback.map((v) => (
-            <div className="boardRow" key={v.id}>
-              <div className="boardMeta">
-                <span className="catLabel">{v.category}</span>
-                <span className="statusChip" data-status={v.status}>
-                  {v.status}
-                </span>
-              </div>
-              <p className="boardTitle">{v.title}</p>
-              <div className="clubReply">
-                <b>구단 답변 · {v.clubFeedback.date}</b>
-                {v.clubFeedback.comment}
+        <div className="channelRow">
+          {officialChannels.map((ch) => (
+            <a key={ch.id} href={ch.url} className="channelPill">
+              {ch.label}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* SPONSORS */}
+      <section>
+        <div className="sectionHead">
+          <h2>SPONSORS</h2>
+        </div>
+        <div className="sponsorGrid">
+          {sponsorGroups.map((g) => (
+            <div key={g.category} className="sponsorGroup">
+              <span className="sponsorGroupLabel">{g.label}</span>
+              <div className="sponsorTiles">
+                {sponsors
+                  .filter((s) => s.category === g.category)
+                  .map((s) => (
+                    <div className="sponsorTile" key={s.id}>
+                      {s.name}
+                    </div>
+                  ))}
               </div>
             </div>
           ))}

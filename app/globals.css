@@ -127,10 +127,11 @@ p {
 
 .topbar nav {
   display: flex;
-  gap: 26px;
-  font-size: 14.5px;
+  gap: 18px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .topbar nav a {
@@ -1028,6 +1029,537 @@ button:disabled {
   background: #f7f9fd;
 }
 
+/* ---------- nav: login link ---------- */
+.loginLink {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--navy);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 12px;
+}
+
+.loginLink:hover {
+  border-color: var(--navy);
+}
+
+/* ---------- home: next match ---------- */
+.matchCard {
+  background: linear-gradient(120deg, var(--navy-deep), #123465 55%, var(--navy));
+  color: #fff;
+  border-radius: 18px;
+  padding: 30px 34px;
+}
+
+.matchTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.matchComp {
+  color: #9fc1ef;
+}
+
+.matchLabel {
+  color: var(--pink);
+}
+
+.matchTeams {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 24px;
+  font-weight: 800;
+  flex-wrap: wrap;
+}
+
+.matchTeam {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.matchVs {
+  color: #9fc1ef;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.matchMeta {
+  margin-top: 10px;
+  color: #d3dcec;
+  font-size: 13.5px;
+}
+
+.matchActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.ghostBtnNavy {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+/* ---------- home: survey teaser ---------- */
+.surveyTeaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.surveyTeaserTitle {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ---------- home: quick actions ---------- */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.quickCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrowSmall {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+.quickTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.quickActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.quickLink {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* ---------- home: cosmos content / channels / sponsors ---------- */
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.contentCard {
+  padding: 18px;
+}
+
+.channelRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.channelPill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  background: #fff;
+}
+
+.channelPill:hover {
+  border-color: var(--navy);
+}
+
+.sponsorGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.sponsorGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sponsorGroupLabel {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.sponsorTiles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sponsorTile {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  background: #fff;
+}
+
+/* ---------- survey detail ---------- */
+.optionList button.isPicked {
+  border-color: var(--navy);
+  background: var(--soft);
+  font-weight: 700;
+}
+
+.completePanel {
+  text-align: center;
+  padding: 44px 24px;
+}
+
+.completeTitle {
+  display: block;
+  font-size: 18px;
+}
+
+.completePoint {
+  color: var(--pink);
+  font-weight: 800;
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+.simNotice {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 14px;
+}
+
+.verifyForm {
+  margin-top: 4px;
+}
+
+/* ---------- point shop ---------- */
+.shopBalance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--soft);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.shopBalance span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.shopBalance b {
+  font-size: 18px;
+  color: var(--navy);
+}
+
+.shopGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.shopCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.shopThumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  background: var(--soft);
+  color: var(--blue);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.shopFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.shopPrice {
+  color: var(--navy);
+  font-size: 15px;
+}
+
+.shopFeedback {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--good);
+  font-weight: 600;
+}
+
+/* ---------- auth (login) ---------- */
+.authShell {
+  width: min(420px, 92vw);
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+.authCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 34px 30px;
+  width: min(420px, 92vw);
+  margin: 80px auto;
+}
+
+.oauthBtn {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+}
+
+.oauthBtn:hover {
+  border-color: var(--navy);
+}
+
+.adminLoginCard {
+  background: #0a1730;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.adminLoginInput {
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.adminLoginInput::placeholder {
+  color: #8ea3cc;
+}
+
+/* ---------- mypage: tier ---------- */
+.tierRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tierName {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.tierProgress {
+  margin-top: 14px;
+}
+
+/* ---------- fan popup ---------- */
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 16, 34, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+
+.popupCard {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 26px;
+  width: min(380px, 100%);
+}
+
+.popupClose {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.popupTitle {
+  display: block;
+  font-size: 17px;
+  color: var(--navy);
+}
+
+.popupDesc {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.popupActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.popupActions .primaryBtn {
+  text-align: center;
+}
+
+.popupDismiss {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 12.5px;
+  padding: 6px;
+}
+
+/* ---------- admin: tabs / tables / insight ---------- */
+.adminTabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+
+.adminTabs button {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+.adminTabs button.isActive {
+  color: #0a1730;
+  border-bottom-color: var(--navy);
+}
+
+.categoryAnalysisRow {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  text-align: left;
+  color: var(--ink);
+}
+
+.categoryAnalysisRow .bar {
+  margin-top: 0;
+}
+
+.keywordTags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.keywordTag {
+  background: var(--soft);
+  color: var(--blue);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.insightCard {
+  border-left: 3px solid var(--pink);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 14px;
+}
+
+.adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.adminTable th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 700;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.adminTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.popupFieldLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .grid3 {
@@ -1039,12 +1571,17 @@ button:disabled {
   .topbar nav {
     display: none;
   }
-  .hero,
   .grid2,
   .grid3,
   .voiceLayout,
-  .profileGrid {
+  .profileGrid,
+  .quickGrid,
+  .contentGrid,
+  .shopGrid {
     grid-template-columns: 1fr;
+  }
+  .sponsorGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
   .metrics {
     grid-template-columns: repeat(2, 1fr);
@@ -1052,11 +1589,11 @@ button:disabled {
   .compose {
     position: static;
   }
-  .hero {
-    padding: 34px 24px;
+  .matchCard {
+    padding: 26px 22px;
   }
-  .hero h1 {
-    font-size: 28px;
+  .matchTeams {
+    font-size: 19px;
   }
   .shell,
   .adminShell {
@@ -1084,5 +1621,16 @@ button:disabled {
   }
   .navRight {
     gap: 8px;
+  }
+  .sponsorGrid {
+    grid-template-columns: 1fr;
+  }
+  .matchActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .matchActions a,
+  .matchActions button {
+    text-align: center;
   }
 }
