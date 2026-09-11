@@ -6,6 +6,7 @@ import { nextMatch } from "@/data/matches";
 import { cosmosContent } from "@/data/content";
 import { officialChannels } from "@/data/channels";
 import { sponsors } from "@/data/sponsors";
+import YouTubeIcon from "@/components/YouTubeIcon";
 import type { SponsorCategory } from "@/data/types";
 
 const sponsorGroups: { category: SponsorCategory; label: string }[] = [
@@ -133,16 +134,21 @@ export default function Home() {
         <div className="sectionHead">
           <h2>COSMOS CONTENT</h2>
         </div>
-        <p className="muted">파주 프런티어FC의 최신 소식</p>
         <div className="contentGrid">
           {cosmosContent.map((c) => (
-            <div className="panel contentCard" key={c.id}>
-              <span className="catLabel">{c.platform}</span>
-              <p className="boardTitle">{c.title}</p>
-              <p className="muted" style={{ marginTop: 4 }}>
-                {c.publishedAt}
-              </p>
-            </div>
+            <a
+              className="contentCard"
+              key={c.id}
+              href={c.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={c.thumbnail} alt={c.title} className="contentThumb" />
+              <div className="contentCardBody">
+                <YouTubeIcon size={16} />
+                <p className="contentCardTitle">{c.title}</p>
+              </div>
+            </a>
           ))}
         </div>
       </section>

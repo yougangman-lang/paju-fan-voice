@@ -153,13 +153,14 @@ export type Sponsor = {
   name: string;
 };
 
-export type ContentPlatform = "Instagram" | "YouTube" | "TikTok";
+export type ContentPlatform = "YouTube";
 
 export type ContentItem = {
   id: string;
   platform: ContentPlatform;
   title: string;
-  publishedAt: string;
+  thumbnail: string;
+  url: string;
 };
 
 export type OfficialChannel = {
