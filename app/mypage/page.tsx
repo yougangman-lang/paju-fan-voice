@@ -10,7 +10,9 @@ const TX_LABELS: Record<string, string> = {
   cheer: "응원하기",
   cheer_message: "응원 메시지",
   survey: "설문 참여",
-  suggestion: "팬 제안 작성",
+  suggestion_stake: "팬 제안 등록",
+  suggestion_stake_refund: "공감 보상 환급",
+  suggestion_like_reward: "공감 보상",
   attendance: "직관 인증",
   referral: "추천인 코드",
   redeem: "포인트 사용",
@@ -121,7 +123,7 @@ export default function MyPage() {
                 <div key={v.id}>
                   <span>{v.title}</span>
                   <span>
-                    공감 {v.likes} · {v.clubStatus}
+                    사용 -10P · 공감 {v.likes} · 획득 +{v.likeRewardEarned}P
                   </span>
                 </div>
               ))}

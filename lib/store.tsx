@@ -15,6 +15,7 @@ import { initialCheerMessages } from "@/data/cheers";
 import { rewardItems } from "@/data/rewards";
 import { initialPopupCampaign } from "@/data/popup";
 import { calcTier } from "@/data/tiers";
+import { applyLike, SUGGESTION_STAKE } from "@/lib/suggestionRewards";
 import type {
   Survey,
   FanSuggestion,
@@ -82,8 +83,7 @@ type AppState = {
 
   // 팬 제안
   suggestions: FanSuggestion[];
-  likedSuggestionIds: string[];
-  submitSuggestion: (input: { category: SuggestionCategory; title: string; content: string }) => void;
+  submitSuggestion: (input: { category: SuggestionCategory; title: string; content: string }) => "success" | "insufficient";
   likeSuggestion: (id: string) => void;
 
   // P:POINT SHOP
@@ -120,7 +120,6 @@ type Persisted = {
   completedSurveyIds: string[];
   verifiedMatchIds: string[];
   suggestions: FanSuggestion[];
-  likedSuggestionIds: string[];
   redemptions: RewardRedemption[];
   popupCampaign: PopupCampaign;
   popupLastDismissedDate: string | null;
@@ -161,7 +160,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [verifiedMatchIds, setVerifiedMatchIds] = useState<string[]>([]);
 
   const [suggestions, setSuggestions] = useState<FanSuggestion[]>(initialSuggestions);
-  const [likedSuggestionIds, setLikedSuggestionIds] = useState<string[]>([]);
 
   const [redemptions, setRedemptions] = useState<RewardRedemption[]>([]);
 
@@ -191,7 +189,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       if (saved.completedSurveyIds) setCompletedSurveyIds(saved.completedSurveyIds);
       if (saved.verifiedMatchIds) setVerifiedMatchIds(saved.verifiedMatchIds);
       if (saved.suggestions) setSuggestions(saved.suggestions);
-      if (saved.likedSuggestionIds) setLikedSuggestionIds(saved.likedSuggestionIds);
       if (saved.redemptions) setRedemptions(saved.redemptions);
       if (saved.popupCampaign) setPopupCampaign(saved.popupCampaign);
       if (saved.popupLastDismissedDate !== undefined) setPopupLastDismissedDate(saved.popupLastDismissedDate);
@@ -220,7 +217,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       completedSurveyIds,
       verifiedMatchIds,
       suggestions,
-      likedSuggestionIds,
       redemptions,
       popupCampaign,
       popupLastDismissedDate,
@@ -250,15 +246,19 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     completedSurveyIds,
     verifiedMatchIds,
     suggestions,
-    likedSuggestionIds,
     redemptions,
     popupCampaign,
     popupLastDismissedDate,
   ]);
 
-  const addPoints = (amount: number, type: PointTransactionType, description: string) => {
+  const addPoints = (
+    amount: number,
+    type: PointTransactionType,
+    description: string,
+    affectsLifetime: boolean = amount > 0
+  ) => {
     setPointBalance((p) => p + amount);
-    if (amount > 0) setLifetimeEarnedPoints((p) => p + amount);
+    if (affectsLifetime) setLifetimeEarnedPoints((p) => p + amount);
     setPointHistory((h) => [
       { id: `h-${Date.now()}`, type, amount, description, createdAt: today() },
       ...h,
@@ -352,26 +352,67 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   };
 
   const submitSuggestion: AppState["submitSuggestion"] = ({ category, title, content }) => {
+    if (pointBalance < SUGGESTION_STAKE) return "insufficient";
     const suggestion: FanSuggestion = {
       id: `sg-${Date.now()}`,
       category,
       title,
       content,
       author: currentUser.nickname,
+      authorId: currentUser.id,
       authorTier: calcTier(lifetimeEarnedPoints),
       likes: 0,
+      likedByUserIds: [],
+      stakeRefunded: false,
+      rewardedLikeCount: 0,
+      likeRewardEarned: 0,
       clubStatus: "검토중",
       createdAt: today(),
     };
     setSuggestions((s) => [suggestion, ...s]);
     setSuggestionCount((c) => c + 1);
-    addPoints(30, "suggestion", `팬 제안 작성 · ${title}`);
+    addPoints(-SUGGESTION_STAKE, "suggestion_stake", `팬 제안 등록 · ${title}`);
+    return "success";
   };
 
   const likeSuggestion = (id: string) => {
-    if (likedSuggestionIds.includes(id)) return;
-    setSuggestions((s) => s.map((x) => (x.id === id ? { ...x, likes: x.likes + 1 } : x)));
-    setLikedSuggestionIds((ids) => [...ids, id]);
+    const target = suggestions.find((s) => s.id === id);
+    if (!target) return;
+    if (target.likedByUserIds.includes(currentUser.id)) return;
+    if (target.authorId === currentUser.id) return;
+
+    const result = applyLike(target, currentUser.id);
+    setSuggestions((prev) =>
+      prev.map((s) =>
+        s.id !== id
+          ? s
+          : {
+              ...s,
+              likes: result.likes,
+              likedByUserIds: result.likedByUserIds,
+              stakeRefunded: result.stakeRefunded,
+              rewardedLikeCount: result.rewardedLikeCount,
+              likeRewardEarned: result.likeRewardEarned,
+            }
+      )
+    );
+
+    // 실제 서비스에서는 이 보상이 target.authorId 계정에 적립된다.
+    // 이 데모는 단일 로그인 계정만 시뮬레이션하므로, 지금 로그인한
+    // 사용자가 곧 작성자인 경우에만 내 지갑(P:POINT)에 반영한다.
+    if (target.authorId === currentUser.id) {
+      if (result.stakeRefundAmount > 0) {
+        addPoints(
+          result.stakeRefundAmount,
+          "suggestion_stake_refund",
+          `팬 제안 공감 5개 달성 · 등록 포인트 환급 · ${target.title}`,
+          false
+        );
+      }
+      if (result.bonusAmount > 0) {
+        addPoints(result.bonusAmount, "suggestion_like_reward", `팬 제안 공감 보상 · ${target.title}`);
+      }
+    }
   };
 
   const redeemReward: AppState["redeemReward"] = (rewardId) => {
@@ -442,7 +483,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       verifyAttendance,
 
       suggestions,
-      likedSuggestionIds,
       submitSuggestion,
       likeSuggestion,
 
@@ -473,7 +513,6 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       completedSurveyIds,
       verifiedMatchIds,
       suggestions,
-      likedSuggestionIds,
       redemptions,
       popupCampaign,
       popupLastDismissedDate,

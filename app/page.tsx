@@ -110,7 +110,7 @@ export default function Home() {
           <div className="panel quickCard">
             <span className="eyebrowSmall">팬 제안</span>
             <p className="quickTitle">바꾸고 싶은 부분이 있나요?</p>
-            <p className="muted">제안 작성 시 +30 P:POINT, 구단이 직접 검토하고 답합니다.</p>
+            <p className="muted">10 P:POINT로 제안을 등록하고, 공감을 받으면 포인트를 돌려받아요.</p>
             <div className="quickActions">
               <Link href="/suggestions" className="primaryBtn">
                 팬 제안 남기기

@@ -82,7 +82,9 @@ const TX_LABELS: Record<string, string> = {
   cheer: "응원하기",
   cheer_message: "응원 메시지",
   survey: "설문 참여",
-  suggestion: "팬 제안 작성",
+  suggestion_stake: "팬 제안 등록",
+  suggestion_stake_refund: "공감 보상 환급",
+  suggestion_like_reward: "공감 보상",
   attendance: "직관 인증",
   referral: "추천인 코드",
   redeem: "포인트 사용",
@@ -95,6 +97,7 @@ export default function AdminPage() {
   const [period, setPeriod] = useState<Period>("week");
   const [tab, setTab] = useState<TabKey>("dashboard");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [suggestionSort, setSuggestionSort] = useState<"popular" | "latest">("popular");
 
   const kpi = periodKpis[period];
 
@@ -107,8 +110,16 @@ export default function AdminPage() {
     count: suggestions.filter((v) => v.clubStatus === s).length,
   }));
 
-  const recentSuggestions = useMemo(
-    () => [...suggestions].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)),
+  const sortedSuggestions = useMemo(
+    () =>
+      [...suggestions].sort((a, b) =>
+        suggestionSort === "popular" ? b.likes - a.likes : a.createdAt < b.createdAt ? 1 : -1
+      ),
+    [suggestions, suggestionSort]
+  );
+
+  const topSuggestions = useMemo(
+    () => [...suggestions].sort((a, b) => b.likes - a.likes).slice(0, 3),
     [suggestions]
   );
 
@@ -171,6 +182,21 @@ export default function AdminPage() {
               <b>{kpi.redemptions.toLocaleString()}</b>
             </div>
           </div>
+
+          <section className="panel">
+            <div className="sectionHead">
+              <h2>이번 주 가장 많이 공감받은 제안</h2>
+            </div>
+            <div className="rankList" style={{ marginTop: 10 }}>
+              {topSuggestions.map((v, i) => (
+                <div key={v.id}>
+                  <b>{i + 1}</b>
+                  <span>{v.title}</span>
+                  <strong>공감 {v.likes}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {todaySurvey && (
             <section className="panel">
@@ -395,6 +421,20 @@ export default function AdminPage() {
         <section className="panel">
           <div className="sectionHead">
             <h2>전체 팬 제안</h2>
+            <div className="sortToggle">
+              <button
+                className={suggestionSort === "popular" ? "isActive" : ""}
+                onClick={() => setSuggestionSort("popular")}
+              >
+                공감 많은순
+              </button>
+              <button
+                className={suggestionSort === "latest" ? "isActive" : ""}
+                onClick={() => setSuggestionSort("latest")}
+              >
+                최신순
+              </button>
+            </div>
           </div>
           <div className="tableWrap">
             <table className="adminTable">
@@ -408,7 +448,7 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody>
-                {recentSuggestions.map((v) => (
+                {sortedSuggestions.map((v) => (
                   <tr key={v.id}>
                     <td>{v.category}</td>
                     <td>{v.title}</td>

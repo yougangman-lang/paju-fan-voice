@@ -22,7 +22,9 @@ export type PointTransactionType =
   | "cheer"
   | "cheer_message"
   | "survey"
-  | "suggestion"
+  | "suggestion_stake"
+  | "suggestion_stake_refund"
+  | "suggestion_like_reward"
   | "attendance"
   | "referral"
   | "redeem";
@@ -102,8 +104,13 @@ export type FanSuggestion = {
   title: string;
   content: string;
   author: string;
+  authorId: string;
   authorTier: Tier;
   likes: number;
+  likedByUserIds: string[];
+  stakeRefunded: boolean;
+  rewardedLikeCount: number;
+  likeRewardEarned: number;
   clubStatus: SuggestionStatus;
   clubResponse?: ClubResponse;
   createdAt: string;

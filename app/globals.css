@@ -354,6 +354,13 @@ button:disabled {
   color: var(--blue);
 }
 
+.errorText {
+  color: var(--bad);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+}
+
 .statusChip[data-status="검토중"] {
   background: var(--soft);
   color: var(--blue);
@@ -416,6 +423,10 @@ button:disabled {
   color: #9c3563;
 }
 
+.likeBtn:disabled {
+  cursor: default;
+}
+
 /* ---------- board list (voices) ---------- */
 .board {
   display: flex;
@@ -466,6 +477,33 @@ button:disabled {
   color: var(--muted);
   line-height: 1.6;
   margin-top: 4px;
+}
+
+.boardAuthorRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.boardLikesCount {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-top: 8px;
+}
+
+.boardEarned {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--cosmos-pink-strong);
+  background: var(--soft);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-top: 6px;
 }
 
 .boardFoot {
