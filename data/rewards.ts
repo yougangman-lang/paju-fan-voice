@@ -44,6 +44,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 40,
     stock: -1,
     isRaffle: false,
+    image: "/shop/kids-cushion.png",
   },
   {
     id: "r-fm-2",
