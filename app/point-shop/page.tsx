@@ -75,8 +75,14 @@ export default function PointShopPage() {
           const disabled = soldOut || pointBalance < item.pointCost;
           return (
             <div className="panel shopCard" key={item.id}>
-              <div className="shopThumb" aria-hidden>
-                {item.title.slice(0, 1)}
+              <div className="shopThumb">
+                {item.image ? (
+                  <img src={item.image} alt={item.title} />
+                ) : (
+                  <span className="shopThumbFallback" aria-hidden>
+                    {item.title.slice(0, 1)}
+                  </span>
+                )}
               </div>
               {item.isRaffle && <span className="tag" style={{ width: "fit-content" }}>응모권</span>}
               <p className="boardTitle" style={{ marginTop: 8 }}>

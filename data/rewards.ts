@@ -12,6 +12,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 100,
     stock: -1,
     isRaffle: false,
+    image: "/shop/fnb-5000-coupon.png",
   },
   {
     id: "r-md-2",
@@ -21,6 +22,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 180,
     stock: -1,
     isRaffle: false,
+    image: "/shop/fnb-10000-coupon.png",
   },
   {
     id: "r-md-3",
@@ -30,6 +32,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 150,
     stock: -1,
     isRaffle: false,
+    image: "/shop/md-10percent-coupon.png",
   },
 
   // FAMILY
@@ -50,6 +53,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 50,
     stock: -1,
     isRaffle: false,
+    image: "/shop/kids-earmuffs.png",
   },
   {
     id: "r-fm-3",
@@ -59,6 +63,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 50,
     stock: -1,
     isRaffle: false,
+    image: "/shop/blanket-rental.png",
   },
   {
     id: "r-fm-4",
@@ -68,6 +73,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 100,
     stock: 40,
     isRaffle: true,
+    image: "/shop/family-event-priority.png",
   },
 
   // EXPERIENCE
@@ -79,6 +85,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 150,
     stock: 30,
     isRaffle: true,
+    image: "/shop/autograph-session.png",
   },
   {
     id: "r-ex-2",
@@ -88,6 +95,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 180,
     stock: 20,
     isRaffle: true,
+    image: "/shop/stadium-tour.png",
   },
   {
     id: "r-ex-3",
@@ -97,6 +105,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 200,
     stock: 20,
     isRaffle: true,
+    image: "/shop/home-match-event.png",
   },
   {
     id: "r-ex-4",
@@ -106,6 +115,7 @@ export const rewardItems: RewardItem[] = [
     pointCost: 250,
     stock: 10,
     isRaffle: true,
+    image: "/shop/escort-kids.png",
   },
 
   // GOODS

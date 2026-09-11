@@ -130,6 +130,7 @@ export type RewardItem = {
   category: RewardCategory;
   title: string;
   description: string;
+  image?: string;
   pointCost: number;
   stock: number; // -1 = 무제한
   isRaffle: boolean; // true면 "응모권" 구조(즉시 구매 아님)
