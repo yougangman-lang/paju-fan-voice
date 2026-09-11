@@ -5,16 +5,7 @@ import { useAppState } from "@/lib/store";
 import { nextMatch } from "@/data/matches";
 import { cosmosContent } from "@/data/content";
 import { officialChannels } from "@/data/channels";
-import { sponsors } from "@/data/sponsors";
 import YouTubeIcon from "@/components/YouTubeIcon";
-import type { SponsorCategory } from "@/data/types";
-
-const sponsorGroups: { category: SponsorCategory; label: string }[] = [
-  { category: "MAIN", label: "MAIN" },
-  { category: "KIT", label: "KIT" },
-  { category: "MEDICAL", label: "MEDICAL" },
-  { category: "OFFICIAL", label: "OFFICIAL" },
-];
 
 function formatMatchDate(dateStr: string) {
   const d = new Date(`${dateStr}T00:00:00`);
@@ -169,25 +160,11 @@ export default function Home() {
 
       {/* SPONSORS */}
       <section>
-        <div className="sectionHead">
-          <h2>SPONSORS</h2>
-        </div>
-        <div className="sponsorGrid">
-          {sponsorGroups.map((g) => (
-            <div key={g.category} className="sponsorGroup">
-              <span className="sponsorGroupLabel">{g.label}</span>
-              <div className="sponsorTiles">
-                {sponsors
-                  .filter((s) => s.category === g.category)
-                  .map((s) => (
-                    <div className="sponsorTile" key={s.id}>
-                      {s.name}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <img
+          src="/sponsors/paju-sponsors-official.png"
+          alt="파주 프런티어FC 공식 스폰서"
+          className="sponsorsImage"
+        />
       </section>
     </div>
   );

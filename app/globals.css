@@ -1240,40 +1240,11 @@ button:disabled {
   border-color: var(--navy);
 }
 
-.sponsorGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-
-.sponsorGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.sponsorGroupLabel {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-}
-
-.sponsorTiles {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.sponsorTile {
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 12px 10px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--muted);
-  text-align: center;
-  background: #fff;
+.sponsorsImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ---------- survey detail ---------- */
@@ -1627,9 +1598,6 @@ button:disabled {
   .shopGrid {
     grid-template-columns: 1fr;
   }
-  .sponsorGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .metrics {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1676,9 +1644,6 @@ button:disabled {
   }
   .navRight {
     gap: 8px;
-  }
-  .sponsorGrid {
-    grid-template-columns: 1fr;
   }
   .matchActions {
     flex-direction: column;

@@ -145,14 +145,6 @@ export type PopupCampaign = {
   ctaHref: string;
 };
 
-export type SponsorCategory = "MAIN" | "KIT" | "MEDICAL" | "OFFICIAL";
-
-export type Sponsor = {
-  id: string;
-  category: SponsorCategory;
-  name: string;
-};
-
 export type ContentPlatform = "YouTube";
 
 export type ContentItem = {
