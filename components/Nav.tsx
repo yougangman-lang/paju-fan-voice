@@ -20,7 +20,7 @@ export default function Nav() {
   return (
     <header className="topbar">
       <Link href="/" className="brand">
-        <div className="brandMark">PF</div>
+        <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="brandCrest" />
         <div>
           <strong>PAJU FAN VOICE</strong>
           <span>파주 프런티어FC 팬 참여 플랫폼</span>

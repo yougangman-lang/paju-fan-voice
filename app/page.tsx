@@ -38,7 +38,10 @@ export default function Home() {
           <span className="matchLabel">NEXT MATCH</span>
         </div>
         <div className="matchTeams">
-          <span className="matchTeam">파주 프런티어FC</span>
+          <span className="matchTeamHome">
+            <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="matchCrest" />
+            파주 프런티어FC
+          </span>
           <span className="matchVs">VS</span>
           <span className="matchTeam">{nextMatch.opponent}</span>
         </div>

@@ -40,11 +40,12 @@ export default function LoginPage() {
 
   return (
     <div className="authCard">
-      <Link href="/" className="brand" style={{ justifyContent: "center", marginBottom: 22 }}>
-        <div className="brandMark">PF</div>
-        <div>
-          <strong>PAJU FAN VOICE</strong>
-        </div>
+      <Link
+        href="/"
+        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginBottom: 22 }}
+      >
+        <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="loginCrest" />
+        <strong>PAJU FAN VOICE</strong>
       </Link>
 
       {step === "choose" ? (

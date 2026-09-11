@@ -1,9 +1,10 @@
 /* ---------- tokens ---------- */
 :root {
-  --navy: #0d2f66;
-  --navy-deep: #081c3f;
-  --blue: #1a56b0;
-  --pink: #d1487f;
+  /* 공식 엠블럼(public/branding/paju-frontier-crest.png) 색상에 맞춘 브랜드 팔레트 */
+  --navy: #283188;
+  --navy-deep: #1a2058;
+  --blue: #4854c9;
+  --pink: #de337d;
   --orange: #ff8a3d;
   --ink: #142033;
   --muted: #6b7688;
@@ -103,15 +104,10 @@ p {
   align-items: center;
 }
 
-.brandMark {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--navy), var(--blue));
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
+.brandCrest {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
   flex: none;
 }
 
@@ -179,7 +175,7 @@ p {
 
 /* ---------- hero ---------- */
 .hero {
-  background: linear-gradient(120deg, var(--navy-deep), #123465 55%, var(--navy));
+  background: linear-gradient(120deg, var(--navy-deep), #222a75 55%, var(--navy));
   color: #fff;
   border-radius: 18px;
   padding: 50px;
@@ -843,16 +839,11 @@ button:disabled {
   align-items: center;
 }
 
-.adminBrandMark {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2e5cb8, #2f7a9e);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 13px;
+.adminBrandCrest {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  flex: none;
 }
 
 .adminBrand strong {
@@ -1045,7 +1036,7 @@ button:disabled {
 
 /* ---------- home: next match ---------- */
 .matchCard {
-  background: linear-gradient(120deg, var(--navy-deep), #123465 55%, var(--navy));
+  background: linear-gradient(120deg, var(--navy-deep), #222a75 55%, var(--navy));
   color: #fff;
   border-radius: 18px;
   padding: 30px 34px;
@@ -1081,6 +1072,21 @@ button:disabled {
 .matchTeam {
   font-size: 24px;
   font-weight: 800;
+}
+
+.matchTeamHome {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.matchCrest {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  flex: none;
 }
 
 .matchVs {
@@ -1354,6 +1360,12 @@ button:disabled {
   margin: 80px auto;
 }
 
+.loginCrest {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+}
+
 .oauthBtn {
   width: 100%;
   padding: 13px 16px;
@@ -1592,8 +1604,16 @@ button:disabled {
   .matchCard {
     padding: 26px 22px;
   }
-  .matchTeams {
+  .matchTeams,
+  .matchTeamHome,
+  .matchTeam {
     font-size: 19px;
+  }
+  .matchCrest {
+    height: 42px;
+  }
+  .brandCrest {
+    height: 36px;
   }
   .shell,
   .adminShell {

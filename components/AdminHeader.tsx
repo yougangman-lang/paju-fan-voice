@@ -9,7 +9,7 @@ export default function AdminHeader() {
   return (
     <header className="adminTopbar">
       <Link href="/admin" className="adminBrand">
-        <div className="adminBrandMark">PF</div>
+        <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="adminBrandCrest" />
         <div>
           <strong>PAJU FAN VOICE</strong>
           <span>CLUB ADMIN CONSOLE</span>
