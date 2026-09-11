@@ -1,9 +1,14 @@
 /* ---------- tokens ---------- */
 :root {
-  --navy: #0d2f66;
-  --navy-deep: #081c3f;
-  --blue: #1a56b0;
-  --pink: #d1487f;
+  /* 공식 엠블럼(public/branding/paju-frontier-crest.png) 색상에 맞춘 브랜드 팔레트 */
+  --navy: #283188;
+  --navy-deep: #1a2058;
+  --blue: #4854c9;
+  /* 공식 Cosmos Pink: 큰 면적 accent, 배경, active underline, COSMOS 등급,
+     장식 라인 등 브랜드 정체성이 드러나야 하는 곳에 사용 */
+  --cosmos-pink: #ee97bd;
+  /* 흰 배경 위 작은 텍스트·버튼처럼 공식 핑크로는 대비가 부족한 곳에만 사용 */
+  --cosmos-pink-strong: #de337d;
   --orange: #ff8a3d;
   --ink: #142033;
   --muted: #6b7688;
@@ -103,15 +108,10 @@ p {
   align-items: center;
 }
 
-.brandMark {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--navy), var(--blue));
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
+.brandCrest {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
   flex: none;
 }
 
@@ -127,10 +127,11 @@ p {
 
 .topbar nav {
   display: flex;
-  gap: 26px;
-  font-size: 14.5px;
+  gap: 18px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .topbar nav a {
@@ -145,7 +146,7 @@ p {
 
 .topbar nav a.navActive {
   color: var(--navy);
-  border-bottom-color: var(--pink);
+  border-bottom-color: var(--cosmos-pink);
 }
 
 .navRight {
@@ -178,7 +179,7 @@ p {
 
 /* ---------- hero ---------- */
 .hero {
-  background: linear-gradient(120deg, var(--navy-deep), #123465 55%, var(--navy));
+  background: linear-gradient(120deg, var(--navy-deep), #222a75 55%, var(--navy));
   color: #fff;
   border-radius: 18px;
   padding: 50px;
@@ -353,6 +354,13 @@ button:disabled {
   color: var(--blue);
 }
 
+.errorText {
+  color: var(--bad);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+}
+
 .statusChip[data-status="검토중"] {
   background: var(--soft);
   color: var(--blue);
@@ -405,7 +413,7 @@ button:disabled {
 .likeBtn {
   border: none;
   background: none;
-  color: var(--pink);
+  color: var(--cosmos-pink-strong);
   font-weight: 700;
   padding: 0;
   font-size: 13px;
@@ -413,6 +421,10 @@ button:disabled {
 
 .likeBtn.isLiked {
   color: #9c3563;
+}
+
+.likeBtn:disabled {
+  cursor: default;
 }
 
 /* ---------- board list (voices) ---------- */
@@ -448,7 +460,7 @@ button:disabled {
 }
 
 .hotLabel {
-  color: var(--pink);
+  color: var(--cosmos-pink-strong);
   font-weight: 800;
 }
 
@@ -465,6 +477,33 @@ button:disabled {
   color: var(--muted);
   line-height: 1.6;
   margin-top: 4px;
+}
+
+.boardAuthorRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.boardLikesCount {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-top: 8px;
+}
+
+.boardEarned {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--cosmos-pink-strong);
+  background: var(--soft);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-top: 6px;
 }
 
 .boardFoot {
@@ -842,16 +881,11 @@ button:disabled {
   align-items: center;
 }
 
-.adminBrandMark {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2e5cb8, #2f7a9e);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 13px;
+.adminBrandCrest {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  flex: none;
 }
 
 .adminBrand strong {
@@ -1028,9 +1062,579 @@ button:disabled {
   background: #f7f9fd;
 }
 
+/* ---------- nav: login link ---------- */
+.loginLink {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--navy);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 12px;
+}
+
+.loginLink:hover {
+  border-color: var(--navy);
+}
+
+/* ---------- home: next match ---------- */
+.matchCard {
+  background: linear-gradient(120deg, var(--navy-deep), #222a75 55%, var(--navy));
+  color: #fff;
+  border-radius: 18px;
+  padding: 30px 34px;
+}
+
+.matchTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.matchComp {
+  color: #9fc1ef;
+}
+
+.matchLabel {
+  color: var(--cosmos-pink);
+}
+
+.matchTeams {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 24px;
+  font-weight: 800;
+  flex-wrap: wrap;
+}
+
+.matchTeam {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.matchTeamHome {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.matchCrest {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  flex: none;
+}
+
+.matchVs {
+  color: #9fc1ef;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.matchMeta {
+  margin-top: 10px;
+  color: #d3dcec;
+  font-size: 13.5px;
+}
+
+.matchActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.ghostBtnNavy {
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+/* ---------- home: survey teaser ---------- */
+.surveyTeaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.surveyTeaserTitle {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ---------- home: quick actions ---------- */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.quickCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrowSmall {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+.quickTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.quickActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.quickLink {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--blue);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* ---------- home: cosmos content / channels / sponsors ---------- */
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.contentCard {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.12s ease;
+}
+
+.contentCard:hover {
+  border-color: var(--navy);
+}
+
+.contentThumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.contentCardBody {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+}
+
+.contentCardTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.channelRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.channelPill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  background: #fff;
+}
+
+.channelPill:hover {
+  border-color: var(--navy);
+}
+
+.sponsorsImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ---------- survey detail ---------- */
+.optionList button.isPicked {
+  border-color: var(--navy);
+  background: var(--soft);
+  font-weight: 700;
+}
+
+.completePanel {
+  text-align: center;
+  padding: 44px 24px;
+}
+
+.completeTitle {
+  display: block;
+  font-size: 18px;
+}
+
+.completePoint {
+  color: var(--cosmos-pink-strong);
+  font-weight: 800;
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+.simNotice {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 14px;
+}
+
+.verifyForm {
+  margin-top: 4px;
+}
+
+/* ---------- point shop ---------- */
+.shopBalance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--soft);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.shopBalance span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.shopBalance b {
+  font-size: 18px;
+  color: var(--navy);
+}
+
+.shopGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.shopCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.shopThumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.shopThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.shopThumbFallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: var(--blue);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.shopFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.shopPrice {
+  color: var(--navy);
+  font-size: 15px;
+}
+
+.shopFeedback {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--good);
+  font-weight: 600;
+}
+
+/* ---------- auth (login) ---------- */
+.authShell {
+  width: min(420px, 92vw);
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+.authCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 34px 30px;
+  width: min(420px, 92vw);
+  margin: 80px auto;
+}
+
+.loginCrest {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+}
+
+.oauthBtn {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+}
+
+.oauthBtn:hover {
+  border-color: var(--navy);
+}
+
+.adminLoginCard {
+  background: #0a1730;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.adminLoginInput {
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.adminLoginInput::placeholder {
+  color: #8ea3cc;
+}
+
+/* ---------- mypage: tier ---------- */
+.tierRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tierName {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.tierProgress {
+  margin-top: 14px;
+}
+
+/* ---------- fan popup ---------- */
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 16, 34, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+
+.popupCard {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 26px;
+  width: min(380px, 100%);
+}
+
+.popupClose {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.popupTitle {
+  display: block;
+  font-size: 17px;
+  color: var(--navy);
+}
+
+.popupDesc {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.popupActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.popupActions .primaryBtn {
+  text-align: center;
+}
+
+.popupDismiss {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 12.5px;
+  padding: 6px;
+}
+
+/* ---------- admin: tabs / tables / insight ---------- */
+.adminTabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+}
+
+.adminTabs button {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+.adminTabs button.isActive {
+  color: #0a1730;
+  border-bottom-color: var(--navy);
+}
+
+.categoryAnalysisRow {
+  display: grid;
+  grid-template-columns: 110px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  text-align: left;
+  color: var(--ink);
+}
+
+.categoryAnalysisRow .bar {
+  margin-top: 0;
+}
+
+.keywordTags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.keywordTag {
+  background: var(--soft);
+  color: var(--blue);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.insightCard {
+  border-left: 3px solid var(--cosmos-pink);
+}
+
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 14px;
+}
+
+.adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.adminTable th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 700;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.adminTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.popupFieldLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
-  .grid3 {
+  .grid3,
+  .contentGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -1039,11 +1643,13 @@ button:disabled {
   .topbar nav {
     display: none;
   }
-  .hero,
   .grid2,
   .grid3,
   .voiceLayout,
-  .profileGrid {
+  .profileGrid,
+  .quickGrid,
+  .contentGrid,
+  .shopGrid {
     grid-template-columns: 1fr;
   }
   .metrics {
@@ -1052,11 +1658,19 @@ button:disabled {
   .compose {
     position: static;
   }
-  .hero {
-    padding: 34px 24px;
+  .matchCard {
+    padding: 26px 22px;
   }
-  .hero h1 {
-    font-size: 28px;
+  .matchTeams,
+  .matchTeamHome,
+  .matchTeam {
+    font-size: 19px;
+  }
+  .matchCrest {
+    height: 42px;
+  }
+  .brandCrest {
+    height: 36px;
   }
   .shell,
   .adminShell {
@@ -1084,5 +1698,13 @@ button:disabled {
   }
   .navRight {
     gap: 8px;
+  }
+  .matchActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .matchActions a,
+  .matchActions button {
+    text-align: center;
   }
 }
