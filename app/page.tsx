@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useAppState } from "@/lib/store";
-import { nextMatch } from "@/data/matches";
+import { nextMatch, nextMatchPreview } from "@/data/matches";
 import { cosmosContent } from "@/data/content";
 import { officialChannels } from "@/data/channels";
 import YouTubeIcon from "@/components/YouTubeIcon";
+import MatchInfoModal from "@/components/MatchInfoModal";
 
 function formatMatchDate(dateStr: string) {
   const d = new Date(`${dateStr}T00:00:00`);
@@ -15,6 +17,7 @@ function formatMatchDate(dateStr: string) {
 
 export default function Home() {
   const { isLoggedIn, surveys, isSurveyCompleted, cheer, hasCheeredToday } = useAppState();
+  const [showMatchInfo, setShowMatchInfo] = useState(false);
 
   const surveyContext = nextMatch.isToday ? nextMatch.homeAway : "NON_MATCHDAY";
   const todaySurvey =
@@ -47,9 +50,9 @@ export default function Home() {
           {nextMatch.homeAway === "HOME" ? " · HOME" : " · AWAY"}
         </div>
         <div className="matchActions">
-          <Link className="ghostBtnNavy" href="/fanzone">
+          <button className="ghostBtnNavy" onClick={() => setShowMatchInfo(true)}>
             경기 정보
-          </Link>
+          </button>
           <a className="ghostBtnNavy" href="#" onClick={(e) => e.preventDefault()}>
             티켓 예매
           </a>
@@ -60,6 +63,14 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {showMatchInfo && (
+        <MatchInfoModal
+          match={nextMatch}
+          preview={nextMatchPreview}
+          onClose={() => setShowMatchInfo(false)}
+        />
+      )}
 
       {/* 오늘의 설문 */}
       {todaySurvey && (
@@ -114,8 +125,8 @@ export default function Home() {
           </div>
           <div className="panel quickCard">
             <span className="eyebrowSmall">팬 제안</span>
-            <p className="quickTitle">바꾸고 싶은 부분이 있나요?</p>
-            <p className="muted">10 P:POINT로 제안을 등록하고, 공감을 받으면 포인트를 돌려받아요.</p>
+            <p className="quickTitle">파주에서의 경험을 들려주세요.</p>
+            <p className="muted">경기장 운영부터 팬서비스까지, 팬의 생각을 함께 모아 더 나은 경험을 만들어갑니다.</p>
             <div className="quickActions">
               <Link href="/suggestions" className="primaryBtn">
                 팬 제안 남기기

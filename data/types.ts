@@ -52,6 +52,21 @@ export type Match = {
   isToday: boolean;
 };
 
+export type TeamMatchStats = {
+  name: string;
+  crest: string;
+  rank: number;
+  points: number;
+  record: string; // 예: "7승 5무 12패"
+  avgGoalsFor: number;
+  avgGoalsAgainst: number;
+};
+
+export type MatchPreview = {
+  home: TeamMatchStats;
+  away: TeamMatchStats;
+};
+
 export type SurveyContext = "HOME" | "AWAY" | "NON_MATCHDAY";
 
 export type SurveyOption = {

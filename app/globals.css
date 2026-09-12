@@ -1552,6 +1552,100 @@ button:disabled {
   padding: 6px;
 }
 
+/* ---------- match info modal ---------- */
+.matchInfoModal {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 24px 22px;
+  width: min(460px, 100%);
+}
+
+.matchInfoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.matchInfoTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  flex: 1;
+}
+
+.matchInfoCrest {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.matchInfoVs {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--cosmos-pink-strong);
+  flex: none;
+  padding: 0 6px;
+}
+
+.matchInfoMeta {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.matchInfoCompareWrap {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.matchInfoCompare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.matchInfoCompare th {
+  color: var(--navy);
+  font-size: 12.5px;
+  font-weight: 800;
+  padding-bottom: 8px;
+  width: 38%;
+}
+
+.matchInfoCompare td {
+  text-align: center;
+  padding: 7px 4px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.matchInfoCompare tr:not(:last-child) td {
+  border-bottom: 1px solid var(--line);
+}
+
+.matchInfoMetric {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  width: 24%;
+}
+
+.matchInfoFootnote {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
 /* ---------- admin: tabs / tables / insight ---------- */
 .adminTabs {
   display: flex;
@@ -1721,5 +1815,20 @@ button:disabled {
   .matchActions a,
   .matchActions button {
     text-align: center;
+  }
+  .matchInfoModal {
+    padding: 24px 16px 18px;
+  }
+  .matchInfoCrest {
+    height: 38px;
+  }
+  .matchInfoTeam {
+    font-size: 12.5px;
+  }
+  .matchInfoCompare {
+    font-size: 11.5px;
+  }
+  .matchInfoCompare td {
+    padding: 7px 2px;
   }
 }
