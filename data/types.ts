@@ -131,6 +131,7 @@ export type RewardItem = {
   title: string;
   description: string;
   image?: string;
+  onlineShopPrice?: number; // 실제 온라인샵 판매가(원). 있으면 상품 카드에 보조 정보로 표시.
   pointCost: number;
   stock: number; // -1 = 무제한
   isRaffle: boolean; // true면 "응모권" 구조(즉시 구매 아님)
