@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAppState } from "@/lib/store";
 import { nextMatch, nextMatchPreview } from "@/data/matches";
@@ -8,6 +8,7 @@ import { cosmosContent } from "@/data/content";
 import { officialChannels } from "@/data/channels";
 import YouTubeIcon from "@/components/YouTubeIcon";
 import MatchInfoModal from "@/components/MatchInfoModal";
+import Toast from "@/components/Toast";
 
 function formatMatchDate(dateStr: string) {
   const d = new Date(`${dateStr}T00:00:00`);
@@ -18,6 +19,21 @@ function formatMatchDate(dateStr: string) {
 export default function Home() {
   const { isLoggedIn, surveys, isSurveyCompleted, cheer, hasCheeredToday } = useAppState();
   const [showMatchInfo, setShowMatchInfo] = useState(false);
+  const [showTicketToast, setShowTicketToast] = useState(false);
+  const ticketToastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (ticketToastTimer.current) clearTimeout(ticketToastTimer.current);
+    };
+  }, []);
+
+  const handleTicketClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowTicketToast(true);
+    if (ticketToastTimer.current) clearTimeout(ticketToastTimer.current);
+    ticketToastTimer.current = setTimeout(() => setShowTicketToast(false), 2400);
+  };
 
   const surveyContext = nextMatch.isToday ? nextMatch.homeAway : "NON_MATCHDAY";
   const todaySurvey =
@@ -53,7 +69,7 @@ export default function Home() {
           <button className="ghostBtnNavy" onClick={() => setShowMatchInfo(true)}>
             경기 정보
           </button>
-          <a className="ghostBtnNavy" href="#" onClick={(e) => e.preventDefault()}>
+          <a className="ghostBtnNavy" href="#" onClick={handleTicketClick}>
             티켓 예매
           </a>
           {nextMatch.isToday && (
@@ -182,6 +198,8 @@ export default function Home() {
           className="sponsorsImage"
         />
       </section>
+
+      {showTicketToast && <Toast message="티켓 예매 기능은 준비 중입니다." />}
     </div>
   );
 }

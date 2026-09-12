@@ -1552,6 +1552,31 @@ button:disabled {
   padding: 6px;
 }
 
+/* ---------- toast ---------- */
+.toastWrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  display: flex;
+  justify-content: center;
+  z-index: 80;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--navy-deep);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(8, 16, 34, 0.28);
+  max-width: 100%;
+  text-align: center;
+}
+
 /* ---------- match info modal ---------- */
 .matchInfoModal {
   position: relative;
