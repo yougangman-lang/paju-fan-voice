@@ -35,7 +35,12 @@ export default function Home() {
             파주 프런티어FC
           </span>
           <span className="matchVs">VS</span>
-          <span className="matchTeam">{nextMatch.opponent}</span>
+          <span className="matchTeam matchTeamAway">
+            {nextMatch.opponent}
+            {nextMatch.opponentCrest && (
+              <img src={nextMatch.opponentCrest} alt={`${nextMatch.opponent} 엠블럼`} className="matchCrest" />
+            )}
+          </span>
         </div>
         <div className="matchMeta">
           {formatMatchDate(nextMatch.date)} {nextMatch.time} · {nextMatch.venue}

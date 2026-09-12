@@ -43,6 +43,7 @@ export type Match = {
   id: string;
   competition: string;
   opponent: string;
+  opponentCrest?: string;
   homeAway: HomeAway;
   venue: string;
   date: string; // ISO date

@@ -24,12 +24,13 @@ export const surveys: Survey[] = [
       },
       {
         id: "s-home-1-q2",
-        text: "오늘 새롭게 운영한 푸드트럭에서 가장 개선이 필요한 부분은?",
+        text: "오늘 푸드트럭 이용에서 가장 개선이 필요하다고 느낀 부분은 무엇인가요?",
         options: [
           { id: "o1", label: "메뉴 다양성", votes: 42 },
           { id: "o2", label: "대기 시간", votes: 96 },
           { id: "o3", label: "가격", votes: 38 },
-          { id: "o4", label: "위생/청결", votes: 15 },
+          { id: "o4", label: "위생·청결", votes: 15 },
+          { id: "o5", label: "설치 위치 및 주변 안전(간접흡연·차량 통행)", votes: 27 },
         ],
       },
       {
