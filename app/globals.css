@@ -1139,6 +1139,14 @@ button:disabled {
   flex: none;
 }
 
+.matchCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
 .matchVs {
   color: #9fc1ef;
   font-size: 14px;
@@ -1146,9 +1154,11 @@ button:disabled {
 }
 
 .matchMeta {
-  margin-top: 10px;
   color: #d3dcec;
-  font-size: 13.5px;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .matchActions {
@@ -1802,6 +1812,10 @@ button:disabled {
   }
   .matchCrest {
     height: 42px;
+  }
+  .matchMeta {
+    white-space: normal;
+    font-size: 12px;
   }
   .brandCrest {
     height: 36px;

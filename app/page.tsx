@@ -53,17 +53,19 @@ export default function Home() {
             <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="matchCrest" />
             파주 프런티어FC
           </span>
-          <span className="matchVs">VS</span>
+          <div className="matchCenter">
+            <span className="matchVs">VS</span>
+            <p className="matchMeta">
+              {formatMatchDate(nextMatch.date)} {nextMatch.time} · {nextMatch.venue}
+              {nextMatch.homeAway === "HOME" ? " · HOME" : " · AWAY"}
+            </p>
+          </div>
           <span className="matchTeam matchTeamAway">
             {nextMatch.opponent}
             {nextMatch.opponentCrest && (
               <img src={nextMatch.opponentCrest} alt={`${nextMatch.opponent} 엠블럼`} className="matchCrest" />
             )}
           </span>
-        </div>
-        <div className="matchMeta">
-          {formatMatchDate(nextMatch.date)} {nextMatch.time} · {nextMatch.venue}
-          {nextMatch.homeAway === "HOME" ? " · HOME" : " · AWAY"}
         </div>
         <div className="matchActions">
           <button className="ghostBtnNavy" onClick={() => setShowMatchInfo(true)}>
