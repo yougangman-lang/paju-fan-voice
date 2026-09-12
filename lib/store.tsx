@@ -135,6 +135,34 @@ function loadPersisted(): Partial<Persisted> | null {
   }
 }
 
+// 설문 문항/선택지 "정의"는 언제나 최신 코드(data/surveys.ts)를 기준으로 삼는다.
+// localStorage에는 과거에 저장된 설문 구조가 그대로 남아있을 수 있어, 문항 텍스트나
+// 선택지 목록이 바뀌어도 사용자 브라우저에는 예전 버전이 영구히 고정되는 문제가
+// 있었다. votes(응답 집계)만 question/option id를 기준으로 이어받고, 문항 텍스트·
+// 선택지 구성·개수는 항상 코드 쪽 정의를 사용한다.
+function mergeSurveys(base: Survey[], saved?: Survey[]): Survey[] {
+  if (!saved) return base;
+  const savedSurveyById = new Map(saved.map((s) => [s.id, s]));
+  return base.map((survey) => {
+    const savedSurvey = savedSurveyById.get(survey.id);
+    if (!savedSurvey) return survey;
+    const savedVotesByKey = new Map<string, number>();
+    savedSurvey.questions.forEach((q) => {
+      q.options.forEach((o) => savedVotesByKey.set(`${q.id}:${o.id}`, o.votes));
+    });
+    return {
+      ...survey,
+      questions: survey.questions.map((q) => ({
+        ...q,
+        options: q.options.map((o) => {
+          const savedVotes = savedVotesByKey.get(`${q.id}:${o.id}`);
+          return savedVotes !== undefined ? { ...o, votes: savedVotes } : o;
+        }),
+      })),
+    };
+  });
+}
+
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -185,7 +213,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       if (saved.lastCheerDate !== undefined) setLastCheerDate(saved.lastCheerDate);
       if (saved.lastCheerMessageDate !== undefined) setLastCheerMessageDate(saved.lastCheerMessageDate);
       if (saved.cheerMessages) setCheerMessages(saved.cheerMessages);
-      if (saved.surveys) setSurveys(saved.surveys);
+      setSurveys(mergeSurveys(initialSurveys, saved.surveys));
       if (saved.completedSurveyIds) setCompletedSurveyIds(saved.completedSurveyIds);
       if (saved.verifiedMatchIds) setVerifiedMatchIds(saved.verifiedMatchIds);
       if (saved.suggestions) setSuggestions(saved.suggestions);
