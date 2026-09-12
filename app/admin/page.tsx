@@ -519,6 +519,7 @@ export default function AdminPage() {
                     <th>카테고리</th>
                     <th>상품명</th>
                     <th>필요 포인트</th>
+                    <th>온라인샵 실제가</th>
                     <th>재고</th>
                     <th>구조</th>
                   </tr>
@@ -529,6 +530,7 @@ export default function AdminPage() {
                       <td>{r.category}</td>
                       <td>{r.title}</td>
                       <td>{r.pointCost}P</td>
+                      <td>{r.onlineShopPrice ? `${r.onlineShopPrice.toLocaleString()}원` : "-"}</td>
                       <td>{r.stock === -1 ? "무제한" : r.stock}</td>
                       <td>{r.isRaffle ? "응모권" : "즉시 교환"}</td>
                     </tr>

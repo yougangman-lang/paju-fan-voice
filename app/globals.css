@@ -1104,6 +1104,7 @@ button:disabled {
 .matchTeams {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
   margin-top: 16px;
   font-size: 24px;
@@ -1112,6 +1113,9 @@ button:disabled {
 }
 
 .matchTeam {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-size: 24px;
   font-weight: 800;
 }
@@ -1124,10 +1128,22 @@ button:disabled {
   font-weight: 800;
 }
 
+.matchTeamAway {
+  flex-direction: row-reverse;
+}
+
 .matchCrest {
   height: 60px;
   width: auto;
   object-fit: contain;
+  flex: none;
+}
+
+.matchCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   flex: none;
 }
 
@@ -1138,9 +1154,11 @@ button:disabled {
 }
 
 .matchMeta {
-  margin-top: 10px;
   color: #d3dcec;
-  font-size: 13.5px;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .matchActions {
@@ -1393,7 +1411,14 @@ button:disabled {
 
 .shopPrice {
   color: var(--navy);
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.shopSalePrice {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 2px;
 }
 
 .shopFeedback {
@@ -1537,6 +1562,125 @@ button:disabled {
   padding: 6px;
 }
 
+/* ---------- toast ---------- */
+.toastWrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  display: flex;
+  justify-content: center;
+  z-index: 80;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--navy-deep);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(8, 16, 34, 0.28);
+  max-width: 100%;
+  text-align: center;
+}
+
+/* ---------- match info modal ---------- */
+.matchInfoModal {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 24px 22px;
+  width: min(460px, 100%);
+}
+
+.matchInfoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.matchInfoTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: center;
+  flex: 1;
+}
+
+.matchInfoCrest {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.matchInfoVs {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--cosmos-pink-strong);
+  flex: none;
+  padding: 0 6px;
+}
+
+.matchInfoMeta {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.matchInfoCompareWrap {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.matchInfoCompare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.matchInfoCompare th {
+  color: var(--navy);
+  font-size: 12.5px;
+  font-weight: 800;
+  padding-bottom: 8px;
+  width: 38%;
+}
+
+.matchInfoCompare td {
+  text-align: center;
+  padding: 7px 4px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.matchInfoCompare tr:not(:last-child) td {
+  border-bottom: 1px solid var(--line);
+}
+
+.matchInfoMetric {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  width: 24%;
+}
+
+.matchInfoFootnote {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
 /* ---------- admin: tabs / tables / insight ---------- */
 .adminTabs {
   display: flex;
@@ -1669,6 +1813,10 @@ button:disabled {
   .matchCrest {
     height: 42px;
   }
+  .matchMeta {
+    white-space: normal;
+    font-size: 12px;
+  }
   .brandCrest {
     height: 36px;
   }
@@ -1706,5 +1854,20 @@ button:disabled {
   .matchActions a,
   .matchActions button {
     text-align: center;
+  }
+  .matchInfoModal {
+    padding: 24px 16px 18px;
+  }
+  .matchInfoCrest {
+    height: 38px;
+  }
+  .matchInfoTeam {
+    font-size: 12.5px;
+  }
+  .matchInfoCompare {
+    font-size: 11.5px;
+  }
+  .matchInfoCompare td {
+    padding: 7px 2px;
   }
 }

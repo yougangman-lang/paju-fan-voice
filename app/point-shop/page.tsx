@@ -88,9 +88,13 @@ export default function PointShopPage() {
               <p className="boardTitle" style={{ marginTop: 8 }}>
                 {item.title}
               </p>
-              <p className="boardExcerpt">{item.description}</p>
+              {item.onlineShopPrice ? (
+                <p className="shopSalePrice">온라인샵 판매가 {item.onlineShopPrice.toLocaleString()}원</p>
+              ) : (
+                <p className="boardExcerpt">{item.description}</p>
+              )}
               <div className="shopFoot">
-                <b className="shopPrice">{item.pointCost} P</b>
+                <b className="shopPrice">{item.pointCost} P:POINT</b>
                 <button className="smallBtn" disabled={disabled} onClick={() => handleRedeem(item.id)}>
                   {item.isRaffle ? "응모하기" : "교환하기"}
                 </button>

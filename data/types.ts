@@ -43,12 +43,28 @@ export type Match = {
   id: string;
   competition: string;
   opponent: string;
+  opponentCrest?: string;
   homeAway: HomeAway;
   venue: string;
   date: string; // ISO date
   time: string;
   status: "upcoming" | "live" | "finished";
   isToday: boolean;
+};
+
+export type TeamMatchStats = {
+  name: string;
+  crest: string;
+  rank: number;
+  points: number;
+  record: string; // 예: "7승 5무 12패"
+  avgGoalsFor: number;
+  avgGoalsAgainst: number;
+};
+
+export type MatchPreview = {
+  home: TeamMatchStats;
+  away: TeamMatchStats;
 };
 
 export type SurveyContext = "HOME" | "AWAY" | "NON_MATCHDAY";
@@ -131,6 +147,7 @@ export type RewardItem = {
   title: string;
   description: string;
   image?: string;
+  onlineShopPrice?: number; // 실제 온라인샵 판매가(원). 있으면 상품 카드에 보조 정보로 표시.
   pointCost: number;
   stock: number; // -1 = 무제한
   isRaffle: boolean; // true면 "응모권" 구조(즉시 구매 아님)
