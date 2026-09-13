@@ -37,11 +37,29 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
   background: var(--bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
+}
+
+/* 팬 화면 전체 배경: 파주 Navy/Blue + Cosmos Pink를 아주 옅은 톤으로 은은하게 섞은
+   밝은 배경. 뷰포트에 고정된 pseudo-element로 그려서 페이지 길이와 무관하게
+   항상 같은 위치에 보이도록 한다. 관리자 화면(.adminTheme)은 자체 불투명
+   배경을 갖고 있어 이 레이어를 그대로 덮으므로 영향받지 않는다. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(238, 151, 189, 0.16), transparent 38%),
+    radial-gradient(circle at 88% 8%, rgba(72, 84, 201, 0.14), transparent 40%),
+    radial-gradient(circle at 20% 92%, rgba(99, 179, 237, 0.12), transparent 42%),
+    linear-gradient(160deg, #fdfcff 0%, #f8f8fd 50%, #f5f9ff 100%);
 }
 
 a {
@@ -135,13 +153,20 @@ p {
 }
 
 .topbar nav a {
-  padding: 8px 0;
+  padding: 8px 4px;
+  border-radius: 6px 6px 0 0;
   border-bottom: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .topbar nav a:hover {
   color: var(--navy);
+  background: rgba(238, 151, 189, 0.1);
+}
+
+.topbar nav a:focus-visible {
+  outline: 2px solid var(--cosmos-pink-strong);
+  outline-offset: 2px;
 }
 
 .topbar nav a.navActive {
@@ -1084,6 +1109,12 @@ button:disabled {
   padding: 30px 34px;
 }
 
+/* 홈 페이지의 최우선 정보(Priority 1)임을 다른 섹션보다 확실히 드러내는 강조 */
+.matchCardHero {
+  padding: 40px 42px;
+  box-shadow: 0 22px 48px rgba(26, 32, 88, 0.32);
+}
+
 .matchTop {
   display: flex;
   justify-content: space-between;
@@ -1107,7 +1138,7 @@ button:disabled {
   justify-content: space-between;
   gap: 16px;
   margin-top: 16px;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 800;
   flex-wrap: wrap;
 }
@@ -1116,7 +1147,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 800;
 }
 
@@ -1124,7 +1155,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 800;
 }
 
@@ -1178,32 +1209,6 @@ button:disabled {
   font-size: 13.5px;
 }
 
-/* ---------- home: survey teaser ---------- */
-.surveyTeaser {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.surveyTeaserTitle {
-  font-size: 16px;
-  font-weight: 700;
-}
-
-/* ---------- home: quick actions ---------- */
-.quickGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
-
-.quickCard {
-  display: flex;
-  flex-direction: column;
-}
-
 .eyebrowSmall {
   font-size: 11px;
   font-weight: 800;
@@ -1212,18 +1217,11 @@ button:disabled {
   text-transform: uppercase;
 }
 
+/* fanzone 페이지에서도 사용하는 공용 클래스이므로 유지 */
 .quickTitle {
   font-size: 16px;
   font-weight: 700;
   margin-top: 8px;
-}
-
-.quickActions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 14px;
-  flex-wrap: wrap;
 }
 
 .quickLink {
@@ -1235,7 +1233,161 @@ button:disabled {
   padding: 0;
 }
 
-/* ---------- home: cosmos content / channels / sponsors ---------- */
+/* ---------- home: page-level stack ---------- */
+.homeStack {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ---------- home: 오늘의 설문 (Priority 2) ---------- */
+.pollSection {
+  display: block;
+}
+
+.pollCard {
+  display: flex;
+  align-items: stretch;
+  gap: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 30px;
+  box-shadow: 0 10px 26px rgba(20, 32, 66, 0.05);
+}
+
+.pollAccentBar {
+  flex: none;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--cosmos-pink);
+}
+
+.pollBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.pollEyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--cosmos-pink-strong);
+}
+
+.pollTitle {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-top: 8px;
+  line-height: 1.3;
+}
+
+.pollMeta {
+  margin-top: 10px;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+
+.pollReward {
+  color: var(--navy);
+}
+
+.pollCta {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+/* ---------- home: FAN ZONE / 팬 제안 (Priority 3, secondary action) ---------- */
+.actionSection {
+  display: block;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.actionPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+}
+
+.actionPanelBlue {
+  background: rgba(72, 84, 201, 0.05);
+}
+
+.actionPanelPink {
+  background: rgba(238, 151, 189, 0.07);
+}
+
+.actionIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  flex: none;
+}
+
+.actionIconBlue {
+  background: rgba(72, 84, 201, 0.14);
+  color: var(--blue);
+}
+
+.actionIconPink {
+  background: rgba(238, 151, 189, 0.22);
+  color: var(--cosmos-pink-strong);
+}
+
+.actionBody {
+  display: block;
+}
+
+.actionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.actionDesc {
+  margin-top: 4px;
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.actionCtaRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.actionCta {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---------- home: COSMOS CONTENT (Priority 4, 정보성 콘텐츠) ---------- */
+.cosmosSection {
+  display: block;
+}
+
+.cosmosSectionHead h2 {
+  font-size: 22px;
+}
+
 .contentGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1276,24 +1428,47 @@ button:disabled {
   line-height: 1.4;
 }
 
+/* ---------- home: OFFICIAL CHANNELS / SPONSORS (Priority 5, footer utility) ---------- */
+.footerUtility {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.footerBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footerLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
 .channelRow {
   display: flex;
-  gap: 8px;
+  gap: 6px 18px;
   flex-wrap: wrap;
 }
 
 .channelPill {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 9px 16px;
+  padding: 10px 2px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   font-size: 13px;
   font-weight: 600;
-  color: var(--navy);
-  background: #fff;
+  color: var(--muted);
 }
 
 .channelPill:hover {
-  border-color: var(--navy);
+  color: var(--navy);
 }
 
 .sponsorsImage {
@@ -1301,6 +1476,7 @@ button:disabled {
   width: 100%;
   height: auto;
   object-fit: contain;
+  opacity: 0.92;
 }
 
 /* ---------- survey detail ---------- */
@@ -1784,16 +1960,52 @@ button:disabled {
 }
 
 @media (max-width: 850px) {
+  /* 모바일에서도 5개 핵심 메뉴를 그대로 보여준다. 숨기는 대신 헤더 아래
+     두 번째 줄로 내려서 가로 스크롤 바로 노출한다(PC와 동일한 정보 구조 유지). */
+  .topbar {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 2px;
+    padding: 10px 4vw 0;
+  }
+  .topbar .brand {
+    order: 1;
+  }
+  .topbar .navRight {
+    order: 2;
+  }
   .topbar nav {
+    order: 3;
+    flex-basis: 100%;
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 6px;
+    margin-top: 6px;
+    padding-bottom: 8px;
+  }
+  .topbar nav::-webkit-scrollbar {
     display: none;
+  }
+  .topbar nav a {
+    flex: none;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 10px;
+    border-radius: 8px 8px 0 0;
   }
   .grid2,
   .grid3,
   .voiceLayout,
   .profileGrid,
-  .quickGrid,
-  .contentGrid,
   .shopGrid {
+    grid-template-columns: 1fr;
+  }
+  /* COSMOS CONTENT은 좁은 화면에서도 가능하면 2열을 유지한다 */
+  .actionGrid {
     grid-template-columns: 1fr;
   }
   .metrics {
@@ -1805,10 +2017,30 @@ button:disabled {
   .matchCard {
     padding: 26px 22px;
   }
+  .pollCard {
+    flex-direction: column;
+    padding: 20px 20px 22px;
+    gap: 14px;
+  }
+  .pollAccentBar {
+    width: 100%;
+    height: 4px;
+  }
+  .pollTitle {
+    font-size: 21px;
+  }
+  .pollCta {
+    width: 100%;
+  }
+  .pollCta .primaryBtn,
+  .pollCta .success {
+    width: 100%;
+    text-align: center;
+  }
   .matchTeams,
   .matchTeamHome,
   .matchTeam {
-    font-size: 19px;
+    font-size: 22px;
   }
   .matchCrest {
     height: 42px;

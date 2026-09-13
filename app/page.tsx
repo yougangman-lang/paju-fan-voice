@@ -9,6 +9,7 @@ import { officialChannels } from "@/data/channels";
 import YouTubeIcon from "@/components/YouTubeIcon";
 import MatchInfoModal from "@/components/MatchInfoModal";
 import Toast from "@/components/Toast";
+import { CheerFlagIcon, SuggestionBubbleIcon } from "@/components/HomeActionIcons";
 
 function formatMatchDate(dateStr: string) {
   const d = new Date(`${dateStr}T00:00:00`);
@@ -41,9 +42,9 @@ export default function Home() {
     surveys.find((s) => s.status === "active");
 
   return (
-    <div className="stack">
-      {/* NEXT MATCH */}
-      <section className="matchCard">
+    <div className="homeStack">
+      {/* NEXT MATCH — Priority 1 */}
+      <section className="matchCard matchCardHero">
         <div className="matchTop">
           <span className="matchComp">{nextMatch.competition}</span>
           <span className="matchLabel">NEXT MATCH</span>
@@ -90,49 +91,52 @@ export default function Home() {
         />
       )}
 
-      {/* 오늘의 설문 */}
+      {/* 오늘의 설문 — Priority 2 */}
       {todaySurvey && (
-        <section>
-          <div className="sectionHead">
-            <h2>오늘의 설문</h2>
-          </div>
-          <div className="panel surveyTeaser">
-            <div>
-              <p className="surveyTeaserTitle">{todaySurvey.title}</p>
-              <p className="muted">
-                {todaySurvey.questions.length}문항 · 참여 완료 시 +{todaySurvey.pointReward} P:POINT
+        <section className="pollSection">
+          <div className="pollCard">
+            <div className="pollAccentBar" aria-hidden="true" />
+            <div className="pollBody">
+              <span className="pollEyebrow">TODAY&apos;S POLL</span>
+              <p className="pollTitle">{todaySurvey.title}</p>
+              <p className="pollMeta">
+                {todaySurvey.questions.length}문항 · 참여 완료 시{" "}
+                <b className="pollReward">+{todaySurvey.pointReward} P:POINT</b>
               </p>
             </div>
-            {isSurveyCompleted(todaySurvey.id) ? (
-              <span className="success" style={{ margin: 0 }}>
-                참여 완료
-              </span>
-            ) : (
-              <Link className="primaryBtn" href={`/survey/${todaySurvey.id}`}>
-                설문 참여하기
-              </Link>
-            )}
+            <div className="pollCta">
+              {isSurveyCompleted(todaySurvey.id) ? (
+                <span className="success" style={{ margin: 0 }}>
+                  참여 완료
+                </span>
+              ) : (
+                <Link className="primaryBtn" href={`/survey/${todaySurvey.id}`}>
+                  설문 참여하기
+                </Link>
+              )}
+            </div>
           </div>
         </section>
       )}
 
-      {/* FAN ZONE / 팬 제안 빠른 참여 */}
-      <section>
-        <div className="sectionHead">
-          <h2>지금 참여할 수 있어요</h2>
-        </div>
-        <div className="quickGrid">
-          <div className="panel quickCard">
-            <span className="eyebrowSmall">FAN ZONE</span>
-            <p className="quickTitle">오늘도 파주와 함께해 주세요.</p>
-            <p className="muted">응원 한 번으로 +5 P:POINT를 받아보세요.</p>
-            <div className="quickActions">
+      {/* FAN ZONE / 팬 제안 — Priority 3, secondary actions */}
+      <section className="actionSection">
+        <div className="actionGrid">
+          <div className="actionPanel actionPanelBlue">
+            <div className="actionIcon actionIconBlue">
+              <CheerFlagIcon size={20} />
+            </div>
+            <div className="actionBody">
+              <p className="actionTitle">오늘도 파주와 함께해 주세요.</p>
+              <p className="actionDesc">응원 한 번으로 +5 P:POINT를 받아보세요.</p>
+            </div>
+            <div className="actionCtaRow">
               {isLoggedIn ? (
-                <button className="primaryBtn" onClick={cheer} disabled={hasCheeredToday}>
+                <button className="smallBtn actionCta" onClick={cheer} disabled={hasCheeredToday}>
                   {hasCheeredToday ? "오늘 응원 완료" : "파주를 응원해요"}
                 </button>
               ) : (
-                <Link className="primaryBtn" href="/login">
+                <Link className="smallBtn actionCta" href="/login">
                   로그인하고 응원하기
                 </Link>
               )}
@@ -141,12 +145,16 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="panel quickCard">
-            <span className="eyebrowSmall">팬 제안</span>
-            <p className="quickTitle">파주에서의 경험을 들려주세요.</p>
-            <p className="muted">경기장 운영부터 팬서비스까지, 팬의 생각을 함께 모아 더 나은 경험을 만들어갑니다.</p>
-            <div className="quickActions">
-              <Link href="/suggestions" className="primaryBtn">
+          <div className="actionPanel actionPanelPink">
+            <div className="actionIcon actionIconPink">
+              <SuggestionBubbleIcon size={20} />
+            </div>
+            <div className="actionBody">
+              <p className="actionTitle">파주에서의 경험을 들려주세요.</p>
+              <p className="actionDesc">경기장 운영부터 팬서비스까지, 팬의 생각을 함께 모아 더 나은 경험을 만들어갑니다.</p>
+            </div>
+            <div className="actionCtaRow">
+              <Link href="/suggestions" className="smallBtn actionCta">
                 팬 제안 남기기
               </Link>
             </div>
@@ -154,9 +162,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COSMOS CONTENT */}
-      <section>
-        <div className="sectionHead">
+      {/* COSMOS CONTENT — Priority 4, 정보성 콘텐츠 */}
+      <section className="cosmosSection">
+        <div className="sectionHead cosmosSectionHead">
           <h2>COSMOS CONTENT</h2>
         </div>
         <div className="contentGrid">
@@ -178,27 +186,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* OFFICIAL CHANNELS */}
-      <section>
-        <div className="sectionHead">
-          <h2>OFFICIAL CHANNELS</h2>
+      {/* OFFICIAL CHANNELS / SPONSORS — Priority 5, footer utility */}
+      <section className="footerUtility">
+        <div className="footerBlock">
+          <span className="footerLabel">OFFICIAL CHANNELS</span>
+          <div className="channelRow">
+            {officialChannels.map((ch) => (
+              <a key={ch.id} href={ch.url} className="channelPill">
+                {ch.label}
+              </a>
+            ))}
+          </div>
         </div>
-        <div className="channelRow">
-          {officialChannels.map((ch) => (
-            <a key={ch.id} href={ch.url} className="channelPill">
-              {ch.label}
-            </a>
-          ))}
+        <div className="footerBlock">
+          <span className="footerLabel">SPONSORS</span>
+          <img
+            src="/sponsors/paju-sponsors-official.png"
+            alt="파주 프런티어FC 공식 스폰서"
+            className="sponsorsImage"
+          />
         </div>
-      </section>
-
-      {/* SPONSORS */}
-      <section>
-        <img
-          src="/sponsors/paju-sponsors-official.png"
-          alt="파주 프런티어FC 공식 스폰서"
-          className="sponsorsImage"
-        />
       </section>
 
       {showTicketToast && <Toast message="티켓 예매 기능은 준비 중입니다." />}
