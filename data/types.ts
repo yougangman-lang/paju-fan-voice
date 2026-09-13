@@ -99,6 +99,20 @@ export type CheerMessage = {
   createdAt: string;
 };
 
+export type PlayerCheerMessage = CheerMessage & {
+  playerId: string;
+  playerName: string;
+};
+
+export type Player = {
+  id: string;
+  number: number;
+  name: string;
+  position: string;
+  image?: string;
+  shortInfo: string;
+};
+
 export type SuggestionCategory =
   | "경기장 운영"
   | "팬서비스"
@@ -139,7 +153,10 @@ export type AttendanceVerification = {
   verifiedAt: string;
 };
 
-export type RewardCategory = "MATCHDAY" | "FAMILY" | "EXPERIENCE" | "GOODS";
+export type RewardCategory = "MATCHDAY" | "FAMILY" | "EXPERIENCE" | "GOODS" | "ONLINE";
+
+// ONLINE 카테고리 상품에서만 사용. 교환 시 어떤 cosmetic 효과를 적용할지 지정한다.
+export type OnlineRewardAction = "nickname" | "title" | "frame" | "background";
 
 export type RewardItem = {
   id: string;
@@ -151,6 +168,8 @@ export type RewardItem = {
   pointCost: number;
   stock: number; // -1 = 무제한
   isRaffle: boolean; // true면 "응모권" 구조(즉시 구매 아님)
+  onlineAction?: OnlineRewardAction;
+  onlineChoices?: { id: string; label: string }[]; // frame/title/background 선택형 상품의 옵션 목록
 };
 
 export type RewardRedemption = {

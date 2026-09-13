@@ -42,6 +42,23 @@ export default function SuggestionsPage() {
     );
   }, [suggestions, categoryFilter, sortMode]);
 
+  const policySteps = [
+    "제안 등록 시 10P 사용",
+    "공감 5개 달성 시 10P 전액 환급",
+    "6번째 공감부터 1개당 +1P, 최대 +50P 보상",
+  ];
+
+  const policyStrip = (
+    <div className="policyStrip" aria-label="팬 제안 포인트 정책">
+      {policySteps.map((step, i) => (
+        <span key={step} className="policyStep">
+          {i > 0 && <span className="policyArrow" aria-hidden="true">→</span>}
+          {step}
+        </span>
+      ))}
+    </div>
+  );
+
   return (
     <div className="stack">
       <div className="pageTitle">
@@ -56,6 +73,7 @@ export default function SuggestionsPage() {
         {isLoggedIn ? (
           <form className="panel compose" onSubmit={submit}>
             <h2>팬 제안 남기기</h2>
+            {policyStrip}
             <label>카테고리</label>
             <select value={category} onChange={(e) => setCategory(e.target.value as SuggestionCategory)}>
               {suggestionCategories.map((c) => (
@@ -88,6 +106,7 @@ export default function SuggestionsPage() {
         ) : (
           <div className="panel compose">
             <h2>팬 제안 남기기</h2>
+            {policyStrip}
             <p className="muted" style={{ marginTop: 10 }}>
               로그인 후 10 P:POINT로 제안을 등록하고, 공감을 받아 포인트를 돌려받아 보세요.
             </p>
@@ -151,9 +170,14 @@ export default function SuggestionsPage() {
                       <TierIcon tier={v.authorTier} size={13} />
                       <span className="muted">· {v.createdAt}</span>
                     </div>
-                    <p className="boardLikesCount">공감 {v.likes}</p>
-                    {isOwn && v.likeRewardEarned > 0 && (
-                      <p className="boardEarned">이 제안으로 +{v.likeRewardEarned} P:POINT를 받았어요.</p>
+                    {isOwn ? (
+                      <p className="boardLikesCount">
+                        공감 {v.likes}
+                        {v.stakeRefunded && " · 등록 포인트 환급 완료"}
+                        {v.likeRewardEarned > 0 && ` · 공감 보상 +${v.likeRewardEarned}P`}
+                      </p>
+                    ) : (
+                      <p className="boardLikesCount">공감 {v.likes}</p>
                     )}
                     <p className="boardExcerpt">{v.content}</p>
                     {v.clubResponse && (

@@ -4,19 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAppState } from "@/lib/store";
 import { rewardItems } from "@/data/rewards";
-import type { RewardCategory } from "@/data/types";
+import type { RewardCategory, RewardItem } from "@/data/types";
+import OnlineRewardModal from "@/components/OnlineRewardModal";
 
 const categories: { key: RewardCategory; label: string }[] = [
   { key: "MATCHDAY", label: "MATCHDAY" },
   { key: "FAMILY", label: "FAMILY" },
   { key: "EXPERIENCE", label: "EXPERIENCE" },
   { key: "GOODS", label: "GOODS" },
+  { key: "ONLINE", label: "ONLINE" },
 ];
 
 export default function PointShopPage() {
-  const { isLoggedIn, pointBalance, redeemReward } = useAppState();
+  const { isLoggedIn, pointBalance, redeemReward, redeemOnlineReward } = useAppState();
   const [activeCategory, setActiveCategory] = useState<RewardCategory>("MATCHDAY");
   const [feedback, setFeedback] = useState<Record<string, string>>({});
+  const [onlineModalItem, setOnlineModalItem] = useState<RewardItem | null>(null);
 
   if (!isLoggedIn) {
     return (
@@ -41,6 +44,19 @@ export default function PointShopPage() {
         ? "포인트가 부족해요"
         : "품절된 상품이에요";
     setFeedback((f) => ({ ...f, [rewardId]: message }));
+  };
+
+  const handleOnlineConfirm = (value: string) => {
+    if (!onlineModalItem) return;
+    const result = redeemOnlineReward(onlineModalItem.id, value);
+    const message =
+      result === "success"
+        ? "적용 완료"
+        : result === "insufficient"
+        ? "포인트가 부족해요"
+        : "품절된 상품이에요";
+    setFeedback((f) => ({ ...f, [onlineModalItem.id]: message }));
+    if (result === "success") setOnlineModalItem(null);
   };
 
   const items = rewardItems.filter((r) => r.category === activeCategory);
@@ -95,8 +111,12 @@ export default function PointShopPage() {
               )}
               <div className="shopFoot">
                 <b className="shopPrice">{item.pointCost} P:POINT</b>
-                <button className="smallBtn" disabled={disabled} onClick={() => handleRedeem(item.id)}>
-                  {item.isRaffle ? "응모하기" : "교환하기"}
+                <button
+                  className="smallBtn"
+                  disabled={disabled}
+                  onClick={() => (item.onlineAction ? setOnlineModalItem(item) : handleRedeem(item.id))}
+                >
+                  {item.isRaffle ? "응모하기" : item.onlineAction ? "적용하기" : "교환하기"}
                 </button>
               </div>
               {feedback[item.id] && <p className="shopFeedback">{feedback[item.id]}</p>}
@@ -105,6 +125,14 @@ export default function PointShopPage() {
           );
         })}
       </div>
+
+      {onlineModalItem && (
+        <OnlineRewardModal
+          item={onlineModalItem}
+          onClose={() => setOnlineModalItem(null)}
+          onConfirm={handleOnlineConfirm}
+        />
+      )}
     </div>
   );
 }

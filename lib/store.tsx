@@ -21,6 +21,7 @@ import type {
   FanSuggestion,
   SuggestionCategory,
   CheerMessage,
+  PlayerCheerMessage,
   PointTransaction,
   PointTransactionType,
   RewardRedemption,
@@ -58,6 +59,11 @@ type AppState = {
   cheerCount: number;
   applyReferralCode: (code: string) => "success" | "invalid" | "already_applied";
 
+  // 프로필 커스터마이징 (P:POINT SHOP ONLINE 카테고리로 획득)
+  profileTitle: string | null;
+  profileFrame: string | null;
+  cardBackground: string | null;
+
   // 포인트 내역
   pointHistory: PointTransaction[];
 
@@ -69,6 +75,8 @@ type AppState = {
   cheer: () => boolean;
   cheerMessages: CheerMessage[];
   postCheerMessage: (content: string) => void;
+  playerCheerMessages: PlayerCheerMessage[];
+  postPlayerCheerMessage: (playerId: string, playerName: string, content: string) => void;
 
   // 설문
   surveys: Survey[];
@@ -89,6 +97,7 @@ type AppState = {
   // P:POINT SHOP
   redemptions: RewardRedemption[];
   redeemReward: (rewardId: string) => "success" | "insufficient" | "out_of_stock";
+  redeemOnlineReward: (rewardId: string, value: string) => "success" | "insufficient" | "out_of_stock";
 
   // 팬 참여 팝업
   popupCampaign: PopupCampaign;
@@ -116,6 +125,7 @@ type Persisted = {
   lastCheerDate: string | null;
   lastCheerMessageDate: string | null;
   cheerMessages: CheerMessage[];
+  playerCheerMessages: PlayerCheerMessage[];
   surveys: Survey[];
   completedSurveyIds: string[];
   verifiedMatchIds: string[];
@@ -123,6 +133,10 @@ type Persisted = {
   redemptions: RewardRedemption[];
   popupCampaign: PopupCampaign;
   popupLastDismissedDate: string | null;
+  nicknameOverride: string | null;
+  profileTitle: string | null;
+  profileFrame: string | null;
+  cardBackground: string | null;
 };
 
 function loadPersisted(): Partial<Persisted> | null {
@@ -181,6 +195,12 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [lastCheerDate, setLastCheerDate] = useState<string | null>(null);
   const [lastCheerMessageDate, setLastCheerMessageDate] = useState<string | null>(null);
   const [cheerMessages, setCheerMessages] = useState<CheerMessage[]>(initialCheerMessages);
+  const [playerCheerMessages, setPlayerCheerMessages] = useState<PlayerCheerMessage[]>([]);
+
+  const [nicknameOverride, setNicknameOverride] = useState<string | null>(null);
+  const [profileTitle, setProfileTitle] = useState<string | null>(null);
+  const [profileFrame, setProfileFrame] = useState<string | null>(null);
+  const [cardBackground, setCardBackground] = useState<string | null>(null);
 
   const [surveys, setSurveys] = useState<Survey[]>(initialSurveys);
   const [completedSurveyIds, setCompletedSurveyIds] = useState<string[]>([]);
@@ -213,6 +233,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       if (saved.lastCheerDate !== undefined) setLastCheerDate(saved.lastCheerDate);
       if (saved.lastCheerMessageDate !== undefined) setLastCheerMessageDate(saved.lastCheerMessageDate);
       if (saved.cheerMessages) setCheerMessages(saved.cheerMessages);
+      if (saved.playerCheerMessages) setPlayerCheerMessages(saved.playerCheerMessages);
       setSurveys(mergeSurveys(initialSurveys, saved.surveys));
       if (saved.completedSurveyIds) setCompletedSurveyIds(saved.completedSurveyIds);
       if (saved.verifiedMatchIds) setVerifiedMatchIds(saved.verifiedMatchIds);
@@ -220,6 +241,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       if (saved.redemptions) setRedemptions(saved.redemptions);
       if (saved.popupCampaign) setPopupCampaign(saved.popupCampaign);
       if (saved.popupLastDismissedDate !== undefined) setPopupLastDismissedDate(saved.popupLastDismissedDate);
+      if (saved.nicknameOverride !== undefined) setNicknameOverride(saved.nicknameOverride);
+      if (saved.profileTitle !== undefined) setProfileTitle(saved.profileTitle);
+      if (saved.profileFrame !== undefined) setProfileFrame(saved.profileFrame);
+      if (saved.cardBackground !== undefined) setCardBackground(saved.cardBackground);
     }
     setHydrated(true);
   }, []);
@@ -241,6 +266,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       lastCheerDate,
       lastCheerMessageDate,
       cheerMessages,
+      playerCheerMessages,
       surveys,
       completedSurveyIds,
       verifiedMatchIds,
@@ -248,6 +274,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       redemptions,
       popupCampaign,
       popupLastDismissedDate,
+      nicknameOverride,
+      profileTitle,
+      profileFrame,
+      cardBackground,
     };
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -270,6 +300,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     lastCheerDate,
     lastCheerMessageDate,
     cheerMessages,
+    playerCheerMessages,
     surveys,
     completedSurveyIds,
     verifiedMatchIds,
@@ -277,7 +308,13 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     redemptions,
     popupCampaign,
     popupLastDismissedDate,
+    nicknameOverride,
+    profileTitle,
+    profileFrame,
+    cardBackground,
   ]);
+
+  const nickname = nicknameOverride ?? currentUser.nickname;
 
   const addPoints = (
     amount: number,
@@ -329,7 +366,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     if (!trimmed) return;
     const message: CheerMessage = {
       id: `cm-${Date.now()}`,
-      author: currentUser.nickname,
+      author: nickname,
       authorTier: calcTier(lifetimeEarnedPoints),
       content: trimmed,
       createdAt: today(),
@@ -338,6 +375,27 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     if (lastCheerMessageDate !== today()) {
       setLastCheerMessageDate(today());
       addPoints(10, "cheer_message", "응원 메시지 작성");
+    }
+  };
+
+  // 구단 응원과 선수 응원은 같은 "FAN ZONE 응원 메시지" 하루 1회 +10P 한도를 공유한다.
+  // 이미 오늘 보상을 받았다면 메시지는 계속 남길 수 있지만 추가 포인트는 지급하지 않는다.
+  const postPlayerCheerMessage = (playerId: string, playerName: string, content: string) => {
+    const trimmed = content.trim();
+    if (!trimmed) return;
+    const message: PlayerCheerMessage = {
+      id: `pcm-${Date.now()}`,
+      playerId,
+      playerName,
+      author: nickname,
+      authorTier: calcTier(lifetimeEarnedPoints),
+      content: trimmed,
+      createdAt: today(),
+    };
+    setPlayerCheerMessages((m) => [message, ...m]);
+    if (lastCheerMessageDate !== today()) {
+      setLastCheerMessageDate(today());
+      addPoints(10, "cheer_message", `응원 메시지 작성 · ${playerName} 선수`);
     }
   };
 
@@ -386,7 +444,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       category,
       title,
       content,
-      author: currentUser.nickname,
+      author: nickname,
       authorId: currentUser.id,
       authorTier: calcTier(lifetimeEarnedPoints),
       likes: 0,
@@ -466,6 +524,29 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     return "success";
   };
 
+  // ONLINE 카테고리 전용: 포인트 차감 + 교환 내역 기록에 더해 실제 cosmetic 효과
+  // (닉네임/칭호/프레임/배경)를 적용한다. pointBalance만 감소하며
+  // lifetimeEarnedPoints(등급 산정 기준)는 변하지 않는다.
+  const redeemOnlineReward: AppState["redeemOnlineReward"] = (rewardId, value) => {
+    const item = rewardItems.find((r) => r.id === rewardId);
+    if (!item || item.category !== "ONLINE" || !item.onlineAction) return "insufficient";
+    if (item.stock === 0) return "out_of_stock";
+    if (pointBalance < item.pointCost) return "insufficient";
+
+    addPoints(-item.pointCost, "redeem", `${item.title} · ${value}`, false);
+    setRedemptions((r) => [
+      { id: `rd-${Date.now()}`, rewardId: item.id, rewardTitle: item.title, pointCost: item.pointCost, redeemedAt: today() },
+      ...r,
+    ]);
+
+    if (item.onlineAction === "nickname") setNicknameOverride(value);
+    if (item.onlineAction === "title") setProfileTitle(value);
+    if (item.onlineAction === "frame") setProfileFrame(value);
+    if (item.onlineAction === "background") setCardBackground(value);
+
+    return "success";
+  };
+
   const dismissPopup = () => setPopupLastDismissedDate(today());
   const updatePopupCampaign = (patch: Partial<PopupCampaign>) =>
     setPopupCampaign((p) => ({ ...p, ...patch }));
@@ -479,7 +560,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       adminLogin,
       adminLogout,
 
-      nickname: currentUser.nickname,
+      nickname,
       pointBalance,
       lifetimeEarnedPoints,
       tier: calcTier(lifetimeEarnedPoints),
@@ -491,6 +572,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       cheerCount,
       applyReferralCode,
 
+      profileTitle,
+      profileFrame,
+      cardBackground,
+
       pointHistory,
 
       hasCheckedInToday: lastCheckInDate === today(),
@@ -500,6 +585,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       cheer,
       cheerMessages,
       postCheerMessage,
+      playerCheerMessages,
+      postPlayerCheerMessage,
 
       surveys,
       completedSurveyIds,
@@ -516,6 +603,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
       redemptions,
       redeemReward,
+      redeemOnlineReward,
 
       popupCampaign,
       popupDismissedToday: popupLastDismissedDate === today(),
@@ -525,6 +613,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [
       isLoggedIn,
       isAdminLoggedIn,
+      nickname,
       pointBalance,
       lifetimeEarnedPoints,
       referralApplied,
@@ -532,11 +621,15 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       surveyCount,
       suggestionCount,
       cheerCount,
+      profileTitle,
+      profileFrame,
+      cardBackground,
       pointHistory,
       lastCheckInDate,
       lastCheerDate,
       lastCheerMessageDate,
       cheerMessages,
+      playerCheerMessages,
       surveys,
       completedSurveyIds,
       verifiedMatchIds,

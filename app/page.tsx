@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useAppState } from "@/lib/store";
 import { nextMatch, nextMatchPreview } from "@/data/matches";
 import { cosmosContent } from "@/data/content";
-import { officialChannels } from "@/data/channels";
+import { officialChannels, officialShopUrl } from "@/data/channels";
 import YouTubeIcon from "@/components/YouTubeIcon";
 import MatchInfoModal from "@/components/MatchInfoModal";
 import Toast from "@/components/Toast";
 import { CheerFlagIcon, SuggestionBubbleIcon } from "@/components/HomeActionIcons";
+import SocialIcons from "@/components/SocialIcons";
 
 function formatMatchDate(dateStr: string) {
   const d = new Date(`${dateStr}T00:00:00`);
@@ -18,7 +19,7 @@ function formatMatchDate(dateStr: string) {
 }
 
 export default function Home() {
-  const { isLoggedIn, surveys, isSurveyCompleted, cheer, hasCheeredToday } = useAppState();
+  const { surveys, isSurveyCompleted } = useAppState();
   const [showMatchInfo, setShowMatchInfo] = useState(false);
   const [showTicketToast, setShowTicketToast] = useState(false);
   const ticketToastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -97,8 +98,9 @@ export default function Home() {
           <div className="pollCard">
             <div className="pollAccentBar" aria-hidden="true" />
             <div className="pollBody">
-              <span className="pollEyebrow">TODAY&apos;S POLL</span>
+              <span className="pollEyebrow">TODAY&apos;S POLL · 오늘의 설문</span>
               <p className="pollTitle">{todaySurvey.title}</p>
+              <p className="pollDesc">구단이 지금 알고 싶은 질문에 20초로 답해보세요.</p>
               <p className="pollMeta">
                 {todaySurvey.questions.length}문항 · 참여 완료 시{" "}
                 <b className="pollReward">+{todaySurvey.pointReward} P:POINT</b>
@@ -127,21 +129,12 @@ export default function Home() {
               <CheerFlagIcon size={20} />
             </div>
             <div className="actionBody">
-              <p className="actionTitle">오늘도 파주와 함께해 주세요.</p>
-              <p className="actionDesc">응원 한 번으로 +5 P:POINT를 받아보세요.</p>
+              <p className="actionTitle">FAN ZONE</p>
+              <p className="actionDesc">팀과 선수를 응원하고, 경기장에서의 참여를 기록해보세요.</p>
             </div>
             <div className="actionCtaRow">
-              {isLoggedIn ? (
-                <button className="smallBtn actionCta" onClick={cheer} disabled={hasCheeredToday}>
-                  {hasCheeredToday ? "오늘 응원 완료" : "파주를 응원해요"}
-                </button>
-              ) : (
-                <Link className="smallBtn actionCta" href="/login">
-                  로그인하고 응원하기
-                </Link>
-              )}
-              <Link href="/fanzone" className="quickLink">
-                FAN ZONE 더 보기 →
+              <Link href="/fanzone" className="smallBtn actionCta">
+                FAN ZONE 들어가기
               </Link>
             </div>
           </div>
@@ -150,8 +143,8 @@ export default function Home() {
               <SuggestionBubbleIcon size={20} />
             </div>
             <div className="actionBody">
-              <p className="actionTitle">파주에서의 경험을 들려주세요.</p>
-              <p className="actionDesc">경기장 운영부터 팬서비스까지, 팬의 생각을 함께 모아 더 나은 경험을 만들어갑니다.</p>
+              <p className="actionTitle">팬 제안</p>
+              <p className="actionDesc">아이디어를 제안하고, 팬들의 공감으로 함께 우선순위를 만들어보세요.</p>
             </div>
             <div className="actionCtaRow">
               <Link href="/suggestions" className="smallBtn actionCta">
@@ -190,12 +183,19 @@ export default function Home() {
       <section className="footerUtility">
         <div className="footerBlock">
           <span className="footerLabel">OFFICIAL CHANNELS</span>
-          <div className="channelRow">
-            {officialChannels.map((ch) => (
-              <a key={ch.id} href={ch.url} className="channelPill">
-                {ch.label}
-              </a>
-            ))}
+          <p className="footerSocialCopy">파주 프런티어FC의 더 많은 소식을 만나보세요.</p>
+          <SocialIcons channels={officialChannels} />
+          <div className="officialShopRow">
+            <span className="officialShopCopy">파주 프런티어FC 공식 온라인샵</span>
+            <a
+              href={officialShopUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="officialShopLink"
+              aria-label="파주 프런티어FC 공식 온라인샵 새 탭에서 열기"
+            >
+              OFFICIAL SHOP →
+            </a>
           </div>
         </div>
         <div className="footerBlock">
