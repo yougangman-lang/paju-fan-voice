@@ -1951,6 +1951,298 @@ button:disabled {
   color: var(--muted);
 }
 
+/* ---------- home: 오늘의 설문 카드 내부 안내문 (일반 pollDesc보다 좁은 간격) ---------- */
+.pollBody .pollDesc {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+/* ---------- home footer: SNS 안내 문구 ---------- */
+.footerSocialCopy {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 2px 0 4px;
+}
+
+/* ---------- SNS 아이콘 (OFFICIAL CHANNELS) ---------- */
+.socialRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.socialIconLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  min-width: 56px;
+}
+
+.socialIconCircle {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  transition: transform 0.12s ease;
+}
+
+.socialIconLink:hover .socialIconCircle {
+  transform: scale(1.04);
+}
+
+.socialIconLabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.socialIconDisabled {
+  cursor: default;
+}
+
+.socialIconDisabled .socialIconCircle {
+  opacity: 0.45;
+}
+
+.socialIconDisabled:hover .socialIconCircle {
+  transform: none;
+}
+
+/* ---------- fanzone: 상단 2개 액션 카드 (오늘의 응원 / 직관 인증) ---------- */
+.fanzoneTopGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.fanzoneTopGrid.single {
+  grid-template-columns: 1fr;
+}
+
+.fanzoneActionCard {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- fanzone: 구단 응원 / 선수 응원 탭 ---------- */
+.cheerNav {
+  margin-bottom: 4px;
+}
+
+.playerGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.playerCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 12px;
+}
+
+.playerPhoto {
+  width: 76px;
+  height: 76px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  color: var(--blue);
+}
+
+.playerPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playerSilhouette {
+  width: 44px;
+  height: 44px;
+}
+
+.playerInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  margin-top: 4px;
+}
+
+.playerNumber {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--navy);
+  background: var(--soft);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.playerName {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 4px;
+}
+
+.playerPosition {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.playerShortInfo {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.playerCheerBtn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.playerCheerModal {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px 24px;
+  width: min(400px, 100%);
+}
+
+/* ---------- P:POINT SHOP: ONLINE 상품 교환 모달 ---------- */
+.onlineRewardModal {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px 24px;
+  width: min(400px, 100%);
+}
+
+.onlineRewardInput {
+  width: 100%;
+  margin-top: 14px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.onlineChoiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.onlineChoiceList button {
+  padding: 11px 14px;
+  text-align: left;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.onlineChoiceList button.isActive {
+  border-color: var(--navy);
+  background: var(--soft);
+  font-weight: 700;
+}
+
+/* ---------- 팬 제안: 포인트 정책 3단계 안내 ---------- */
+.policyStrip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 12px 0 4px;
+  padding: 10px 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.policyStep {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.policyArrow {
+  color: var(--cosmos-pink-strong);
+  font-weight: 700;
+}
+
+/* ---------- mypage: 프로필 커스터마이즈 (칭호/프레임/배경) ---------- */
+.profileTitleBadge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cosmos-pink-strong);
+  background: rgba(238, 151, 189, 0.14);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.tierIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.tierIconWrap.profileFrame-cosmos-pink {
+  box-shadow: 0 0 0 3px var(--cosmos-pink);
+}
+
+.tierIconWrap.profileFrame-paju-blue {
+  box-shadow: 0 0 0 3px var(--blue);
+}
+
+.pointCard.big.cardBg-navy-wave {
+  background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+  color: #fff;
+}
+
+.pointCard.big.cardBg-cosmos-bloom {
+  background: linear-gradient(135deg, var(--cosmos-pink), var(--cosmos-pink-strong));
+  color: #fff;
+}
+
+.pointCard.big.cardBg-blue-horizon {
+  background: linear-gradient(135deg, var(--blue), var(--navy));
+  color: #fff;
+}
+
+.pointCard.big[class*="cardBg-"] .muted {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.pointCard.big[class*="cardBg-"] .tierName {
+  color: #fff;
+}
+
+.pointCard.big[class*="cardBg-"] .profileTitleBadge {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.22);
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .grid3,
@@ -2008,6 +2300,16 @@ button:disabled {
   .actionGrid {
     grid-template-columns: 1fr;
   }
+  .fanzoneTopGrid {
+    grid-template-columns: 1fr;
+  }
+  .playerGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .socialIconCircle {
+    width: 50px;
+    height: 50px;
+  }
   .metrics {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2064,6 +2366,29 @@ button:disabled {
   }
   .metrics {
     grid-template-columns: 1fr 1fr;
+  }
+  .playerGrid {
+    grid-template-columns: 1fr;
+  }
+  .policyStrip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .policyStep {
+    white-space: normal;
+  }
+  .policyArrow {
+    display: none;
+  }
+  .socialRow {
+    gap: 12px 14px;
+  }
+  .socialIconLink {
+    min-width: 46px;
+  }
+  .socialIconCircle {
+    width: 46px;
+    height: 46px;
   }
   .topbar {
     padding: 0 4vw;

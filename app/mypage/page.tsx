@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useAppState } from "@/lib/store";
 import { TIER_LABELS, TIER_DESCRIPTIONS, tierProgress } from "@/data/tiers";
 import TierIcon from "@/components/TierIcon";
+import { currentUser } from "@/data/users";
 
 const TX_LABELS: Record<string, string> = {
   checkin: "출석 체크",
@@ -18,6 +19,24 @@ const TX_LABELS: Record<string, string> = {
   redeem: "포인트 사용",
 };
 
+const PROFILE_TITLE_LABELS: Record<string, string> = {
+  "paju-expedition": "파주 원정대",
+  "cosmos-mate": "코스모스 메이트",
+  "frontier-crew": "프런티어 크루",
+  "paju-guardian": "파주 지킴이",
+};
+
+const PROFILE_FRAME_LABELS: Record<string, string> = {
+  "cosmos-pink": "Cosmos Pink",
+  "paju-blue": "Paju Blue",
+};
+
+const CARD_BACKGROUND_LABELS: Record<string, string> = {
+  "navy-wave": "Navy Wave",
+  "cosmos-bloom": "Cosmos Bloom",
+  "blue-horizon": "Blue Horizon",
+};
+
 export default function MyPage() {
   const {
     isLoggedIn,
@@ -25,6 +44,9 @@ export default function MyPage() {
     pointBalance,
     lifetimeEarnedPoints,
     tier,
+    profileTitle,
+    profileFrame,
+    cardBackground,
     pointHistory,
     attendanceCount,
     surveyCount,
@@ -49,8 +71,10 @@ export default function MyPage() {
     );
   }
 
-  const myVoices = suggestions.filter((v) => v.author === nickname);
+  const myVoices = suggestions.filter((v) => v.authorId === currentUser.id);
   const progress = tierProgress(lifetimeEarnedPoints);
+  const frameClass = profileFrame ? ` profileFrame-${profileFrame}` : "";
+  const backgroundClass = cardBackground ? ` cardBg-${cardBackground}` : "";
 
   return (
     <div className="stack">
@@ -60,10 +84,23 @@ export default function MyPage() {
       </div>
 
       <div className="profileGrid">
-        <div className="pointCard big">
+        <div
+          className={`pointCard big${backgroundClass}`}
+          aria-label={cardBackground ? `팬 카드 배경: ${CARD_BACKGROUND_LABELS[cardBackground] ?? cardBackground}` : undefined}
+        >
           <div className="tierRow">
-            <TierIcon tier={tier} size={22} />
+            <span
+              className={`tierIconWrap${frameClass}`}
+              aria-label={profileFrame ? `프로필 프레임: ${PROFILE_FRAME_LABELS[profileFrame] ?? profileFrame}` : undefined}
+            >
+              <TierIcon tier={tier} size={22} />
+            </span>
             <span className="tierName">{TIER_LABELS[tier]}</span>
+            {profileTitle && (
+              <span className="profileTitleBadge">
+                {PROFILE_TITLE_LABELS[profileTitle] ?? profileTitle}
+              </span>
+            )}
           </div>
           <p className="muted" style={{ marginTop: 2 }}>
             {TIER_DESCRIPTIONS[tier]}
