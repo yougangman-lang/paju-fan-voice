@@ -69,9 +69,7 @@ export default function TierIcon({
       aria-label={`${TIER_LABELS[tier]} · ${TIER_DESCRIPTIONS[tier]}`}
       style={{ color: TIER_COLORS[tier], flex: "none" }}
     >
-      <title>
-        {TIER_LABELS[tier]} · {TIER_DESCRIPTIONS[tier]}
-      </title>
+      <title>{`${TIER_LABELS[tier]} · ${TIER_DESCRIPTIONS[tier]}`}</title>
       <IconPath tier={tier} />
     </svg>
   );
