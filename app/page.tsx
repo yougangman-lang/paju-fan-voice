@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAppState } from "@/lib/store";
 import { nextMatch, nextMatchPreview } from "@/data/matches";
 import { cosmosContent } from "@/data/content";
-import { officialChannels } from "@/data/channels";
+import { officialChannels, officialShopUrl } from "@/data/channels";
 import YouTubeIcon from "@/components/YouTubeIcon";
 import MatchInfoModal from "@/components/MatchInfoModal";
 import Toast from "@/components/Toast";
@@ -185,6 +185,18 @@ export default function Home() {
           <span className="footerLabel">OFFICIAL CHANNELS</span>
           <p className="footerSocialCopy">파주 프런티어FC의 더 많은 소식을 만나보세요.</p>
           <SocialIcons channels={officialChannels} />
+          <div className="officialShopRow">
+            <span className="officialShopCopy">파주 프런티어FC 공식 온라인샵</span>
+            <a
+              href={officialShopUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="officialShopLink"
+              aria-label="파주 프런티어FC 공식 온라인샵 새 탭에서 열기"
+            >
+              OFFICIAL SHOP →
+            </a>
+          </div>
         </div>
         <div className="footerBlock">
           <span className="footerLabel">SPONSORS</span>

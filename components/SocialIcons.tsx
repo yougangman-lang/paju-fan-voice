@@ -44,7 +44,7 @@ export default function SocialIcons({ channels }: { channels: OfficialChannel[] 
             target="_blank"
             rel="noopener noreferrer"
             className="socialIconLink"
-            aria-label={ch.label}
+            aria-label={`${ch.label} 공식 채널 열기`}
           >
             {iconEl}
             <span className="socialIconLabel">{ch.label}</span>
