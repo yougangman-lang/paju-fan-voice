@@ -106,7 +106,8 @@ export type PlayerCheerMessage = CheerMessage & {
 
 export type Player = {
   id: string;
-  number: number;
+  // 감독 등 등번호가 없는 코칭스태프 항목을 위해 선택 필드로 둔다.
+  number?: number;
   name: string;
   position: string;
   shortInfo: string;

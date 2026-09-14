@@ -213,18 +213,23 @@ export default function FanZonePage() {
 
             {playerCheerMessages.length > 0 && (
               <div className="board" style={{ marginTop: 18 }}>
-                {playerCheerMessages.map((m) => (
+                {playerCheerMessages.map((m) => {
+                  const isManager = players.find((p) => p.id === m.playerId)?.position === "감독";
+                  return (
                   <div className="boardRow" key={m.id}>
                     <div className="boardMeta">
                       <span style={{ fontWeight: 700 }}>{m.author}</span>
                       <TierIcon tier={m.authorTier} />
-                      <span style={{ color: "var(--muted)" }}>· {m.playerName} 선수 · {m.createdAt}</span>
+                      <span style={{ color: "var(--muted)" }}>
+                        · {m.playerName} {isManager ? "감독님" : "선수"} · {m.createdAt}
+                      </span>
                     </div>
                     <p className="boardExcerpt" style={{ marginTop: 4 }}>
                       {m.content}
                     </p>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -237,12 +242,12 @@ export default function FanZonePage() {
             <button className="popupClose" onClick={() => setCheerPlayer(null)} aria-label="닫기">
               ×
             </button>
-            <h3>{cheerPlayer.name} 선수에게 응원의 한마디</h3>
+            <h3>{cheerPlayer.name} {cheerPlayer.position === "감독" ? "감독님" : "선수"}에게 응원의 한마디</h3>
             <form onSubmit={submitPlayerMessage} style={{ marginTop: 14 }}>
               <input
                 value={playerMessage}
                 onChange={(e) => setPlayerMessage(e.target.value)}
-                placeholder={`${cheerPlayer.name} 선수에게 힘이 되는 한마디를 남겨주세요.`}
+                placeholder={`${cheerPlayer.name} ${cheerPlayer.position === "감독" ? "감독님" : "선수"}에게 힘이 되는 한마디를 남겨주세요.`}
                 style={{ width: "100%", padding: "11px 12px", border: "1px solid var(--line)", borderRadius: 8 }}
                 maxLength={80}
                 autoFocus

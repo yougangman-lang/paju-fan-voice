@@ -17,9 +17,10 @@ export default function PlayerCard({
   player: Player;
   onCheer: (player: Player) => void;
 }) {
-  // /public/players/{등번호}.png 파일이 존재하면 자동으로 실제 사진이 보이고,
+  // /public/players/{id}.png 파일이 존재하면 자동으로 실제 사진이 보이고,
   // 아직 없으면(404) neutral silhouette placeholder로 폴백한다. 별도의 데이터
-  // 입력 없이 파일만 추가하면 되도록 등번호 기반 경로 규칙을 사용한다.
+  // 입력 없이 파일만 추가하면 되도록 id 기반 경로 규칙을 사용한다(감독처럼
+  // 등번호가 없는 항목도 같은 방식으로 다룰 수 있다).
   const [photoFailed, setPhotoFailed] = useState(false);
 
   return (
@@ -29,14 +30,14 @@ export default function PlayerCard({
           <SilhouettePlaceholder />
         ) : (
           <img
-            src={`/players/${player.number}.png`}
+            src={`/players/${player.id}.png`}
             alt={player.name}
             onError={() => setPhotoFailed(true)}
           />
         )}
       </div>
       <div className="playerInfo">
-        <span className="playerNumber">{player.number}</span>
+        {player.number !== undefined && <span className="playerNumber">{player.number}</span>}
         <p className="playerName">{player.name}</p>
         <p className="playerPosition">{player.position}</p>
         {player.shortInfo && <p className="playerShortInfo">{player.shortInfo}</p>}
