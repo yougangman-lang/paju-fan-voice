@@ -109,7 +109,6 @@ export type Player = {
   number: number;
   name: string;
   position: string;
-  image?: string;
   shortInfo: string;
 };
 
