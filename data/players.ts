@@ -1,9 +1,12 @@
 import type { Player } from "./types";
 
-// 파주 프런티어FC 2026 선수단. 아직 선수 사진은 없어 PlayerCard가 자동으로
-// neutral silhouette placeholder를 보여준다. 사진이 준비되면 각 항목에
-// image만 추가하면 된다.
+// 파주 프런티어FC 2026 선수단(+감독). 아직 선수 사진은 없어 PlayerCard가
+// 자동으로 neutral silhouette placeholder를 보여준다. 사진이 준비되면
+// /public/players/{id}.png 파일만 추가하면 자동으로 교체된다.
 export const players: Player[] = [
+  // 감독 — 등번호가 없어 number 없이 등록한다.
+  { id: "manager-gerard-nuss", name: "제라드 누스", position: "감독", shortInfo: "스페인 출신" },
+
   // GK
   { id: "p-1", number: 1, name: "류원우", position: "GK", shortInfo: "" },
   { id: "p-13", number: 13, name: "김민승", position: "GK", shortInfo: "" },
@@ -45,6 +48,7 @@ export const players: Player[] = [
   { id: "p-47", number: 47, name: "최상윤", position: "FW", shortInfo: "" },
   { id: "p-70", number: 70, name: "안준혁", position: "FW", shortInfo: "" },
   { id: "p-92", number: 92, name: "보르하 바스톤", position: "FW", shortInfo: "Borja Bastón" },
+  { id: "p-95", number: 95, name: "시암", position: "FW", shortInfo: "Thailand" },
   { id: "p-97", number: 97, name: "전유상", position: "FW", shortInfo: "" },
   { id: "p-99", number: 99, name: "이동열", position: "FW", shortInfo: "" },
 ];
