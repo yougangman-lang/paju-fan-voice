@@ -72,14 +72,63 @@ export const categoryAnalysis: CategoryAnalysis[] = [
   },
 ];
 
-export const aiFanInsight = {
-  headline: "셔틀 관련 의견이 최근 증가하고 있습니다.",
-  body:
-    "최근 팬 제안에서 경기 종료 후 금촌역 방면 이동과 관련된 의견이 반복적으로 확인되었습니다.",
-  keywords: [
-    { label: "배차간격", count: 12 },
-    { label: "막차시간", count: 8 },
-    { label: "금촌역", count: 7 },
-  ],
-  trend: "최근 2경기 연속 증가",
+// ---------------------------------------------------------------------------
+// AI FAN INSIGHT: "AI는 분류·정리, 사람은 검토·판단·대응"을 화면 구조로
+// 보여주기 위한 mock 데이터. 실제 NLP 분석과 연동되어 있지 않으며, 각 카드는
+// (1) AI가 묶어 준 관련 의견 수/추세, (2) 그 근거가 된 원문 예시,
+// (3) 관리자가 상태를 바꾸고 답변을 남길 대상 제안(linkedSuggestionId)으로
+// 구성된다. linkedSuggestionId가 있는 카드는 실제 팬 제안 목록의 항목과
+// 연결되어, "AI 인사이트 → 원문 확인 → 관리자 판단 → 상태/답변 반영" 흐름을
+// 그대로 시연할 수 있다.
+export type FanInsightCard = {
+  id: string;
+  topic: string;
+  subtopic: string;
+  relatedCount: number;
+  trendTags: string[];
+  rawQuotes: string[];
+  linkedSuggestionId?: string;
 };
+
+export const weeklyFanInsights: FanInsightCard[] = [
+  {
+    id: "insight-safety",
+    topic: "경기장 운영",
+    subtopic: "안전·동선",
+    relatedCount: 18,
+    trendTags: ["최근 증가", "반복도 높음"],
+    rawQuotes: [
+      "푸드트럭 앞에 차가 계속 들어와서 아이들이랑 지나가기 조금 위험했어요.",
+      "흡연구역이 대기줄이랑 너무 가까운 것 같습니다.",
+      "차량 동선과 관람객 줄을 분리하면 좋을 것 같아요.",
+      "매표소 앞에 줄이 여러 갈래라 혼잡해요.",
+    ],
+    linkedSuggestionId: "sg-demo-foodtruck",
+  },
+  {
+    id: "insight-shuttle",
+    topic: "셔틀/접근성",
+    subtopic: "경기 후 이동",
+    relatedCount: 14,
+    trendTags: ["공감도 높음"],
+    rawQuotes: [
+      "경기 끝나고 셔틀 배차 간격이 너무 길어요.",
+      "막차 시간이 너무 빨라서 못 탈 때가 있어요.",
+      "금촌역 방면 셔틀이 한 대만 더 있어도 훨씬 편할 것 같아요.",
+    ],
+    linkedSuggestionId: "sg1",
+  },
+  {
+    id: "insight-md",
+    topic: "MD/굿즈",
+    subtopic: "상품 구성",
+    relatedCount: 9,
+    trendTags: ["유사 의견"],
+    rawQuotes: [
+      "원정 팬들도 살 수 있는 소량 굿즈가 있으면 좋겠어요.",
+      "인기 사이즈가 빨리 품절돼요.",
+      "머플러 디자인 종류가 조금 더 다양했으면 합니다.",
+    ],
+    linkedSuggestionId: "sg3",
+  },
+];

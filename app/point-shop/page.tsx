@@ -7,17 +7,16 @@ import { rewardItems } from "@/data/rewards";
 import type { RewardCategory, RewardItem } from "@/data/types";
 import OnlineRewardModal from "@/components/OnlineRewardModal";
 
-const categories: { key: RewardCategory; label: string }[] = [
-  { key: "MATCHDAY", label: "MATCHDAY" },
-  { key: "FAMILY", label: "FAMILY" },
+const categories: { key: RewardCategory | "전체"; label: string }[] = [
+  { key: "전체", label: "전체" },
+  { key: "DIGITAL", label: "DIGITAL" },
   { key: "EXPERIENCE", label: "EXPERIENCE" },
   { key: "GOODS", label: "GOODS" },
-  { key: "ONLINE", label: "ONLINE" },
 ];
 
 export default function PointShopPage() {
   const { isLoggedIn, pointBalance, redeemReward, redeemOnlineReward } = useAppState();
-  const [activeCategory, setActiveCategory] = useState<RewardCategory>("MATCHDAY");
+  const [activeCategory, setActiveCategory] = useState<RewardCategory | "전체">("전체");
   const [feedback, setFeedback] = useState<Record<string, string>>({});
   const [onlineModalItem, setOnlineModalItem] = useState<RewardItem | null>(null);
 
@@ -59,7 +58,8 @@ export default function PointShopPage() {
     if (result === "success") setOnlineModalItem(null);
   };
 
-  const items = rewardItems.filter((r) => r.category === activeCategory);
+  const items =
+    activeCategory === "전체" ? rewardItems : rewardItems.filter((r) => r.category === activeCategory);
 
   return (
     <div className="stack">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppState } from "@/lib/store";
 
 const providers = [
@@ -42,10 +43,16 @@ export default function LoginPage() {
     <div className="authCard">
       <Link
         href="/"
-        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, marginBottom: 22 }}
+        style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 22 }}
       >
-        <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="loginCrest" />
-        <strong>PAJU FAN VOICE</strong>
+        <Image
+          src="/branding/paju-fan-voice-logo.png"
+          alt="PAJU FAN VOICE"
+          width={264}
+          height={128}
+          priority
+          className="loginLogo"
+        />
       </Link>
 
       {step === "choose" ? (

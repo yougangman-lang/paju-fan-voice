@@ -156,4 +156,50 @@ export const initialSuggestions: FanSuggestion[] = [
     clubStatus: "검토중",
     createdAt: "2026-08-22",
   },
+  // 아래 두 건은 현재 로그인 데모 계정(currentUser) 명의로 등록된 제안으로,
+  // "제안 → 공감 → 구단 검토 → 반영 완료 → 구단 답변" 흐름과 마이페이지의
+  // "내 제안 처리 현황"을 발표에서 바로 보여줄 수 있도록 넣은 예시 데이터다.
+  // isDemo: true인 항목은 실제 구단 정책으로 오인되지 않도록 화면에 작은
+  // DEMO 표시를 함께 보여준다.
+  {
+    id: "sg-demo-foodtruck",
+    category: "경기장 운영",
+    title: "푸드트럭 주변 차량 동선과 흡연 구역을 분리해주세요",
+    content:
+      "푸드트럭을 이용하는 관람객과 차량 이동 동선이 겹치는 구간이 있어 어린이와 가족 관람객이 이용하기 불편합니다. 인근 흡연 구역의 연기도 대기 공간으로 들어오는 경우가 있어 차량 동선과 흡연 구역을 관람객 대기 공간과 조금 더 분리했으면 좋겠습니다.",
+    author: "파주프런티어 팬",
+    authorId: "u1",
+    authorTier: "ROOKIE",
+    likes: 37,
+    likedByUserIds: [],
+    stakeRefunded: true,
+    rewardedLikeCount: 32,
+    likeRewardEarned: 32,
+    clubStatus: "반영완료",
+    clubResponse: {
+      comment:
+        "팬 여러분의 의견을 반영해 푸드트럭 주변 차량 이동 동선을 관람객 대기 구역과 분리하고, 흡연 구역 안내 표지와 현장 안내를 강화했습니다. 다음 홈경기에서도 이용 불편 사항을 지속적으로 확인해 추가 개선하겠습니다.",
+      date: "2026-09-15",
+    },
+    createdAt: "2026-09-05",
+    isDemo: true,
+  },
+  {
+    id: "sg-demo-shuttlebus",
+    category: "경기장 운영",
+    title: "원정버스 운영 시간을 조금 더 늘려주세요",
+    content:
+      "원정 응원을 위한 버스 운영 시간이 다소 빠듯합니다. 더 많은 팬들이 참여할 수 있도록 원정버스 운행 시간을 조금 더 여유 있게 조정해주시면 좋겠습니다.",
+    author: "파주프런티어 팬",
+    authorId: "u1",
+    authorTier: "ROOKIE",
+    likes: 6,
+    likedByUserIds: [],
+    stakeRefunded: true,
+    rewardedLikeCount: 1,
+    likeRewardEarned: 1,
+    clubStatus: "검토중",
+    createdAt: "2026-09-16",
+    isDemo: true,
+  },
 ];

@@ -62,7 +62,7 @@ export default function FanZonePage() {
     return (
       <div className="stack">
         <div className="pageTitle">
-          <h1>FAN ZONE</h1>
+          <h1>응원존</h1>
           <p>로그인 후 응원하고 P:POINT를 쌓아보세요.</p>
         </div>
         <Link className="primaryBtn" href="/login" style={{ width: "fit-content" }}>
@@ -75,15 +75,17 @@ export default function FanZonePage() {
   return (
     <div className="stack">
       <div className="pageTitle">
-        <h1>FAN ZONE</h1>
+        <h1>응원존</h1>
         <p>파주 프런티어FC를 향한 긍정적인 응원과 참여가 모이는 공간입니다.</p>
       </div>
 
       <div className={`fanzoneTopGrid${showAttendanceCard ? "" : " single"}`}>
         <section className="panel fanzoneActionCard">
-          <p className="quickTitle">오늘도 파주를 응원해 주세요.</p>
+          <p className="quickTitle">
+            오늘도 파주를 응원해 주세요. <span className="pointChip">+5P</span>
+          </p>
           <p className="muted" style={{ marginTop: 4 }}>
-            하루 한 번 응원하고 +5 P:POINT
+            하루 한 번 응원할 수 있어요.
           </p>
           <button className="primaryBtn" style={{ marginTop: 14 }} onClick={cheer} disabled={hasCheeredToday}>
             {hasCheeredToday ? "오늘 응원 완료" : "파주 응원하기"}
@@ -92,9 +94,11 @@ export default function FanZonePage() {
 
         {showAttendanceCard && (
           <section className="panel fanzoneActionCard">
-            <p className="quickTitle">오늘 경기장에서 함께하시나요?</p>
+            <p className="quickTitle">
+              오늘 경기장에서 함께하시나요? <span className="pointChip">+50P</span>
+            </p>
             <p className="muted" style={{ marginTop: 4 }}>
-              직관을 인증하고 +50 P:POINT
+              직관 인증으로 참여를 기록해보세요.
             </p>
 
             {verified || justVerified ? (

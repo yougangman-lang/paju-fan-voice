@@ -163,6 +163,11 @@ export default function SuggestionsPage() {
                     <div className="boardMeta">
                       <span className="catLabel">{v.category}</span>
                       {v.likes >= 20 && <span className="hotLabel">HOT</span>}
+                      {v.isDemo && (
+                        <span className="demoTag" title="발표 시연을 위한 예시 데이터입니다.">
+                          DEMO
+                        </span>
+                      )}
                     </div>
                     <p className="boardTitle">{v.title}</p>
                     <div className="boardAuthorRow">
@@ -182,8 +187,17 @@ export default function SuggestionsPage() {
                     <p className="boardExcerpt">{v.content}</p>
                     {v.clubResponse && (
                       <div className="clubReply">
-                        <b>구단 답변 · {v.clubResponse.date}</b>
-                        {v.clubResponse.comment}
+                        <div className="clubReplyHead">
+                          <img
+                            src="/branding/paju-frontier-crest.png"
+                            alt=""
+                            aria-hidden="true"
+                            className="clubReplyCrest"
+                          />
+                          <b>구단 답변</b>
+                          <span className="clubReplyDate">{v.clubResponse.date}</span>
+                        </div>
+                        <p className="clubReplyText">{v.clubResponse.comment}</p>
                       </div>
                     )}
                     <div className="boardFoot">

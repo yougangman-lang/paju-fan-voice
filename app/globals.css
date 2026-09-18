@@ -87,15 +87,15 @@ p {
 }
 
 .shell {
-  width: min(1180px, 92vw);
+  width: min(1140px, 92vw);
   margin: 0 auto;
-  padding: 40px 0 90px;
+  padding: 44px 0 96px;
 }
 
 .stack {
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 40px;
 }
 
 .eyebrow {
@@ -126,27 +126,23 @@ p {
   align-items: center;
 }
 
-.brandCrest {
-  height: 44px;
+.brandLogo {
+  height: 40px;
   width: auto;
   object-fit: contain;
   flex: none;
 }
 
-.brand strong {
-  display: block;
-  font-size: 15px;
-}
-
-.brand span {
-  font-size: 11.5px;
+.brandSub {
+  font-size: 12.5px;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .topbar nav {
   display: flex;
   gap: 18px;
-  font-size: 13.5px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--muted);
   white-space: nowrap;
@@ -189,7 +185,7 @@ p {
   border-radius: 8px;
   padding: 8px 12px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .adminLink {
@@ -247,8 +243,12 @@ p {
   border-radius: 8px;
   padding: 13px 20px;
   font-weight: 700;
-  font-size: 14px;
-  display: inline-block;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  box-sizing: border-box;
   transition: opacity 0.12s ease;
 }
 
@@ -271,7 +271,7 @@ p {
   padding: 8px 14px;
   background: var(--soft);
   color: var(--navy);
-  font-size: 12.5px;
+  font-size: 14px;
 }
 
 .subtleBtn {
@@ -279,7 +279,7 @@ p {
   background: var(--bg);
   border: 1px solid var(--line);
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .subtleBtn.isActive {
@@ -304,14 +304,14 @@ button:disabled {
 .pointCard span {
   display: block;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
 .pointCard strong {
   display: block;
-  font-size: 34px;
+  font-size: 32px;
   margin: 8px 0;
   color: var(--navy);
   font-weight: 800;
@@ -321,7 +321,7 @@ button:disabled {
   display: block;
   color: var(--muted);
   line-height: 1.6;
-  font-size: 12.5px;
+  font-size: 13.5px;
 }
 
 /* ---------- section header ---------- */
@@ -335,13 +335,13 @@ button:disabled {
 
 .sectionHead h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 27px;
   font-weight: 800;
   color: var(--ink);
 }
 
 .sectionHead > a {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--blue);
   font-weight: 700;
 }
@@ -352,7 +352,7 @@ button:disabled {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  padding: 24px;
+  padding: 28px;
 }
 
 .questionCard h3 {
@@ -371,7 +371,7 @@ button:disabled {
 .chips span,
 .tag,
 .statusChip {
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 700;
   border-radius: 6px;
   padding: 5px 9px;
@@ -381,9 +381,14 @@ button:disabled {
 
 .errorText {
   color: var(--bad);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   margin: 0;
+}
+
+.statusChip[data-status="접수"] {
+  background: #eef0f4;
+  color: #4b5568;
 }
 
 .statusChip[data-status="검토중"] {
@@ -415,13 +420,13 @@ button:disabled {
 .grid2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  gap: 20px;
 }
 
 .muted {
   color: var(--muted);
   line-height: 1.65;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .meta {
@@ -431,7 +436,7 @@ button:disabled {
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 18px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
 }
 
@@ -441,7 +446,7 @@ button:disabled {
   color: var(--cosmos-pink-strong);
   font-weight: 700;
   padding: 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .likeBtn.isLiked {
@@ -459,7 +464,7 @@ button:disabled {
 }
 
 .boardRow {
-  padding: 18px 0;
+  padding: 20px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -476,7 +481,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .catLabel {
@@ -490,7 +495,7 @@ button:disabled {
 }
 
 .boardTitle {
-  font-size: 15.5px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.4;
   margin-top: 6px;
@@ -498,7 +503,7 @@ button:disabled {
 }
 
 .boardExcerpt {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.6;
   margin-top: 4px;
@@ -508,20 +513,20 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--muted);
   margin-top: 6px;
 }
 
 .boardLikesCount {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   color: var(--navy);
   margin-top: 8px;
 }
 
 .boardEarned {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--cosmos-pink-strong);
   background: var(--soft);
@@ -537,32 +542,14 @@ button:disabled {
   justify-content: space-between;
   gap: 10px;
   margin-top: 10px;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--muted);
-}
-
-.clubReply {
-  margin-top: 10px;
-  padding: 2px 0 2px 14px;
-  border-left: 2px solid var(--line);
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--ink);
-}
-
-.clubReply b {
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.02em;
-  color: var(--blue);
-  margin-bottom: 3px;
-  font-weight: 700;
 }
 
 /* ---------- page title ---------- */
 .pageTitle h1 {
   color: var(--navy);
-  font-size: 28px;
+  font-size: 30px;
   margin: 0 0 10px;
   font-weight: 800;
 }
@@ -571,7 +558,7 @@ button:disabled {
   color: var(--muted);
   line-height: 1.7;
   max-width: 640px;
-  font-size: 14.5px;
+  font-size: 16px;
 }
 
 /* ---------- polls ---------- */
@@ -584,14 +571,14 @@ button:disabled {
 }
 
 .pollHead h2 {
-  font-size: 19px;
+  font-size: 22px;
   margin-top: 10px;
   font-weight: 700;
 }
 
 .pollDesc {
   color: var(--muted);
-  font-size: 13.5px;
+  font-size: 15px;
   margin-bottom: 18px;
   line-height: 1.6;
 }
@@ -615,7 +602,7 @@ button:disabled {
   border: 1px solid var(--line);
   border-radius: 8px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
   transition: border-color 0.12s ease, background 0.12s ease;
 }
 
@@ -631,7 +618,7 @@ button:disabled {
   padding: 11px 14px;
   font-weight: 700;
   margin: 16px 0;
-  font-size: 13.5px;
+  font-size: 14.5px;
 }
 
 .resultList {
@@ -642,7 +629,7 @@ button:disabled {
 .resultHead {
   display: flex;
   justify-content: space-between;
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 500;
 }
 
@@ -680,7 +667,7 @@ button:disabled {
 }
 
 .compose label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   display: block;
   margin: 14px 0 6px;
@@ -728,8 +715,9 @@ button:disabled {
   border: 1px solid var(--line);
   background: #fff;
   border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 12.5px;
+  padding: 9px 14px;
+  min-height: 40px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--muted);
 }
@@ -752,9 +740,10 @@ button:disabled {
 .sortToggle button {
   border: none;
   background: transparent;
-  padding: 6px 12px;
+  padding: 9px 14px;
+  min-height: 40px;
   border-radius: 6px;
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--muted);
 }
@@ -770,7 +759,7 @@ button:disabled {
   color: var(--muted);
   border: 1px dashed var(--line);
   border-radius: var(--radius-md);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* ---------- mypage ---------- */
@@ -781,7 +770,7 @@ button:disabled {
 }
 
 .pointCard.big strong {
-  font-size: 40px;
+  font-size: 32px;
 }
 
 .stats {
@@ -806,7 +795,7 @@ button:disabled {
 
 .stats span {
   display: block;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--muted);
   margin-top: 4px;
 }
@@ -818,7 +807,7 @@ button:disabled {
   gap: 16px;
   padding: 13px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 13.5px;
+  font-size: 14.5px;
 }
 
 .history > div:last-child,
@@ -843,7 +832,7 @@ button:disabled {
   gap: 12px;
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 13.5px;
+  font-size: 14.5px;
 }
 
 .miniList > div:last-child {
@@ -873,7 +862,7 @@ button:disabled {
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 7px 11px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
   font-weight: 600;
 }
@@ -906,28 +895,40 @@ button:disabled {
   align-items: center;
 }
 
-.adminBrandCrest {
-  height: 32px;
-  width: auto;
-  object-fit: contain;
+.adminBrandLogoWrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 12px;
   flex: none;
 }
 
-.adminBrand strong {
+.adminBrandLogo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
   display: block;
-  color: #fff;
-  font-size: 14px;
 }
 
-.adminBrand span {
+.adminBrandSub {
   display: block;
   color: #8ea3cc;
-  font-size: 10.5px;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.adminLoginLogo {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .backToFan {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #b9c6e6;
 }
@@ -966,7 +967,7 @@ button:disabled {
 .metrics span {
   display: block;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -981,7 +982,7 @@ button:disabled {
 .metrics small {
   display: block;
   color: #2e8a55;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -1005,7 +1006,7 @@ button:disabled {
   gap: 16px;
   padding: 13px 0;
   border-bottom: 1px solid var(--line);
-  font-size: 13.5px;
+  font-size: 14.5px;
 }
 
 .adminPoll:last-child {
@@ -1027,7 +1028,7 @@ button:disabled {
   grid-template-columns: 110px 1fr 34px;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .barChart .bar {
@@ -1060,7 +1061,7 @@ button:disabled {
 
 .integration span {
   color: var(--muted);
-  font-size: 12.5px;
+  font-size: 13.5px;
 }
 
 .plus,
@@ -1082,14 +1083,14 @@ button:disabled {
   color: #56637f;
   border-radius: 6px;
   padding: 7px 12px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   background: #f7f9fd;
 }
 
 /* ---------- nav: login link ---------- */
 .loginLink {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--navy);
   border: 1px solid var(--line);
@@ -1186,7 +1187,7 @@ button:disabled {
 
 .matchMeta {
   color: #d3dcec;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   text-align: center;
   white-space: nowrap;
@@ -1206,7 +1207,7 @@ button:disabled {
   border-radius: 8px;
   padding: 11px 18px;
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 14.5px;
 }
 
 .eyebrowSmall {
@@ -1219,13 +1220,13 @@ button:disabled {
 
 /* fanzone 페이지에서도 사용하는 공용 클래스이므로 유지 */
 .quickTitle {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   margin-top: 8px;
 }
 
 .quickLink {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--blue);
   background: none;
@@ -1237,7 +1238,7 @@ button:disabled {
 .homeStack {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 36px;
 }
 
 /* ---------- home: 오늘의 설문 (Priority 2) ---------- */
@@ -1277,7 +1278,7 @@ button:disabled {
 }
 
 .pollTitle {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--ink);
   margin-top: 8px;
@@ -1286,7 +1287,7 @@ button:disabled {
 
 .pollMeta {
   margin-top: 10px;
-  font-size: 14.5px;
+  font-size: 15.5px;
   color: var(--muted);
 }
 
@@ -1360,7 +1361,7 @@ button:disabled {
 
 .actionDesc {
   margin-top: 4px;
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.5;
 }
@@ -1385,7 +1386,7 @@ button:disabled {
 }
 
 .cosmosSectionHead h2 {
-  font-size: 22px;
+  font-size: 27px;
 }
 
 .contentGrid {
@@ -1422,7 +1423,7 @@ button:disabled {
 }
 
 .contentCardTitle {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--ink);
   line-height: 1.4;
@@ -1462,7 +1463,7 @@ button:disabled {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--muted);
 }
@@ -1499,12 +1500,12 @@ button:disabled {
 .completePoint {
   color: var(--cosmos-pink-strong);
   font-weight: 800;
-  font-size: 22px;
+  font-size: 24px;
   margin: 10px 0;
 }
 
 .simNotice {
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--muted);
   line-height: 1.6;
   background: var(--bg);
@@ -1529,7 +1530,7 @@ button:disabled {
 }
 
 .shopBalance span {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--blue);
 }
@@ -1587,19 +1588,19 @@ button:disabled {
 
 .shopPrice {
   color: var(--navy);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
 }
 
 .shopSalePrice {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--muted);
   margin-top: 2px;
 }
 
 .shopFeedback {
   margin-top: 8px;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--good);
   font-weight: 600;
 }
@@ -1620,8 +1621,8 @@ button:disabled {
   margin: 80px auto;
 }
 
-.loginCrest {
-  height: 72px;
+.loginLogo {
+  height: 64px;
   width: auto;
   object-fit: contain;
 }
@@ -1633,7 +1634,7 @@ button:disabled {
   border: 1px solid var(--line);
   background: #fff;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15.5px;
   text-align: center;
 }
 
@@ -1666,7 +1667,7 @@ button:disabled {
 }
 
 .tierName {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
   color: var(--navy);
 }
@@ -1715,7 +1716,7 @@ button:disabled {
 .popupDesc {
   margin-top: 10px;
   color: var(--muted);
-  font-size: 13.5px;
+  font-size: 14.5px;
   line-height: 1.6;
 }
 
@@ -1784,7 +1785,7 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--navy);
   text-align: center;
@@ -1798,7 +1799,7 @@ button:disabled {
 }
 
 .matchInfoVs {
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--cosmos-pink-strong);
   flex: none;
@@ -1808,7 +1809,7 @@ button:disabled {
 .matchInfoMeta {
   margin-top: 16px;
   text-align: center;
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--muted);
 }
 
@@ -1821,12 +1822,12 @@ button:disabled {
 .matchInfoCompare {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .matchInfoCompare th {
   color: var(--navy);
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 800;
   padding-bottom: 8px;
   width: 38%;
@@ -1845,7 +1846,7 @@ button:disabled {
 
 .matchInfoMetric {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   width: 24%;
 }
@@ -1867,7 +1868,7 @@ button:disabled {
 
 .adminTabs button {
   padding: 10px 14px;
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--muted);
   background: none;
@@ -1885,7 +1886,7 @@ button:disabled {
   grid-template-columns: 110px 1fr 34px;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 14px;
   width: 100%;
   background: none;
   border: none;
@@ -1912,7 +1913,7 @@ button:disabled {
   color: var(--blue);
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -1928,7 +1929,7 @@ button:disabled {
 .adminTable {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap;
 }
 
@@ -1946,7 +1947,7 @@ button:disabled {
 }
 
 .popupFieldLabel {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--muted);
 }
@@ -1959,7 +1960,7 @@ button:disabled {
 
 /* ---------- home footer: SNS 안내 문구 ---------- */
 .footerSocialCopy {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--ink);
   margin: 2px 0 4px;
@@ -2025,12 +2026,12 @@ button:disabled {
 }
 
 .officialShopCopy {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
 }
 
 .officialShopLink {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--muted);
   background: var(--bg);
@@ -2116,7 +2117,7 @@ button:disabled {
 }
 
 .playerNumber {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   color: var(--navy);
   background: var(--soft);
@@ -2125,14 +2126,14 @@ button:disabled {
 }
 
 .playerName {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--ink);
   margin-top: 4px;
 }
 
 .playerPosition {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--muted);
 }
 
@@ -2185,7 +2186,7 @@ button:disabled {
   border: 1px solid var(--line);
   border-radius: 8px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .onlineChoiceList button.isActive {
@@ -2204,7 +2205,7 @@ button:disabled {
   padding: 10px 12px;
   background: var(--bg);
   border-radius: 8px;
-  font-size: 11.5px;
+  font-size: 13px;
   color: var(--muted);
   font-weight: 600;
 }
@@ -2223,7 +2224,7 @@ button:disabled {
 
 /* ---------- mypage: 프로필 커스터마이즈 (칭호/프레임/배경) ---------- */
 .profileTitleBadge {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--cosmos-pink-strong);
   background: rgba(238, 151, 189, 0.14);
@@ -2272,6 +2273,268 @@ button:disabled {
 .pointCard.big[class*="cardBg-"] .profileTitleBadge {
   color: #fff;
   background: rgba(255, 255, 255, 0.22);
+}
+
+/* ---------- home: BRAND/HERO (Priority 0) ---------- */
+.homeHero {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+}
+
+.homeHeroLogo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.homeHeroTitle {
+  margin-top: 14px;
+  font-size: 38px;
+  line-height: 1.28;
+  font-weight: 800;
+  color: var(--navy);
+  max-width: 760px;
+}
+
+.homeHeroDesc {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 640px;
+}
+
+/* ---------- point value chip (행동 옆에 붙는 작은 포인트 배지) ---------- */
+.pointChip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+  background: var(--soft);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.pointCard.big[class*="cardBg-"] .pointChip,
+[class*="cardBg-"] .pointChip {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ---------- 발표 시연용 mock 데이터 표시 ---------- */
+.demoTag {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* ---------- 팬 제안 / AI FAN INSIGHT: 구단 답변 블록 ----------
+   일반 팬 댓글과 확실히 구분되도록 연한 Navy→Pink 배경 + 엠블럼 +
+   "구단 답변" 배지를 사용한다. */
+.clubReply {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, rgba(40, 49, 136, 0.07), rgba(238, 151, 189, 0.1));
+  border: 1px solid rgba(40, 49, 136, 0.12);
+}
+
+.clubReplyHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clubReplyCrest {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
+  flex: none;
+}
+
+.clubReplyHead b {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.clubReplyDate {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.clubReplyText {
+  margin-top: 6px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* ---------- mypage: 내 제안 처리 현황 ---------- */
+.myVoiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.myVoiceRow {
+  display: block;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.myVoiceRow:hover {
+  border-color: var(--navy);
+  background: var(--soft);
+}
+
+.myVoiceRowHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.myVoiceTitle {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.myVoiceMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---------- admin: AI FAN INSIGHT 카드 ---------- */
+.insightCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.insightCard {
+  border-left: 3px solid var(--cosmos-pink);
+  padding: 20px;
+}
+
+.insightCardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  color: inherit;
+}
+
+.insightTopic {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--blue);
+}
+
+.insightCount {
+  margin-top: 6px;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.insightToggle {
+  flex: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.insightDetail {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.insightAnalysisGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.insightQuoteList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.insightQuote {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.insightAdminAction {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+
+.statusChangeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.statusChangeBtn {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.statusChangeBtn.isActive {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+.adminResponseInput {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  resize: vertical;
 }
 
 /* ---------- responsive ---------- */
@@ -2324,12 +2587,19 @@ button:disabled {
   .grid3,
   .voiceLayout,
   .profileGrid,
-  .shopGrid {
+  .shopGrid,
+  .insightCardGrid {
     grid-template-columns: 1fr;
   }
   /* COSMOS CONTENT은 좁은 화면에서도 가능하면 2열을 유지한다 */
   .actionGrid {
     grid-template-columns: 1fr;
+  }
+  .homeHero {
+    padding: 26px 22px;
+  }
+  .myVoiceRowHead {
+    flex-wrap: wrap;
   }
   .fanzoneTopGrid {
     grid-template-columns: 1fr;
@@ -2360,7 +2630,7 @@ button:disabled {
     height: 4px;
   }
   .pollTitle {
-    font-size: 21px;
+    font-size: 23px;
   }
   .pollCta {
     width: 100%;
@@ -2380,14 +2650,27 @@ button:disabled {
   }
   .matchMeta {
     white-space: normal;
-    font-size: 12px;
+    font-size: 13px;
   }
-  .brandCrest {
-    height: 36px;
+  .brandLogo {
+    height: 32px;
   }
   .shell,
   .adminShell {
     padding: 28px 0 70px;
+  }
+  .homeHeroTitle {
+    font-size: 28px;
+  }
+  .homeHeroDesc {
+    font-size: 15px;
+  }
+  .sectionHead h2,
+  .cosmosSectionHead h2 {
+    font-size: 24px;
+  }
+  .pageTitle h1 {
+    font-size: 25px;
   }
 }
 
@@ -2424,7 +2707,7 @@ button:disabled {
   .topbar {
     padding: 0 4vw;
   }
-  .brand span {
+  .brandSub {
     display: none;
   }
   .ypBadge {
