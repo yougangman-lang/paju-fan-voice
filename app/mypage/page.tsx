@@ -149,20 +149,32 @@ export default function MyPage() {
 
       <div className="grid2">
         <div className="panel">
-          <h2>내가 작성한 팬 제안</h2>
+          <h2>내 제안 처리 현황</h2>
+          <p className="muted" style={{ marginTop: 4 }}>
+            내가 남긴 제안을 구단이 어떻게 처리하고 있는지 확인하세요.
+          </p>
           {myVoices.length === 0 ? (
             <p className="muted" style={{ marginTop: 14 }}>
               아직 작성한 제안이 없어요. 팬 제안에서 첫 의견을 남겨보세요.
             </p>
           ) : (
-            <div className="miniList" style={{ marginTop: 14 }}>
+            <div className="myVoiceList" style={{ marginTop: 14 }}>
               {myVoices.map((v) => (
-                <div key={v.id}>
-                  <span>{v.title}</span>
-                  <span>
-                    사용 -10P · 공감 {v.likes} · 획득 +{v.likeRewardEarned}P
-                  </span>
-                </div>
+                <Link href="/suggestions" className="myVoiceRow" key={v.id}>
+                  <div className="myVoiceRowHead">
+                    <span className="myVoiceTitle">{v.title}</span>
+                    <span className="statusChip" data-status={v.clubStatus}>
+                      {v.clubStatus}
+                    </span>
+                  </div>
+                  <div className="myVoiceMeta">
+                    <span>{v.createdAt}</span>
+                    <span>공감 {v.likes}</span>
+                    {v.stakeRefunded && <span>등록 포인트 환급 완료</span>}
+                    {v.likeRewardEarned > 0 && <span>공감 보상 +{v.likeRewardEarned}P</span>}
+                    {v.isDemo && <span className="demoTag">DEMO</span>}
+                  </div>
+                </Link>
               ))}
             </div>
           )}

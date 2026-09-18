@@ -3,10 +3,10 @@ import type { RewardItem } from "./types";
 // P:POINT는 현금으로 환전되지 않는다. UI에는 "1P = 몇 원"을 노출하지 않고
 // 상품별로 필요한 P:POINT만 보여준다.
 export const rewardItems: RewardItem[] = [
-  // MATCHDAY
+  // GOODS — 매치데이 할인권 (F&B/MD 사용처가 실물 굿즈/현장 소비와 가까워 GOODS로 분류)
   {
     id: "r-md-1",
-    category: "MATCHDAY",
+    category: "GOODS",
     title: "F&B 5,000원 할인권",
     description: "경기장 내 F&B 매장에서 사용할 수 있는 할인권입니다.",
     pointCost: 100,
@@ -16,7 +16,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-md-2",
-    category: "MATCHDAY",
+    category: "GOODS",
     title: "F&B 10,000원 할인권",
     description: "경기장 내 F&B 매장에서 사용할 수 있는 할인권입니다.",
     pointCost: 180,
@@ -26,7 +26,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-md-3",
-    category: "MATCHDAY",
+    category: "GOODS",
     title: "MD 10% 할인 쿠폰",
     description: "공식 MD 스토어에서 사용할 수 있는 할인 쿠폰입니다.",
     pointCost: 150,
@@ -35,10 +35,10 @@ export const rewardItems: RewardItem[] = [
     image: "/shop/md-10percent-coupon.png",
   },
 
-  // FAMILY
+  // EXPERIENCE — 가족 단위 현장 편의/이벤트 (경기장 경험형 혜택으로 EXPERIENCE에 포함)
   {
     id: "r-fm-1",
-    category: "FAMILY",
+    category: "EXPERIENCE",
     title: "유아용 방석 대여",
     description: "경기 관람 시 유아용 방석을 대여해 드립니다.",
     pointCost: 40,
@@ -48,7 +48,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-fm-2",
-    category: "FAMILY",
+    category: "EXPERIENCE",
     title: "어린이 귀마개 대여",
     description: "함성 소음으로부터 아이의 청력을 보호하는 귀마개 대여입니다.",
     pointCost: 50,
@@ -58,7 +58,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-fm-3",
-    category: "FAMILY",
+    category: "EXPERIENCE",
     title: "담요 대여",
     description: "쌀쌀한 날씨에 경기장에서 사용할 수 있는 담요 대여입니다.",
     pointCost: 50,
@@ -68,7 +68,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-fm-4",
-    category: "FAMILY",
+    category: "EXPERIENCE",
     title: "패밀리 이벤트 우선 응모",
     description: "가족 단위 참여 이벤트에 우선 응모할 수 있는 기회입니다.",
     pointCost: 100,
@@ -77,7 +77,7 @@ export const rewardItems: RewardItem[] = [
     image: "/shop/family-event-priority.png",
   },
 
-  // EXPERIENCE
+  // EXPERIENCE — 응모형 현장 경험
   {
     id: "r-ex-1",
     category: "EXPERIENCE",
@@ -165,10 +165,10 @@ export const rewardItems: RewardItem[] = [
     isRaffle: false,
   },
 
-  // ONLINE (배송/현장 수령 없이 사이트 안에서 바로 적용되는 디지털 혜택)
+  // DIGITAL (배송/현장 수령 없이 사이트 안에서 바로 적용되는 디지털 혜택)
   {
     id: "r-on-1",
-    category: "ONLINE",
+    category: "DIGITAL",
     title: "닉네임 변경권",
     description: "PAJU FAN VOICE에서 사용하는 닉네임을 한 번 변경할 수 있습니다.",
     image: "/shop/online-nickname.png",
@@ -179,7 +179,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-on-2",
-    category: "ONLINE",
+    category: "DIGITAL",
     title: "프로필 프레임 이용권",
     description: "프로필에 Cosmos Pink / Paju Blue 전용 프레임을 적용합니다.",
     image: "/shop/online-frame.png",
@@ -194,7 +194,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-on-3",
-    category: "ONLINE",
+    category: "DIGITAL",
     title: "프로필 칭호 선택권",
     description: "활동 등급과 별개로 프로필에 표시할 팬 칭호를 선택합니다.",
     image: "/shop/online-title.png",
@@ -211,7 +211,7 @@ export const rewardItems: RewardItem[] = [
   },
   {
     id: "r-on-4",
-    category: "ONLINE",
+    category: "DIGITAL",
     title: "팬 카드 배경 이용권",
     description: "마이페이지 팬 카드에 전용 배경 디자인을 적용합니다.",
     image: "/shop/online-background.png",

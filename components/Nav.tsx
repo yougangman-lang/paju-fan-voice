@@ -7,7 +7,7 @@ import TierIcon from "./TierIcon";
 
 const links = [
   { href: "/", label: "홈" },
-  { href: "/fanzone", label: "FAN ZONE" },
+  { href: "/fanzone", label: "응원존" },
   { href: "/suggestions", label: "팬 제안" },
   { href: "/point-shop", label: "P:POINT SHOP" },
   { href: "/mypage", label: "마이페이지" },

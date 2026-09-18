@@ -44,6 +44,19 @@ export default function Home() {
 
   return (
     <div className="homeStack">
+      {/* BRAND / HERO — Priority 0. NEXT MATCH가 첫 화면에서 밀려나지 않도록
+          일부러 작고 밝은 톤으로 유지한다. */}
+      <section className="homeHero">
+        <div className="homeHeroBrand">
+          <img src="/branding/paju-frontier-crest.png" alt="" aria-hidden="true" className="homeHeroCrest" />
+          <span>PAJU FAN VOICE</span>
+        </div>
+        <h1 className="homeHeroTitle">구단의 다음 행동에는 여러분이 함께합니다.</h1>
+        <p className="homeHeroDesc">
+          설문, 응원, 팬 제안 등 다양한 참여를 통해 팬의 목소리를 구단에 전달하세요.
+        </p>
+      </section>
+
       {/* NEXT MATCH — Priority 1 */}
       <section className="matchCard matchCardHero">
         <div className="matchTop">
@@ -103,7 +116,7 @@ export default function Home() {
               <p className="pollDesc">구단이 지금 알고 싶은 질문에 20초로 답해보세요.</p>
               <p className="pollMeta">
                 {todaySurvey.questions.length}문항 · 참여 완료 시{" "}
-                <b className="pollReward">+{todaySurvey.pointReward} P:POINT</b>
+                <span className="pointChip">+{todaySurvey.pointReward}P</span>
               </p>
             </div>
             <div className="pollCta">
@@ -129,12 +142,12 @@ export default function Home() {
               <CheerFlagIcon size={20} />
             </div>
             <div className="actionBody">
-              <p className="actionTitle">FAN ZONE</p>
+              <p className="actionTitle">응원존</p>
               <p className="actionDesc">팀과 선수를 응원하고, 경기장에서의 참여를 기록해보세요.</p>
             </div>
             <div className="actionCtaRow">
               <Link href="/fanzone" className="smallBtn actionCta">
-                FAN ZONE 들어가기
+                응원존 들어가기
               </Link>
             </div>
           </div>

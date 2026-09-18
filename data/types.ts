@@ -121,7 +121,7 @@ export type SuggestionCategory =
   | "콘텐츠"
   | "기타";
 
-export type SuggestionStatus = "검토중" | "반영예정" | "반영완료" | "반영어려움";
+export type SuggestionStatus = "접수" | "검토중" | "반영예정" | "반영완료" | "반영어려움";
 
 export type ClubResponse = {
   comment: string;
@@ -144,6 +144,9 @@ export type FanSuggestion = {
   clubStatus: SuggestionStatus;
   clubResponse?: ClubResponse;
   createdAt: string;
+  // 발표/시연용으로 만든 예시 제안임을 표시한다(실제 구단 정책으로 오인되지
+  // 않도록 UI에 작은 DEMO 표시를 함께 보여준다).
+  isDemo?: boolean;
 };
 
 export type AttendanceVerification = {
@@ -153,9 +156,9 @@ export type AttendanceVerification = {
   verifiedAt: string;
 };
 
-export type RewardCategory = "MATCHDAY" | "FAMILY" | "EXPERIENCE" | "GOODS" | "ONLINE";
+export type RewardCategory = "EXPERIENCE" | "GOODS" | "DIGITAL";
 
-// ONLINE 카테고리 상품에서만 사용. 교환 시 어떤 cosmetic 효과를 적용할지 지정한다.
+// DIGITAL 카테고리 상품에서만 사용. 교환 시 어떤 cosmetic 효과를 적용할지 지정한다.
 export type OnlineRewardAction = "nickname" | "title" | "frame" | "background";
 
 export type RewardItem = {

@@ -20,6 +20,7 @@ import type {
   Survey,
   FanSuggestion,
   SuggestionCategory,
+  SuggestionStatus,
   CheerMessage,
   PlayerCheerMessage,
   PointTransaction,
@@ -59,7 +60,7 @@ type AppState = {
   cheerCount: number;
   applyReferralCode: (code: string) => "success" | "invalid" | "already_applied";
 
-  // 프로필 커스터마이징 (P:POINT SHOP ONLINE 카테고리로 획득)
+  // 프로필 커스터마이징 (P:POINT SHOP DIGITAL 카테고리로 획득)
   profileTitle: string | null;
   profileFrame: string | null;
   cardBackground: string | null;
@@ -93,6 +94,8 @@ type AppState = {
   suggestions: FanSuggestion[];
   submitSuggestion: (input: { category: SuggestionCategory; title: string; content: string }) => "success" | "insufficient";
   likeSuggestion: (id: string) => void;
+  // 관리자 전용: 상태 변경 + 구단 답변 등록(둘 다 선택적으로 함께 처리 가능)
+  updateSuggestionStatus: (id: string, status: SuggestionStatus, response?: string) => void;
 
   // P:POINT SHOP
   redemptions: RewardRedemption[];
@@ -177,6 +180,21 @@ function mergeSurveys(base: Survey[], saved?: Survey[]): Survey[] {
   });
 }
 
+// 팬 제안 mock 목록도 surveys와 같은 이유로 병합이 필요하다: data/suggestions.ts에
+// 새로 추가한 항목(예: 발표용 DEMO 제안)이, 예전 버전을 저장해 둔 사용자의
+// localStorage에는 없어 화면에 영원히 나타나지 않는 문제를 막는다. 이미 알고
+// 있는 id는 저장된 값(공감수·상태·구단 답변 등 실제로 바뀔 수 있는 값)을 그대로
+// 쓰고, 코드에만 있는 새 항목만 추가하며, 사용자가 직접 작성해 저장된(코드에는
+// 없는) 제안은 그대로 유지한다.
+function mergeSuggestions(base: FanSuggestion[], saved?: FanSuggestion[]): FanSuggestion[] {
+  if (!saved) return base;
+  const savedById = new Map(saved.map((s) => [s.id, s]));
+  const baseIds = new Set(base.map((s) => s.id));
+  const merged = base.map((s) => savedById.get(s.id) ?? s);
+  const userSubmitted = saved.filter((s) => !baseIds.has(s.id));
+  return [...userSubmitted, ...merged];
+}
+
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -237,7 +255,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setSurveys(mergeSurveys(initialSurveys, saved.surveys));
       if (saved.completedSurveyIds) setCompletedSurveyIds(saved.completedSurveyIds);
       if (saved.verifiedMatchIds) setVerifiedMatchIds(saved.verifiedMatchIds);
-      if (saved.suggestions) setSuggestions(saved.suggestions);
+      setSuggestions(mergeSuggestions(initialSuggestions, saved.suggestions));
       if (saved.redemptions) setRedemptions(saved.redemptions);
       if (saved.popupCampaign) setPopupCampaign(saved.popupCampaign);
       if (saved.popupLastDismissedDate !== undefined) setPopupLastDismissedDate(saved.popupLastDismissedDate);
@@ -452,7 +470,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       stakeRefunded: false,
       rewardedLikeCount: 0,
       likeRewardEarned: 0,
-      clubStatus: "검토중",
+      clubStatus: "접수",
       createdAt: today(),
     };
     setSuggestions((s) => [suggestion, ...s]);
@@ -501,6 +519,22 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // 관리자 전용 액션. 상태만 바꿀 수도, 구단 답변과 함께 바꿀 수도 있다.
+  // 답변을 등록하면 항상 오늘 날짜로 기록한다(실서비스라면 서버 타임스탬프).
+  const updateSuggestionStatus: AppState["updateSuggestionStatus"] = (id, status, response) => {
+    setSuggestions((prev) =>
+      prev.map((s) =>
+        s.id !== id
+          ? s
+          : {
+              ...s,
+              clubStatus: status,
+              clubResponse: response?.trim() ? { comment: response.trim(), date: today() } : s.clubResponse,
+            }
+      )
+    );
+  };
+
   const redeemReward: AppState["redeemReward"] = (rewardId) => {
     const item = rewardItems.find((r) => r.id === rewardId);
     if (!item) return "insufficient";
@@ -524,12 +558,12 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     return "success";
   };
 
-  // ONLINE 카테고리 전용: 포인트 차감 + 교환 내역 기록에 더해 실제 cosmetic 효과
+  // DIGITAL 카테고리 전용: 포인트 차감 + 교환 내역 기록에 더해 실제 cosmetic 효과
   // (닉네임/칭호/프레임/배경)를 적용한다. pointBalance만 감소하며
   // lifetimeEarnedPoints(등급 산정 기준)는 변하지 않는다.
   const redeemOnlineReward: AppState["redeemOnlineReward"] = (rewardId, value) => {
     const item = rewardItems.find((r) => r.id === rewardId);
-    if (!item || item.category !== "ONLINE" || !item.onlineAction) return "insufficient";
+    if (!item || item.category !== "DIGITAL" || !item.onlineAction) return "insufficient";
     if (item.stock === 0) return "out_of_stock";
     if (pointBalance < item.pointCost) return "insufficient";
 
@@ -600,6 +634,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       suggestions,
       submitSuggestion,
       likeSuggestion,
+      updateSuggestionStatus,
 
       redemptions,
       redeemReward,

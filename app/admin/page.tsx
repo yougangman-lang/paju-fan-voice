@@ -5,12 +5,13 @@ import { useAppState } from "@/lib/store";
 import { suggestionCategories } from "@/data/suggestions";
 import { rewardItems } from "@/data/rewards";
 import { fanDirectory } from "@/data/fans";
-import { categoryAnalysis, aiFanInsight } from "@/data/insight";
+import { categoryAnalysis, weeklyFanInsights } from "@/data/insight";
 import { nextMatch } from "@/data/matches";
 import { futureFeatures } from "@/data/future";
 import type { SuggestionStatus } from "@/data/types";
 
-const statusOrder: SuggestionStatus[] = ["검토중", "반영예정", "반영완료", "반영어려움"];
+const statusOrder: SuggestionStatus[] = ["접수", "검토중", "반영예정", "반영완료", "반영어려움"];
+const adminStatusChoices: SuggestionStatus[] = ["검토중", "반영예정", "반영완료", "반영어려움"];
 
 type Period = "week" | "month" | "season";
 
@@ -91,13 +92,15 @@ const TX_LABELS: Record<string, string> = {
 };
 
 export default function AdminPage() {
-  const { suggestions, surveys, pointHistory, redemptions, popupCampaign, updatePopupCampaign } =
+  const { suggestions, surveys, pointHistory, redemptions, popupCampaign, updatePopupCampaign, updateSuggestionStatus } =
     useAppState();
 
   const [period, setPeriod] = useState<Period>("week");
   const [tab, setTab] = useState<TabKey>("dashboard");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [suggestionSort, setSuggestionSort] = useState<"popular" | "latest">("popular");
+  const [expandedInsightId, setExpandedInsightId] = useState<string | null>(null);
+  const [responseDraft, setResponseDraft] = useState("");
 
   const kpi = periodKpis[period];
 
@@ -290,21 +293,136 @@ export default function AdminPage() {
             </section>
           </div>
 
-          <section className="panel insightCard">
-            <span className="eyebrowSmall">AI FAN INSIGHT</span>
-            <p className="boardTitle" style={{ marginTop: 8 }}>
-              {aiFanInsight.headline}
-            </p>
-            <p className="boardExcerpt">{aiFanInsight.body}</p>
-            <div className="keywordTags" style={{ marginTop: 10 }}>
-              {aiFanInsight.keywords.map((k) => (
-                <span className="keywordTag" key={k.label}>
-                  {k.label} {k.count}
-                </span>
-              ))}
+          <section className="panel">
+            <div className="sectionHead">
+              <div>
+                <span className="eyebrowSmall">AI FAN INSIGHT</span>
+                <h2 style={{ marginTop: 6 }}>이번 주 FAN INSIGHT</h2>
+              </div>
             </div>
-            <p className="muted" style={{ marginTop: 10, fontSize: 12.5 }}>{aiFanInsight.trend}</p>
-            <p className="simNotice" style={{ marginTop: 12 }}>
+            <p className="muted" style={{ marginTop: 4 }}>
+              AI는 팬 제안을 주제별로 묶어서 보여줄 뿐입니다. 반영 여부는 원문을 직접 확인한 관리자가
+              최종 판단합니다.
+            </p>
+
+            <div className="insightCardGrid" style={{ marginTop: 18 }}>
+              {weeklyFanInsights.map((card) => {
+                const isOpen = expandedInsightId === card.id;
+                const linked = card.linkedSuggestionId
+                  ? suggestions.find((s) => s.id === card.linkedSuggestionId)
+                  : undefined;
+                return (
+                  <div className="panel insightCard" key={card.id}>
+                    <button
+                      type="button"
+                      className="insightCardHead"
+                      onClick={() => {
+                        const nextOpen = isOpen ? null : card.id;
+                        setExpandedInsightId(nextOpen);
+                        setResponseDraft(nextOpen && linked?.clubResponse ? linked.clubResponse.comment : "");
+                      }}
+                    >
+                      <div>
+                        <span className="insightTopic">
+                          {card.topic} · {card.subtopic}
+                        </span>
+                        <p className="insightCount">관련 의견 {card.relatedCount}건</p>
+                        {card.trendTags.length > 0 && (
+                          <div className="keywordTags" style={{ marginTop: 8, paddingTop: 0, borderTop: "none" }}>
+                            {card.trendTags.map((t) => (
+                              <span className="keywordTag" key={t}>
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <span className="insightToggle">{isOpen ? "접기 ▲" : "자세히 ▼"}</span>
+                    </button>
+
+                    {isOpen && (
+                      <div className="insightDetail">
+                        <span className="popupFieldLabel">AI 분석</span>
+                        <div className="insightAnalysisGrid">
+                          <span>주제: {card.topic}</span>
+                          <span>세부주제: {card.subtopic}</span>
+                          <span>관련 의견: {card.relatedCount}건</span>
+                          <span>특징: {card.trendTags.join(" · ") || "특이 신호 없음"}</span>
+                        </div>
+
+                        <span className="popupFieldLabel" style={{ marginTop: 14, display: "block" }}>
+                          관련 팬 의견 (원문)
+                        </span>
+                        <div className="insightQuoteList">
+                          {card.rawQuotes.map((q, i) => (
+                            <p className="insightQuote" key={i}>
+                              “{q}”
+                            </p>
+                          ))}
+                        </div>
+
+                        {linked ? (
+                          <div className="insightAdminAction">
+                            <span className="popupFieldLabel">관리자 판단</span>
+                            <p className="boardTitle" style={{ marginTop: 6 }}>
+                              {linked.title}
+                            </p>
+                            <div className="statusChangeRow">
+                              {adminStatusChoices.map((s) => (
+                                <button
+                                  key={s}
+                                  type="button"
+                                  className={`statusChangeBtn ${linked.clubStatus === s ? "isActive" : ""}`}
+                                  onClick={() => updateSuggestionStatus(linked.id, s)}
+                                >
+                                  {s}
+                                </button>
+                              ))}
+                            </div>
+                            <textarea
+                              className="adminResponseInput"
+                              rows={3}
+                              value={responseDraft}
+                              onChange={(e) => setResponseDraft(e.target.value)}
+                              placeholder="구단 답변을 입력하세요."
+                            />
+                            <button
+                              className="smallBtn"
+                              type="button"
+                              onClick={() => updateSuggestionStatus(linked.id, linked.clubStatus, responseDraft)}
+                              disabled={!responseDraft.trim()}
+                            >
+                              답변 등록
+                            </button>
+                            {linked.clubResponse && (
+                              <div className="clubReply" style={{ marginTop: 12 }}>
+                                <div className="clubReplyHead">
+                                  <img
+                                    src="/branding/paju-frontier-crest.png"
+                                    alt=""
+                                    aria-hidden="true"
+                                    className="clubReplyCrest"
+                                  />
+                                  <b>구단 답변</b>
+                                  <span className="clubReplyDate">{linked.clubResponse.date}</span>
+                                </div>
+                                <p className="clubReplyText">{linked.clubResponse.comment}</p>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="muted" style={{ marginTop: 12, fontSize: 14 }}>
+                            이 주제에 연결된 개별 제안이 아직 없습니다.
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="simNotice" style={{ marginTop: 16 }}>
               AI는 팬 제안 텍스트의 분류·키워드 군집·빈도 분석을 지원할 뿐, 반영 여부를 자동으로
               결정하지 않습니다. 실제 AI 모델과는 연동되어 있지 않은 개념 화면입니다.
             </p>
