@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAppState } from "@/lib/store";
 import TierIcon from "./TierIcon";
@@ -20,11 +21,15 @@ export default function Nav() {
   return (
     <header className="topbar">
       <Link href="/" className="brand">
-        <img src="/branding/paju-frontier-crest.png" alt="파주 프런티어FC 엠블럼" className="brandCrest" />
-        <div>
-          <strong>PAJU FAN VOICE</strong>
-          <span>파주 프런티어FC 팬 참여 플랫폼</span>
-        </div>
+        <Image
+          src="/branding/paju-fan-voice-logo.png"
+          alt="PAJU FAN VOICE"
+          width={183}
+          height={89}
+          priority
+          className="brandLogo"
+        />
+        <span className="brandSub">파주 프런티어FC 팬 참여 플랫폼</span>
       </Link>
       <nav>
         {links.map((l) => (

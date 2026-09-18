@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppState } from "@/lib/store";
 import { nextMatch, nextMatchPreview } from "@/data/matches";
 import { cosmosContent } from "@/data/content";
@@ -47,10 +48,14 @@ export default function Home() {
       {/* BRAND / HERO — Priority 0. NEXT MATCH가 첫 화면에서 밀려나지 않도록
           일부러 작고 밝은 톤으로 유지한다. */}
       <section className="homeHero">
-        <div className="homeHeroBrand">
-          <img src="/branding/paju-frontier-crest.png" alt="" aria-hidden="true" className="homeHeroCrest" />
-          <span>PAJU FAN VOICE</span>
-        </div>
+        <Image
+          src="/branding/paju-fan-voice-logo.png"
+          alt="PAJU FAN VOICE"
+          width={183}
+          height={89}
+          priority
+          className="homeHeroLogo"
+        />
         <h1 className="homeHeroTitle">구단의 다음 행동에는 여러분이 함께합니다.</h1>
         <p className="homeHeroDesc">
           설문, 응원, 팬 제안 등 다양한 참여를 통해 팬의 목소리를 구단에 전달하세요.

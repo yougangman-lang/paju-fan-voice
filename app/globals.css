@@ -126,21 +126,17 @@ p {
   align-items: center;
 }
 
-.brandCrest {
-  height: 44px;
+.brandLogo {
+  height: 40px;
   width: auto;
   object-fit: contain;
   flex: none;
 }
 
-.brand strong {
-  display: block;
-  font-size: 16px;
-}
-
-.brand span {
+.brandSub {
   font-size: 12.5px;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .topbar nav {
@@ -899,24 +895,36 @@ button:disabled {
   align-items: center;
 }
 
-.adminBrandCrest {
-  height: 32px;
-  width: auto;
-  object-fit: contain;
+.adminBrandLogoWrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 12px;
   flex: none;
 }
 
-.adminBrand strong {
+.adminBrandLogo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
   display: block;
-  color: #fff;
-  font-size: 15px;
 }
 
-.adminBrand span {
+.adminBrandSub {
   display: block;
   color: #8ea3cc;
   font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.adminLoginLogo {
+  height: 30px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .backToFan {
@@ -1613,8 +1621,8 @@ button:disabled {
   margin: 80px auto;
 }
 
-.loginCrest {
-  height: 72px;
+.loginLogo {
+  height: 64px;
   width: auto;
   object-fit: contain;
 }
@@ -2275,23 +2283,10 @@ button:disabled {
   padding: 32px 36px;
 }
 
-.homeHeroBrand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.homeHeroCrest {
-  height: 26px;
+.homeHeroLogo {
+  height: 48px;
   width: auto;
   object-fit: contain;
-}
-
-.homeHeroBrand span {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--blue);
 }
 
 .homeHeroTitle {
@@ -2657,8 +2652,8 @@ button:disabled {
     white-space: normal;
     font-size: 13px;
   }
-  .brandCrest {
-    height: 36px;
+  .brandLogo {
+    height: 32px;
   }
   .shell,
   .adminShell {
@@ -2712,7 +2707,7 @@ button:disabled {
   .topbar {
     padding: 0 4vw;
   }
-  .brand span {
+  .brandSub {
     display: none;
   }
   .ypBadge {

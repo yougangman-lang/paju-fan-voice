@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useAppState } from "@/lib/store";
 
 export default function AdminLoginPage() {
@@ -24,12 +25,20 @@ export default function AdminLoginPage() {
 
   return (
     <div className="authCard adminLoginCard">
-      <strong style={{ display: "block", textAlign: "center", fontSize: 15, color: "#fff" }}>
-        PAJU FAN VOICE
-      </strong>
-      <p style={{ textAlign: "center", color: "#8ea3cc", fontSize: 12, letterSpacing: "0.08em", marginTop: 4 }}>
-        CLUB ADMIN CONSOLE
-      </p>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className="adminBrandLogoWrap">
+          <Image
+            src="/branding/paju-fan-voice-logo.png"
+            alt="PAJU FAN VOICE"
+            width={183}
+            height={89}
+            className="adminLoginLogo"
+          />
+        </div>
+        <p style={{ textAlign: "center", color: "#8ea3cc", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", marginTop: 10 }}>
+          CLUB ADMIN CONSOLE
+        </p>
+      </div>
       <form onSubmit={submit} className="stack" style={{ gap: 10, marginTop: 22 }}>
         <input
           value={id}
