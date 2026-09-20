@@ -77,7 +77,13 @@ type AppState = {
   cheerMessages: CheerMessage[];
   postCheerMessage: (content: string) => void;
   playerCheerMessages: PlayerCheerMessage[];
-  postPlayerCheerMessage: (playerId: string, playerName: string, content: string) => void;
+  postPlayerCheerMessage: (
+    playerId: string,
+    playerName: string,
+    content: string,
+    targetType: "player" | "coach",
+    role?: string
+  ) => void;
 
   // 설문
   surveys: Survey[];
@@ -396,15 +402,24 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // 구단 응원과 선수 응원은 같은 "FAN ZONE 응원 메시지" 하루 1회 +10P 한도를 공유한다.
-  // 이미 오늘 보상을 받았다면 메시지는 계속 남길 수 있지만 추가 포인트는 지급하지 않는다.
-  const postPlayerCheerMessage = (playerId: string, playerName: string, content: string) => {
+  // 구단 응원, 선수 응원, 코치진 응원은 모두 같은 "FAN ZONE 응원 메시지" 하루 1회
+  // +10P 한도를 공유한다. 이미 오늘 보상을 받았다면 메시지는 계속 남길 수 있지만
+  // 추가 포인트는 지급하지 않는다 — 대상이 선수든 코치든 동일하게 적용된다.
+  const postPlayerCheerMessage = (
+    playerId: string,
+    playerName: string,
+    content: string,
+    targetType: "player" | "coach",
+    role?: string
+  ) => {
     const trimmed = content.trim();
     if (!trimmed) return;
     const message: PlayerCheerMessage = {
       id: `pcm-${Date.now()}`,
       playerId,
       playerName,
+      targetType,
+      role,
       author: nickname,
       authorTier: calcTier(lifetimeEarnedPoints),
       content: trimmed,
@@ -413,7 +428,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setPlayerCheerMessages((m) => [message, ...m]);
     if (lastCheerMessageDate !== today()) {
       setLastCheerMessageDate(today());
-      addPoints(10, "cheer_message", `응원 메시지 작성 · ${playerName} 선수`);
+      addPoints(10, "cheer_message", `응원 메시지 작성 · ${playerName} ${targetType === "coach" ? role ?? "코치진" : "선수"}`);
     }
   };
 

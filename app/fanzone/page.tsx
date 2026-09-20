@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useAppState } from "@/lib/store";
 import { nextMatch } from "@/data/matches";
 import { players } from "@/data/players";
+import { coaches } from "@/data/coaches";
 import TierIcon from "@/components/TierIcon";
-import PlayerCard from "@/components/PlayerCard";
-import type { Player } from "@/data/types";
+import PlayerCard, { isCoach, type CheerTarget } from "@/components/PlayerCard";
 
 export default function FanZonePage() {
   const {
@@ -29,7 +29,8 @@ export default function FanZonePage() {
   const [showVerify, setShowVerify] = useState(false);
   const [justVerified, setJustVerified] = useState(false);
   const [cheerTab, setCheerTab] = useState<"club" | "player">("club");
-  const [cheerPlayer, setCheerPlayer] = useState<Player | null>(null);
+  const [targetTab, setTargetTab] = useState<"player" | "coach">("player");
+  const [cheerPlayer, setCheerPlayer] = useState<CheerTarget | null>(null);
   const [playerMessage, setPlayerMessage] = useState("");
 
   const submitMessage = (e: React.FormEvent) => {
@@ -50,7 +51,11 @@ export default function FanZonePage() {
   const submitPlayerMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!cheerPlayer || !playerMessage.trim()) return;
-    postPlayerCheerMessage(cheerPlayer.id, cheerPlayer.name, playerMessage.trim());
+    if (isCoach(cheerPlayer)) {
+      postPlayerCheerMessage(cheerPlayer.id, cheerPlayer.name, playerMessage.trim(), "coach", cheerPlayer.role);
+    } else {
+      postPlayerCheerMessage(cheerPlayer.id, cheerPlayer.name, playerMessage.trim(), "player");
+    }
     setPlayerMessage("");
     setCheerPlayer(null);
   };
@@ -158,7 +163,7 @@ export default function FanZonePage() {
             구단 응원
           </button>
           <button type="button" className={cheerTab === "player" ? "isActive" : ""} onClick={() => setCheerTab("player")}>
-            선수 응원
+            선수·코치진 응원
           </button>
         </div>
 
@@ -198,42 +203,60 @@ export default function FanZonePage() {
           </div>
         ) : (
           <div style={{ marginTop: 16 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 700 }}>선수단에게 응원을 전해주세요.</h2>
+            <h2 style={{ fontSize: 18, fontWeight: 700 }}>선수단과 코칭스태프에게 응원을 전해주세요.</h2>
             <p className="muted" style={{ marginTop: 4 }}>
-              선수를 선택하고 응원 메시지를 남겨보세요. 구단 응원과 하루 +10 P:POINT 한도를 함께 사용합니다.
+              선수 또는 코치진을 선택하고 응원 메시지를 남겨보세요. 구단 응원과 하루 +10 P:POINT 한도를 함께 사용합니다.
             </p>
 
-            {players.length === 0 ? (
+            <div className="sortToggle" style={{ marginTop: 14, width: "fit-content" }}>
+              <button type="button" className={targetTab === "player" ? "isActive" : ""} onClick={() => setTargetTab("player")}>
+                선수
+              </button>
+              <button type="button" className={targetTab === "coach" ? "isActive" : ""} onClick={() => setTargetTab("coach")}>
+                코치진
+              </button>
+            </div>
+
+            {targetTab === "player" ? (
+              players.length === 0 ? (
+                <p className="muted" style={{ marginTop: 18 }}>
+                  선수단 명단이 곧 업데이트될 예정이에요. 조금만 기다려주세요.
+                </p>
+              ) : (
+                <div className="playerGrid" style={{ marginTop: 16 }}>
+                  {players.map((p) => (
+                    <PlayerCard key={p.id} target={p} onCheer={setCheerPlayer} />
+                  ))}
+                </div>
+              )
+            ) : coaches.length === 0 ? (
               <p className="muted" style={{ marginTop: 18 }}>
-                선수단 명단이 곧 업데이트될 예정이에요. 조금만 기다려주세요.
+                코치진 명단이 곧 업데이트될 예정이에요. 조금만 기다려주세요.
               </p>
             ) : (
               <div className="playerGrid" style={{ marginTop: 16 }}>
-                {players.map((p) => (
-                  <PlayerCard key={p.id} player={p} onCheer={setCheerPlayer} />
+                {coaches.map((c) => (
+                  <PlayerCard key={c.id} target={c} onCheer={setCheerPlayer} />
                 ))}
               </div>
             )}
 
             {playerCheerMessages.length > 0 && (
               <div className="board" style={{ marginTop: 18 }}>
-                {playerCheerMessages.map((m) => {
-                  const isManager = players.find((p) => p.id === m.playerId)?.position === "감독";
-                  return (
+                {playerCheerMessages.map((m) => (
                   <div className="boardRow" key={m.id}>
                     <div className="boardMeta">
                       <span style={{ fontWeight: 700 }}>{m.author}</span>
                       <TierIcon tier={m.authorTier} />
                       <span style={{ color: "var(--muted)" }}>
-                        · {m.playerName} {isManager ? "감독님" : "선수"} · {m.createdAt}
+                        · {m.playerName} {m.targetType === "coach" ? `${m.role ?? "코치진"}님` : "선수"} · {m.createdAt}
                       </span>
                     </div>
                     <p className="boardExcerpt" style={{ marginTop: 4 }}>
                       {m.content}
                     </p>
                   </div>
-                  );
-                })}
+                ))}
               </div>
             )}
           </div>
@@ -246,12 +269,12 @@ export default function FanZonePage() {
             <button className="popupClose" onClick={() => setCheerPlayer(null)} aria-label="닫기">
               ×
             </button>
-            <h3>{cheerPlayer.name} {cheerPlayer.position === "감독" ? "감독님" : "선수"}에게 응원의 한마디</h3>
+            <h3>{cheerPlayer.name} {isCoach(cheerPlayer) ? `${cheerPlayer.role}님` : "선수"}에게 응원의 한마디</h3>
             <form onSubmit={submitPlayerMessage} style={{ marginTop: 14 }}>
               <input
                 value={playerMessage}
                 onChange={(e) => setPlayerMessage(e.target.value)}
-                placeholder={`${cheerPlayer.name} ${cheerPlayer.position === "감독" ? "감독님" : "선수"}에게 힘이 되는 한마디를 남겨주세요.`}
+                placeholder={`${cheerPlayer.name} ${isCoach(cheerPlayer) ? `${cheerPlayer.role}님` : "선수"}에게 힘이 되는 한마디를 남겨주세요.`}
                 style={{ width: "100%", padding: "11px 12px", border: "1px solid var(--line)", borderRadius: 8 }}
                 maxLength={80}
                 autoFocus
