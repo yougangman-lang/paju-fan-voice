@@ -1,9 +1,15 @@
 import { useState } from "react";
-import type { Player } from "@/data/types";
+import type { Player, Coach } from "@/data/types";
+
+export type CheerTarget = Player | Coach;
+
+export function isCoach(target: CheerTarget): target is Coach {
+  return "role" in target;
+}
 
 function SilhouettePlaceholder() {
   return (
-    <svg viewBox="0 0 100 100" role="img" aria-label="선수 사진 준비중" className="playerSilhouette">
+    <svg viewBox="0 0 100 100" role="img" aria-label="사진 준비중" className="playerSilhouette">
       <circle cx="50" cy="38" r="18" fill="currentColor" />
       <path d="M18 92c2-20 16-34 32-34s30 14 32 34Z" fill="currentColor" />
     </svg>
@@ -11,17 +17,18 @@ function SilhouettePlaceholder() {
 }
 
 export default function PlayerCard({
-  player,
+  target,
   onCheer,
 }: {
-  player: Player;
-  onCheer: (player: Player) => void;
+  target: CheerTarget;
+  onCheer: (target: CheerTarget) => void;
 }) {
-  // /public/players/{id}.png 파일이 존재하면 자동으로 실제 사진이 보이고,
-  // 아직 없으면(404) neutral silhouette placeholder로 폴백한다. 별도의 데이터
-  // 입력 없이 파일만 추가하면 되도록 id 기반 경로 규칙을 사용한다(감독처럼
-  // 등번호가 없는 항목도 같은 방식으로 다룰 수 있다).
+  // 공식 사진이 있으면 자동으로 보이고, 아직 없으면(404) neutral silhouette
+  // placeholder로 폴백한다. 선수는 /public/players/{id}.png, 코치진은
+  // image 필드(없으면 /public/staff/{id}.png)를 기준으로 경로를 찾는다.
   const [photoFailed, setPhotoFailed] = useState(false);
+  const coach = isCoach(target);
+  const photoSrc = coach ? target.image ?? `/staff/${target.id}.png` : `/players/${target.id}.png`;
 
   return (
     <div className="playerCard">
@@ -29,20 +36,20 @@ export default function PlayerCard({
         {photoFailed ? (
           <SilhouettePlaceholder />
         ) : (
-          <img
-            src={`/players/${player.id}.png`}
-            alt={player.name}
-            onError={() => setPhotoFailed(true)}
-          />
+          <img src={photoSrc} alt={target.name} onError={() => setPhotoFailed(true)} />
         )}
       </div>
       <div className="playerInfo">
-        {player.number !== undefined && <span className="playerNumber">{player.number}</span>}
-        <p className="playerName">{player.name}</p>
-        <p className="playerPosition">{player.position}</p>
-        {player.shortInfo && <p className="playerShortInfo">{player.shortInfo}</p>}
+        {!coach && target.number !== undefined && <span className="playerNumber">{target.number}</span>}
+        <p className="playerName">{target.name}</p>
+        {coach ? (
+          <span className="roleBadge">{target.role}</span>
+        ) : (
+          <p className="playerPosition">{target.position}</p>
+        )}
+        {!coach && target.shortInfo && <p className="playerShortInfo">{target.shortInfo}</p>}
       </div>
-      <button className="smallBtn playerCheerBtn" onClick={() => onCheer(player)}>
+      <button className="smallBtn playerCheerBtn" onClick={() => onCheer(target)}>
         응원하기
       </button>
     </div>

@@ -102,15 +102,30 @@ export type CheerMessage = {
 export type PlayerCheerMessage = CheerMessage & {
   playerId: string;
   playerName: string;
+  // 응원 대상이 선수인지 코치진인지 구분한다. 추후 관리자 페이지에서
+  // 선수 응원 / 코치진 응원을 별도로 집계할 수 있도록 저장 시점에 남겨둔다.
+  targetType: "player" | "coach";
+  // 코치진 응원일 때만 채워지는 역할 라벨(예: "GK 코치").
+  role?: string;
 };
 
 export type Player = {
   id: string;
-  // 감독 등 등번호가 없는 코칭스태프 항목을 위해 선택 필드로 둔다.
   number?: number;
   name: string;
   position: string;
   shortInfo: string;
+};
+
+export type CoachRole = "감독" | "수석코치" | "피지컬 코치" | "코치" | "GK 코치";
+
+export type Coach = {
+  id: string;
+  name: string;
+  role: CoachRole;
+  // 공식 사진이 준비되면 경로를 지정한다(예: "/staff/{id}.png"). 비어 있거나
+  // 파일이 없으면 PlayerCard가 자동으로 neutral silhouette로 대체한다.
+  image?: string;
 };
 
 export type SuggestionCategory =
