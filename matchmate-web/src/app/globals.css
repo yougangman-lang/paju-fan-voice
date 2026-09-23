@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #d71920;
+  --color-brand-dark: #a8121a;
+  --color-ink: #111111;
+  --color-paper: #f5f2ea;
+  --color-paper-deep: #ebe6da;
+  --color-mute: #757575;
+  --color-line6: #cd7c2f;
+
+  --font-sans: var(--font-noto-kr), "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-display: var(--font-anton), "Arial Narrow", Impact, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-paper);
+}
+
+/* Horizontal swipe rows on mobile */
+.swipe-row {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.swipe-row::-webkit-scrollbar {
+  display: none;
+}
+.swipe-row > * {
+  scroll-snap-align: start;
+}
+
+/* CSS-only placeholder for photos that do not exist yet */
+.placeholder-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgb(17 17 17 / 0.06) 0 1px,
+    transparent 1px 14px
+  );
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+}
