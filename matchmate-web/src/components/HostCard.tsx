@@ -90,13 +90,13 @@ export default function HostCard({ host, variant = "feature", index = 1 }: Props
 
   if (variant === "overlay") {
     return (
-      <Link href={`/host/${host.id}`} className="group relative block h-full min-h-[440px] overflow-hidden bg-paper-deep">
-        {photo("(min-width: 768px) 40vw, 100vw")}
-        <div className="absolute right-4 top-4 text-paper">
-          <ArrowUpRight size={26} className="drop-shadow" />
+      <Link href={`/host/${host.id}`} className="group flex h-full flex-col bg-brand text-paper">
+        <div className="relative min-h-[280px] flex-1 overflow-hidden">
+          {photo("(min-width: 768px) 40vw, 100vw")}
+          <div className="absolute left-0 top-0 bg-brand px-3 py-1.5">{no}</div>
+          <ArrowUpRight size={26} className="absolute right-4 top-4 text-paper drop-shadow" />
         </div>
-        <div className="absolute bottom-0 left-0 w-[72%] bg-brand p-5 text-paper">
-          <div className="mb-3">{no}</div>
+        <div className="p-5">
           <Meta host={host} compact />
         </div>
       </Link>

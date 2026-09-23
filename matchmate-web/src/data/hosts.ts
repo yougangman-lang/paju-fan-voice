@@ -46,7 +46,8 @@ export const hosts: Host[] = [
     id: "seongbuk",
     name: "성북부대공",
     image: "/images/hosts/host-seongbuk.png",
-    imagePosition: "center 30%",
+    // portrait, subject stands right of center
+    imagePosition: "66% 22%",
     role: "Campus Host",
     headline: "성북부대공과\n안암에서 상암까지.",
     description: "먹고, 놀고, 마지막은 FC서울.",
@@ -77,7 +78,8 @@ export const hosts: Host[] = [
     id: "durimi",
     name: "50만 유튜버 DURIMI",
     image: "/images/hosts/host-durimi.png",
-    imagePosition: "center 25%",
+    // face sits at the top of the frame
+    imagePosition: "50% 8%",
     role: "Creator Host",
     headline: "DURIMI와\n새 친구 만나러 가자.",
     description: "처음 만난 사람들과\n먹고, 놀고, 같이 응원하기.",
@@ -109,7 +111,7 @@ export const hosts: Host[] = [
     id: "byeon",
     name: "BYEON HOLLAND",
     image: "/images/hosts/host-byeon.png",
-    imagePosition: "center 30%",
+    imagePosition: "48% 25%",
     role: "Social Host",
     headline: "BYEON HOLLAND와\n상암을 접수하자.",
     description: "평범한 토요일 말고,\n조금 이상하고 재밌는 Matchday.",

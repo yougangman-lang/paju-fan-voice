@@ -5,6 +5,7 @@ import { guidePoints } from "@/data/guide";
 import Container from "@/components/Container";
 import SectionHeader from "@/components/SectionHeader";
 import SmartImage from "@/components/SmartImage";
+import { fansPhotos } from "@/data/photos";
 
 export const metadata: Metadata = { title: "GUIDE — MATCHMATE SEOUL" };
 
@@ -30,11 +31,11 @@ export default function GuidePage() {
       <div className="mx-auto grid w-full max-w-[1280px] md:grid-cols-12 md:gap-10 md:px-10 md:pt-14">
         <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep md:order-2 md:col-span-6 md:aspect-[4/5]">
           <SmartImage
-            src="/images/community/fans-02.png"
-            alt="처음 직관 온 대학생들"
+            src={fansPhotos.fans02.src}
+            alt="서울월드컵경기장 응원석에서 경기를 지켜보는 팬들"
             preload
             sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover contrast-[1.04]"
+            className="object-cover object-[22%_50%] contrast-[1.04]"
           />
         </div>
         <div className="relative z-10 -mt-20 mr-6 bg-paper px-5 pt-6 md:order-1 md:col-span-6 md:mr-0 md:mt-0 md:flex md:flex-col md:justify-end md:px-0 md:pb-4">

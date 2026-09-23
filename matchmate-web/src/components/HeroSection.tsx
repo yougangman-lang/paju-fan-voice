@@ -1,46 +1,43 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import SmartImage from "./SmartImage";
+import { fansPhotos } from "@/data/photos";
 
-const photos = {
-  main: "/images/community/fans-01.png",
-  second: "/images/community/fans-02.png",
-  third: "/images/community/fans-03.png",
-};
 
 export default function HeroSection() {
   return (
     <section className="relative">
       <div className="mx-auto grid w-full max-w-[1280px] md:grid-cols-12 md:gap-10 md:px-10 md:pt-12 lg:gap-14">
-        {/* Photo collage — first on mobile, right column on desktop */}
+        {/* Photo collage — first on mobile, right column on desktop.
+            Each slot follows the photo's own shape so faces are not cut. */}
         <div className="relative md:order-2 md:col-span-7">
           <div className="grid grid-cols-6 gap-2 md:gap-3">
-            <div className="relative col-span-6 aspect-[4/5] overflow-hidden bg-paper-deep md:col-span-4 md:row-span-2 md:aspect-auto md:min-h-[620px]">
+            <div className="relative col-span-6 aspect-[4/5] overflow-hidden bg-paper-deep sm:aspect-[4/3] md:aspect-[16/9]">
               <SmartImage
-                src={photos.main}
-                alt="FC서울 경기장에서 함께 응원하는 대학생들"
+                src={fansPhotos.fans02.src}
+                alt={fansPhotos.fans02.alt}
                 preload
-                sizes="(min-width: 768px) 40vw, 100vw"
-                className="object-cover object-center contrast-[1.04]"
+                sizes="(min-width: 768px) 55vw, 100vw"
+                className="object-cover object-[22%_50%] contrast-[1.04] sm:object-[30%_50%] md:object-center"
               />
-              <div className="absolute left-0 top-0 bg-brand px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-paper md:px-4 md:text-xs">
+              <div className="absolute right-0 top-0 bg-brand px-3 py-2 text-[11px] font-bold tracking-[0.18em] text-paper md:px-4 md:text-xs">
                 SAT 10.03 · SANGAM
               </div>
             </div>
-            <div className="relative hidden aspect-[3/4] overflow-hidden bg-paper-deep md:col-span-2 md:block">
+            <div className="relative hidden aspect-[3/2] overflow-hidden bg-paper-deep md:col-span-4 md:block">
               <SmartImage
-                src={photos.second}
-                alt="같이 직관 온 친구들"
-                sizes="20vw"
+                src={fansPhotos.fans01.src}
+                alt={fansPhotos.fans01.alt}
+                sizes="37vw"
                 className="object-cover object-center contrast-[1.04]"
               />
             </div>
             <div className="relative hidden aspect-[3/4] overflow-hidden bg-paper-deep md:col-span-2 md:block">
               <SmartImage
-                src={photos.third}
-                alt="응원석의 대학생 팬들"
-                sizes="20vw"
-                className="object-cover object-center contrast-[1.04]"
+                src={fansPhotos.fans03.src}
+                alt={fansPhotos.fans03.alt}
+                sizes="18vw"
+                className="object-cover object-[50%_28%] contrast-[1.04]"
               />
             </div>
           </div>
@@ -89,16 +86,22 @@ export default function HeroSection() {
 
         {/* Mobile photo strip */}
         <div className="swipe-row mt-8 flex gap-2 overflow-x-auto px-5 md:hidden">
-          {[photos.second, photos.third].map((src, i) => (
-            <div key={src} className="relative aspect-[4/5] w-[62%] shrink-0 overflow-hidden bg-paper-deep">
-              <SmartImage
-                src={src}
-                alt={i === 0 ? "같이 직관 온 친구들" : "응원석의 대학생 팬들"}
-                sizes="62vw"
-                className="object-cover object-center contrast-[1.04]"
-              />
-            </div>
-          ))}
+          <div className="relative aspect-[3/2] h-56 shrink-0 overflow-hidden bg-paper-deep">
+            <SmartImage
+              src={fansPhotos.fans01.src}
+              alt={fansPhotos.fans01.alt}
+              sizes="340px"
+              className="object-cover object-center contrast-[1.04]"
+            />
+          </div>
+          <div className="relative aspect-[3/4] h-56 shrink-0 overflow-hidden bg-paper-deep">
+            <SmartImage
+              src={fansPhotos.fans03.src}
+              alt={fansPhotos.fans03.alt}
+              sizes="170px"
+              className="object-cover object-[50%_28%] contrast-[1.04]"
+            />
+          </div>
         </div>
       </div>
     </section>

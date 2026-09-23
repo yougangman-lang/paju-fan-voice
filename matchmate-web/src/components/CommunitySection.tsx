@@ -1,10 +1,33 @@
+import { fansPhotos } from "@/data/photos";
 import SmartImage from "./SmartImage";
 import Container from "./Container";
 
+/* Each shot keeps a crop close to the photo's own ratio so faces stay in frame. */
 const shots = [
-  { src: "/images/community/fans-01.png", copy: "같이 응원하면 더 재밌으니까.", alt: "함께 응원하는 대학생 팬들" },
-  { src: "/images/community/fans-02.png", copy: "직관이 친목이 되는 순간.", alt: "직관에서 친해진 친구들" },
-  { src: "/images/community/fans-03.png", copy: "축구보다 먼저, 사람.", alt: "경기장에서 함께한 사람들" },
+  {
+    ...fansPhotos.fans02,
+    copy: "같이 응원하면 더 재밌으니까.",
+    figure: "md:col-span-7",
+    frame: "aspect-[16/10]",
+    position: "object-[25%_40%]",
+    sizes: "(min-width: 768px) 55vw, 100vw",
+  },
+  {
+    ...fansPhotos.fans03,
+    copy: "축구보다 먼저, 사람.",
+    figure: "w-2/3 md:col-span-2 md:mt-28 md:w-auto",
+    frame: "aspect-[9/16]",
+    position: "object-[50%_30%]",
+    sizes: "(min-width: 768px) 17vw, 66vw",
+  },
+  {
+    ...fansPhotos.fans01,
+    copy: "직관이 친목이 되는 순간.",
+    figure: "md:col-span-3 md:mt-12",
+    frame: "aspect-[3/2] md:aspect-square",
+    position: "object-center",
+    sizes: "(min-width: 768px) 25vw, 100vw",
+  },
 ];
 
 export default function CommunitySection({ index = "05 / 06" }: { index?: string }) {
@@ -23,18 +46,13 @@ export default function CommunitySection({ index = "05 / 06" }: { index?: string
 
         <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-3">
           {shots.map((shot, i) => (
-            <figure
-              key={shot.src}
-              className={
-                i === 0 ? "md:col-span-6" : i === 1 ? "md:col-span-3 md:mt-32" : "md:col-span-3 md:mt-12"
-              }
-            >
-              <div className={`relative overflow-hidden ${i === 0 ? "aspect-[4/5]" : "aspect-[3/4]"}`}>
+            <figure key={shot.src} className={shot.figure}>
+              <div className={`relative overflow-hidden bg-paper/10 ${shot.frame}`}>
                 <SmartImage
                   src={shot.src}
                   alt={shot.alt}
-                  sizes={i === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 100vw"}
-                  className="object-cover contrast-[1.04]"
+                  sizes={shot.sizes}
+                  className={`object-cover contrast-[1.04] ${shot.position}`}
                 />
               </div>
               <figcaption className="mt-4 flex gap-3 text-lg font-bold leading-snug md:text-xl">
